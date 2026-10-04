@@ -86,9 +86,9 @@ function Pricing(){
   return <section id="pricing" className="pricing-band">
     <div className="shell price-head"><div><p className="eyebrow">PRICING</p><h2>Choose how you want to run Nest-Pro.</h2></div><p>Keep the same licensing direction from the existing Nest-Pro website, presented as a cleaner product offer.</p></div>
     <div className="shell price-grid">
-      <div className="price-card"><span>INDIVIDUAL</span><strong>License</strong><small>For one designer</small><div className="price-divider"/><p>For independent designers and individual apparel workflows. Contact us for current license terms.</p><a href="mailto:support@nest-pro.com?subject=Nest-Pro%20Individual%20License">Ask about license <ArrowRight size={15}/></a></div>
-      <div className="price-card featured"><div className="featured-tag">RECOMMENDED</div><span>PRODUCTION</span><strong>Nest-Pro</strong><small>For active production</small><div className="price-divider"/><p>For designers and production operators processing pattern files regularly.</p><a href="mailto:support@nest-pro.com?subject=Nest-Pro%20Production%20License">Ask about license <ArrowRight size={15}/></a></div>
-      <div className="price-card"><span>TEAM</span><strong>Custom</strong><small>For studios & teams</small><div className="price-divider"/><p>For apparel suppliers and teams that need multi-user or multi-machine licensing.</p><a href="mailto:support@nest-pro.com?subject=Nest-Pro%20Team%20License">Contact sales <ArrowRight size={15}/></a></div>
+      <div className="price-card"><span>MONTHLY</span><strong>$19</strong><small>per month</small><div className="price-divider"/><p>For individual production workflows and flexible access.</p><a href="#top">Choose monthly <ArrowRight size={15}/></a></div>
+      <div className="price-card featured"><div className="featured-tag">POPULAR</div><span>YEARLY</span><strong>$149</strong><small>per year</small><div className="price-divider"/><p>For active users who rely on Nest-Pro throughout the year.</p><a href="#top">Choose yearly <ArrowRight size={15}/></a></div>
+      <div className="price-card"><span>COMMERCIAL</span><strong>LET'S TALK</strong><small>team licensing</small><div className="price-divider"/><p>For studios, production teams and multi-machine workflows.</p><a href="#top">Contact sales <ArrowRight size={15}/></a></div>
     </div>
   </section>
 }
@@ -100,7 +100,7 @@ export default function Home(){
       <div className="hero-left">
         <p className="eyebrow">AI-POWERED NESTING FOR ADOBE ILLUSTRATOR</p>
         <h1>Less manual work.<br/><em>More production.</em></h1>
-        <p className="hero-text">Automate pattern scanning, size recognition, artwork placement and nesting in Adobe Illustrator—built around the real needs of apparel design and sublimation production.</p>
+        <p className="hero-text">Nest-Pro turns repetitive pattern preparation, size recognition, artwork placement and nesting into one streamlined workflow inside Adobe Illustrator.</p>
         <div className="hero-actions"><a className="button dark" href="#pricing">Get Nest-Pro <ArrowRight size={16}/></a><a className="button outline" href="#workflow"><Play size={14}/> Watch workflow</a></div>
         <div className="hero-meta"><span><Check size={14}/> AI-assisted workflow</span><span><Check size={14}/> 1–4 size detection</span><span><Check size={14}/> Illustrator compatible</span></div>
       </div>
@@ -111,7 +111,7 @@ export default function Home(){
 
     <section id="features" className="intro-section shell">
       <div><p className="eyebrow">WHY NEST-PRO</p><h2>Built around the way apparel production actually works.</h2></div>
-      <div className="intro-copy"><p>From pattern recognition to production-ready Illustrator documents, Nest-Pro brings repetitive preparation tasks into one focused workflow for apparel teams.</p><a href="#workflow" className="text-link">Explore the workflow <ArrowRight size={15}/></a></div>
+      <div className="intro-copy"><p>The original Nest-Pro website already contains the right workflow. This redesign makes those capabilities easier to understand at a glance, with larger sections, clearer storytelling and a stronger product focus.</p><a href="#workflow" className="text-link">Explore the workflow <ArrowRight size={15}/></a></div>
     </section>
 
     <section className="feature-list shell">
@@ -137,7 +137,7 @@ export default function Home(){
     <section id="faq" className="faq shell">
       <div className="faq-title"><p className="eyebrow">FAQ</p><h2>Questions before you run your first nest?</h2></div>
       <div className="faq-list">
-        {["What Illustrator versions are supported?","Can Nest-Pro detect 1–4 sizes in the same pattern file?","Can it work with both AI and PDF files?","Does Nest-Pro support 0° and 180° orientation?","What is the difference between Quick Scan and High Performance Scan?","How does the license activation work?"].map((q)=><details key={q}><summary>{q}<span>+</span></summary><p>Nest-Pro is built for apparel pattern workflows inside Adobe Illustrator. Supported behavior can depend on the document structure and the version of Nest-Pro you are using. Please contact support to confirm compatibility and licensing details for your setup.</p></details>)}
+        {["What Illustrator versions are supported?","Can Nest-Pro detect 1–4 sizes in the same pattern file?","Can it work with both AI and PDF files?","Does Nest-Pro support 0° and 180° orientation?","What is the difference between Quick Scan and High Performance Scan?","How does the license activation work?"].map((q)=><details key={q}><summary>{q}<span>+</span></summary><p>Nest-Pro is designed around a production workflow inside Adobe Illustrator. The exact behavior depends on the document structure and the enabled feature set in your current build.</p></details>)}
       </div>
     </section>
 

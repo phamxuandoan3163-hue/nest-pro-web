@@ -1,16 +1,9 @@
-# Nest-Pro V2.0 — ENUT-inspired landing page
+# Nest-Pro Web V10 — Airo-inspired redesign
 
-A responsive Next.js landing-page concept for Nest-Pro, adapted from the ENUT website structure for apparel pattern automation.
+This version rebuilds the landing page from the Nest-Pro V6.2 content direction with a clean, editorial product-site layout inspired by modern Airo-generated website patterns: large typography, spacious sections, full-width visual hero, restrained navigation, and strong CTA hierarchy.
 
-## Run locally
-
-```bash
+## Run
 npm install
 npm run dev
-```
 
-## Notes
-- Pricing values have intentionally not been invented. Update the three license cards with confirmed terms before publishing.
-- Replace the illustrative product UI with current Nest-Pro screenshots or demo video when available.
-- Update contact email links before deployment.
-- Deployable to Vercel after installing dependencies and connecting the project repository.
+Open http://localhost:3000
