@@ -3,8 +3,8 @@ export const defaultContent = {
   theme:{pageBg:"#0d0f10",surface:"#141719",surface2:"#181b1d",text:"#f2f2ef",muted:"#9a9f9f",line:"#2a2f31",accent:"#f2f0ea",accentText:"#111315",darkBand:"#090b0c",softBand:"#111415",radius:"22"},
   hero:{eyebrow:"PRODUCTION TOOLS FOR ADOBE ILLUSTRATOR",titleLine1:"Automate the work.",titleLine2:"Keep production moving.",text:"Nest-Pro turns repetitive apparel-production tasks into focused Illustrator tools — from pattern recognition and size preparation to nesting and layout automation.",primaryCta:"Explore Nest-Pro",secondaryCta:"See how it works",note:"01 / PRODUCT PLATFORM",meta:["Built for Illustrator","Apparel production workflows","More tools coming"]},
   intro:{eyebrow:"THE NEST-PRO PLATFORM",title:"One place for the production tools you actually need.",text:"Nest-Pro starts with automated nesting and pattern preparation. The platform is structured so new production tools can be added without changing the core experience.",link:"Explore products"},
-  products:{eyebrow:"PRODUCTS",title:"Tools built for real production.",text:"Start with Nest-Pro V2.5, including the combined nesting and laser-stroke workflow, then add more focused tools as your workflow grows.",cards:[
-    {tag:"AVAILABLE NOW",name:"Nest-Pro V2.5 + Laser Cut",description:"Match rập outlines to design silhouettes, align artwork and generate white/black laser strokes in Adobe Illustrator.",features:["AI / PDF in Illustrator","Active-artboard matching","0° / 180° orientation","Dual laser strokes"],cta:"Explore Nest-Pro",href:"#features"},
+  products:{eyebrow:"PRODUCTS",title:"Tools built for real production.",text:"Start with Nest-Pro and Laser Cut, including the combined nesting and laser-stroke workflow, then add more focused tools as your workflow grows.",cards:[
+    {tag:"AVAILABLE NOW",name:"Nest-Pro and Laser Cut",description:"Match rập outlines to design silhouettes, align artwork and optionally generate configurable laser strokes in Adobe Illustrator.",features:["Active-artboard matching","0° / 180° orientation","Laser Cut optional","Inside 1 pt / Outside 2 pt"],cta:"Explore Nest-Pro",href:"#features"},
     {tag:"COMING SOON",name:"Sticker Layout",description:"Automatic sticker imposition with page sizing, spacing, quantity optimization and decal-cut safety margins.",features:["Custom page size","Object dimensions","Auto layout","Cutting margin"],cta:"Coming soon",href:"#products"},
     {tag:"COMING SOON",name:"Production Tools",description:"More focused Illustrator utilities for apparel, print preparation and repetitive production work.",features:["Workflow automation","Batch operations","Production presets","Export tools"],cta:"Coming soon",href:"#products"}
   ]},
@@ -21,11 +21,11 @@ export const defaultContent = {
   pricing:{eyebrow:"PRICING",title:"Simple access. Clear licensing.",text:"Choose the access period that fits your production workflow. Pricing and license activation can evolve independently from the product pages.",cards:[["7 DAYS","Trial","One-time trial","Test the workflow before committing.","Start trial"],["30 DAYS","Monthly","Flexible access","For active individual production workflows.","Get monthly"],["1 YEAR","Yearly","Best for production","For studios and users running Nest-Pro throughout the year.","Get yearly"]]},
   faq:{eyebrow:"FAQ",title:"Questions before you automate?",items:[
     ["What is Nest-Pro?","Nest-Pro is a product platform for production-focused Adobe Illustrator tools, starting with automated nesting and pattern preparation."],
-    ["What can Nest-Pro V2.5 automate?","It scans rập outlines, matches design silhouettes, uses 0°/180° orientation, aligns designs in place and creates dual laser stroke paths from successfully placed closed silhouettes."],
+    ["What can Nest-Pro and Laser Cut automate?","It scans rập outlines, matches design silhouettes, uses 0°/180° orientation and aligns designs in place. Laser Cut is optional, with editable Inside/Outside widths and colors."],
     ["Can it work with AI and PDF pattern files?","Yes. The Nest-Pro workflow is designed around AI and PDF pattern inputs."],
     ["How many sizes can it detect?","The current workflow is designed for one to four sizes in a pattern."],
     ["What is Quick Scan vs High Performance Scan?","Quick Scan prioritizes speed for lighter files. High Performance Scan is intended for larger or more complex documents."],
-    ["Will more tools be added later?","Yes. Nest-Pro is being structured as a growing product platform, so additional Illustrator production tools can be added alongside Nest-Pro V2.5."]
+    ["Will more tools be added later?","Yes. Nest-Pro is being structured as a growing product platform, so additional Illustrator production tools can be added alongside Nest-Pro and Laser Cut."]
   ]},
   finalCta:{eyebrow:"START WITH NEST-PRO V2.0",title:"Automate the repetitive parts of production.",primary:"Explore Nest-Pro",secondary:"View pricing"}
 };
