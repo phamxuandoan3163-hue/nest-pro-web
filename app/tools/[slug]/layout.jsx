@@ -1,7 +1,7 @@
 const PRODUCTS = {
   "nest-pro": {
-    title: "Nest-Pro — Apparel pattern preparation and nesting",
-    description: "Explore Nest-Pro tools for pattern recognition, size detection, artwork placement, controlled orientation and apparel production nesting."
+    title: "Nest-Pro V2.5 — Nesting and Laser Cut for Illustrator",
+    description: "Follow the Nest-Pro V2.5 Illustrator workflow: scan rập outlines, match design silhouettes, orient at 0° or 180°, align designs and generate white/black laser strokes."
   },
   "sticker-layout": {
     title: "Sticker Layout — Product information",
