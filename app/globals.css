@@ -282,3 +282,25 @@ html{scroll-padding-top:112px}
 
 /* Uppercase navigation labels for a stronger, consistent header */
 .nav-links a,.nav-buy{text-transform:uppercase;letter-spacing:.65px}
+
+
+/* Hand-drawn yellow separators between primary navigation labels */
+@media(min-width:951px){
+  .nav-links a{position:relative}
+  .nav-links a:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    right:calc(-1 * clamp(28px,2.55vw,39px));
+    width:4px;
+    height:29px;
+    background:#f5ed00;
+    border-radius:55% 35% 48% 30%;
+    clip-path:polygon(30% 0,78% 2%,100% 77%,68% 100%,18% 88%,0 18%);
+    transform:translateY(-50%) rotate(-2deg);
+    pointer-events:none;
+  }
+  .nav-links a:nth-child(2)::after{height:32px;transform:translateY(-50%) rotate(3deg)}
+  .nav-links a:nth-child(3)::after{height:35px;transform:translateY(-50%) rotate(5deg)}
+  .nav-links a:nth-child(4)::after{height:29px;transform:translateY(-50%) rotate(-6deg)}
+}
