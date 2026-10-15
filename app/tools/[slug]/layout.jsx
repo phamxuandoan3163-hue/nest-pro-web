@@ -1,7 +1,7 @@
 const PRODUCTS = {
   "nest-pro": {
-    title: "Nest-Pro V2.5 — Nesting and Laser Cut for Illustrator",
-    description: "Follow the Nest-Pro V2.5 Illustrator workflow: scan rập outlines, match design silhouettes, orient at 0° or 180°, align designs and generate white/black laser strokes."
+    title: "Nest-Pro and Laser Cut for Illustrator",
+    description: "Match rập outlines to design silhouettes, align artwork in Adobe Illustrator, and optionally create configurable Inside/Outside laser strokes with color pickers."
   },
   "sticker-layout": {
     title: "Sticker Layout — Product information",
