@@ -310,3 +310,22 @@ html{scroll-padding-top:112px}
 @media(min-width:951px){
   .nav-links a:not(:last-child)::after{background:#c7cbca}
 }
+
+
+/* Refined navigation separators: straight, slim and even */
+@media(min-width:951px){
+  .nav-links a:not(:last-child)::after{
+    width:1px;
+    height:24px;
+    background:#c7cbca;
+    border-radius:0;
+    clip-path:none;
+    transform:translateY(-50%);
+  }
+  .nav-links a:nth-child(2)::after,
+  .nav-links a:nth-child(3)::after,
+  .nav-links a:nth-child(4)::after{
+    height:24px;
+    transform:translateY(-50%);
+  }
+}
