@@ -278,3 +278,7 @@ html{scroll-padding-top:112px}
   .nav-links{gap:23px!important}
   .nav-links a{padding:7px 0;font-size:12px;font-weight:750}
 }
+
+
+/* Uppercase navigation labels for a stronger, consistent header */
+.nav-links a,.nav-buy{text-transform:uppercase;letter-spacing:.65px}
