@@ -35,7 +35,7 @@ const sections = [
 
 export default function PoliciesPage() {
   return <main className="utility-page policy-page">
-    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand"><span>Nest-Pro</span><sup>AI</sup></a><div className="nav-links"><a href="/#tools">Tools</a><a href="/#features">Features</a><a href="/license">Licensing</a></div><a href="/support" className="nav-buy">Support <span aria-hidden="true">↗</span></a></nav></header>
+    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand"><span>Nest-Pro</span><sup>AI</sup></a><div className="nav-links"><a href="/#tools">Tools</a><a href="/tools/nest-pro#features">Features</a><a href="/tools/nest-pro#workflow">Workflow</a><a href="/tools/nest-pro#resources">Resources</a><a href="/guides">Guides</a></div><a href="/support" className="nav-buy">Support <span aria-hidden="true">↗</span></a></nav></header>
     <div className="shell utility-shell">
       <div className="utility-breadcrumb"><Link href="/">Home</Link><span>/</span><span>Policies</span></div>
       <header className="utility-hero"><p className="eyebrow">POLICIES & CUSTOMER INFORMATION</p><h1>Clear terms.<br/><em>Fair expectations.</em></h1><p>Review the baseline policies for using Nest-Pro, managing a license and resolving a purchase issue.</p><p className="policy-updated">Last updated: October 15, 2026</p></header>
