@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function OrderConfirmationPage() {
   return <main className="utility-page confirmation-page">
-    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand"><span>Nest-Pro</span><sup>AI</sup></a><div className="nav-links"><a href="/#tools">Tools</a><a href="/license">Licensing</a><a href="/support">Support</a></div><a href="/support" className="nav-buy">Get help <span aria-hidden="true">↗</span></a></nav></header>
+    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand"><span>Nest-Pro</span><sup>AI</sup></a><div className="nav-links"><a href="/#tools">Tools</a><a href="/tools/nest-pro#features">Features</a><a href="/tools/nest-pro#workflow">Workflow</a><a href="/tools/nest-pro#resources">Resources</a><a href="/guides">Guides</a></div><a href="/support" className="nav-buy">Get help <span aria-hidden="true">↗</span></a></nav></header>
     <div className="shell utility-shell confirmation-shell">
       <div className="confirmation-mark" aria-hidden="true">✓</div>
       <p className="eyebrow">AFTER CHECKOUT</p>
