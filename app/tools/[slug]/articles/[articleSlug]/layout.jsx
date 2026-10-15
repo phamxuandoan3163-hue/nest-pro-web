@@ -1,8 +1,9 @@
 const ARTICLES = {
   "nest-pro": {
-    "getting-started": ["Getting started with Nest-Pro", "A practical overview of importing pattern files, preparing sizes and reviewing the final Illustrator document."],
-    "scan-modes": ["Choosing Quick Scan or High Performance Scan", "Compare scan modes for lighter files and more complex pattern documents."],
-    "nesting-workflow": ["A cleaner pattern-to-nesting workflow", "Prepare pattern geometry, review placement and check the final production document." ]
+    "getting-started": ["Preparing a document for Nest-Pro V2.5", "Set the active artboard, pattern outlines, design position, matching tolerance and laser settings before running the Nesting + Laser workflow."],
+    "scan-modes": ["How silhouette matching works", "Learn how geometry filters, normalized shape fingerprints, perimeter comparison and 0°/180° orientation determine a design-to-pattern match."],
+    "nesting-workflow": ["The exact Nesting + Laser sequence", "Follow the Nest-Pro V2.5 steps from active-artboard scan through design alignment, dual laser strokes and manual saving."],
+    "laser-stroke-output": ["Understanding the laser stroke output", "Learn how white and black laser paths are created from successfully placed closed design silhouettes and how to inspect the output."]
   },
   "sticker-layout": {
     "sticker-layout-overview": ["Sticker Layout overview", "A first look at sheet setup, object sizing, spacing and cut-margin planning."]
