@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRight, BookOpen, CheckCircle2, Layers3, ScanLine, Scissors, Workflow } from "lucide-react";
+import { ArrowRight, BookOpen, ScanLine, Scissors, Workflow } from "lucide-react";
 
 const navItems = [
   { label: "Tools", href: "/#tools" },
