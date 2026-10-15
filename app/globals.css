@@ -304,3 +304,9 @@ html{scroll-padding-top:112px}
   .nav-links a:nth-child(3)::after{height:35px;transform:translateY(-50%) rotate(5deg)}
   .nav-links a:nth-child(4)::after{height:29px;transform:translateY(-50%) rotate(-6deg)}
 }
+
+
+/* Match separator strokes to the navigation text color */
+@media(min-width:951px){
+  .nav-links a:not(:last-child)::after{background:#c7cbca}
+}
