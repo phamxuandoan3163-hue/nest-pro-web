@@ -4,7 +4,7 @@ import { ArrowRight, Check, Layers3, Move, RotateCw, ScanLine, Sparkles, Zap, Sh
 import { defaultContent } from "./content";
 
 const STORAGE="nestpro-cms-v1";
-const SLUGS={"Nest-Pro V2.5 + Laser Cut":"nest-pro","Nest-Pro V2.0":"nest-pro","Sticker Layout":"sticker-layout","Production Tools":"production-tools"};
+const SLUGS={"Nest-Pro and Laser Cut":"nest-pro","Nest-Pro V2.5 + Laser Cut":"nest-pro","Nest-Pro V2.0":"nest-pro","Sticker Layout":"sticker-layout","Production Tools":"production-tools"};
 function Brand({c}){return <a href="/" className="brand"><span>{c.site.brand}</span><sup>{c.site.brandTag}</sup></a>}
 function Nav({c}){return <header className="nav-wrap"><nav className="nav shell"><Brand c={c}/><div className="nav-links"><a href="#tools">Tools</a><a href="#features">Features</a><a href="#workflow">Workflow</a><a href="#resources">Resources</a></div><a href="/license" className="nav-buy">Licensing <ArrowRight size={15}/></a></nav></header>}
 function ProductCard({p,index}){const slug=SLUGS[p.name]||"production-tools";return <article className={"product-card "+(index===0?"product-primary":"")}><div className="product-card-top"><span>{p.tag}</span><div className="product-icon">{index===0?<Zap size={18}/>:<Sparkles size={18}/>}</div></div><h3>{p.name}</h3><p>{p.description}</p><ul>{p.features.slice(0,4).map(x=><li key={x}><Check size={13}/>{x}</li>)}</ul><a className="card-action" href={"/tools/"+slug}>{index===0?"Explore features":"View tool details"} <ArrowRight size={14}/></a></article>}
