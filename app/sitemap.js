@@ -15,6 +15,7 @@ export default function sitemap() {
     "/tools/nest-pro/articles/getting-started",
     "/tools/nest-pro/articles/scan-modes",
     "/tools/nest-pro/articles/nesting-workflow",
+    "/tools/nest-pro/articles/laser-stroke-output",
     "/tools/sticker-layout/articles/sticker-layout-overview",
     "/tools/production-tools/articles/production-tools-roadmap"
   ];
