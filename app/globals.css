@@ -204,3 +204,31 @@ html{scroll-padding-top:112px}
   .guides-library-grid{grid-template-columns:1fr}
   .guides-library,.guides-start{padding:65px 0}
 }
+
+
+/* Wider desktop navigation: spread menu buttons across the marked header area */
+@media(min-width:951px){
+  .nav{
+    grid-template-columns:minmax(220px,1fr) minmax(640px,2.7fr) minmax(165px,1fr);
+    column-gap:24px;
+  }
+  .nav-links{
+    width:100%;
+    justify-content:space-between;
+    gap:12px;
+    font-size:14px;
+  }
+  .nav-links a{
+    min-height:40px;
+    padding:0 16px;
+    font-size:14px;
+  }
+}
+@media(min-width:951px) and (max-width:1120px){
+  .nav{
+    grid-template-columns:minmax(175px,.9fr) minmax(510px,2.5fr) minmax(140px,.8fr);
+    column-gap:14px;
+  }
+  .nav-links{gap:8px}
+  .nav-links a{padding:0 11px;font-size:13px}
+}
