@@ -7,6 +7,7 @@ export default function sitemap() {
     "/license",
     "/policies",
     "/support",
+    "/guides",
     "/tools/nest-pro",
     "/tools/sticker-layout",
     "/tools/production-tools"
