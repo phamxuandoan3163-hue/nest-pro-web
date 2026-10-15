@@ -329,3 +329,11 @@ html{scroll-padding-top:112px}
     transform:translateY(-50%);
   }
 }
+
+
+/* Nest-Pro monogram logo in site navigation */
+.brand-mark-link{align-items:center;justify-self:start;height:100%;min-width:48px}
+.brand-mark-img{display:block;width:auto;height:39px;max-width:none;object-fit:contain}
+@media(max-width:600px){
+  .brand-mark-img{height:33px}
+}
