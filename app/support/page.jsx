@@ -14,7 +14,7 @@ const helpItems = [
 
 export default function SupportPage() {
   return <main className="utility-page support-page">
-    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand"><span>Nest-Pro</span><sup>AI</sup></a><div className="nav-links"><a href="/#tools">Tools</a><a href="/license">Licensing</a><a href="/policies">Policies</a></div><a href="/tools/nest-pro" className="nav-buy">Product details <span aria-hidden="true">↗</span></a></nav></header>
+    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand"><span>Nest-Pro</span><sup>AI</sup></a><div className="nav-links"><a href="/#tools">Tools</a><a href="/tools/nest-pro#features">Features</a><a href="/tools/nest-pro#workflow">Workflow</a><a href="/tools/nest-pro#resources">Resources</a><a href="/guides">Guides</a></div><a href="/tools/nest-pro" className="nav-buy">Product details <span aria-hidden="true">↗</span></a></nav></header>
     <div className="shell utility-shell">
       <div className="utility-breadcrumb"><Link href="/">Home</Link><span>/</span><span>Support</span></div>
       <header className="utility-hero"><p className="eyebrow">NEST-PRO CUSTOMER HELP</p><h1>Let’s get your<br/><em>workflow moving.</em></h1><p>Use the steps below to resolve common purchase, delivery and activation issues.</p></header>
