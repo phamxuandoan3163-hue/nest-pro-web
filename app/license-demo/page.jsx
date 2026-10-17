@@ -22,7 +22,7 @@ export default function LicenseDemoPage() {
     setBusy(true);
     setResult("");
     try {
-      const deviceId = "webdemo" + "0123456789abcdef01234567";
+      const deviceId = "deadbeef0123456789abcdef01234567";
       const response = await fetch("/api/npl-demo/" + path, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
