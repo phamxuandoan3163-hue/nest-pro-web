@@ -80,3 +80,11 @@
 .license-bottom{background:#e9e7e0;color:#111415;padding:55px 0}.license-bottom-inner{display:flex;justify-content:space-between;align-items:center;gap:30px}.license-bottom .eyebrow{color:#6b6a63}.license-bottom h2{font-size:clamp(32px,4vw,48px);letter-spacing:-2px;margin:0}.license-bottom .button.dark{background:#111415;color:#f2f2ef}
 @media(max-width:950px){.directory-hero{grid-template-columns:1fr;gap:40px}.landing-visual{max-width:760px}.landing-section-heading,.landing-standards,.license-section-head,.license-how-inner,.license-faq{grid-template-columns:1fr;gap:35px}.license-grid{grid-template-columns:1fr}.license-card{min-height:330px}.license-steps{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.directory-hero{padding:70px 0 55px}.directory-hero h1,.license-hero h1{letter-spacing:-3px}.landing-canvas{height:260px}.directory-stats{flex-direction:row;gap:18px}.directory-stats span{font-size:9px}.landing-features,.landing-standards{padding:75px 0}.landing-section-heading h2,.standards-heading h2{letter-spacing:-2px}.value-grid{grid-template-columns:1fr}.value-card{min-height:220px}.landing-workflow{padding:75px 0}.landing-step-grid{grid-template-columns:1fr 1fr}.landing-step-grid article,.landing-step-grid article+article{padding:17px 12px 18px 0;border-right:0;border-bottom:1px solid #363c3d;min-height:145px}.landing-step-grid article:last-child{border-bottom:0}.landing-license-inner,.license-bottom-inner{align-items:flex-start;flex-direction:column}.license-hero{padding:55px 0 40px}.license-options{padding-bottom:75px}.license-highlights{gap:13px;flex-direction:column}.license-steps{grid-template-columns:1fr}.license-steps article{padding-bottom:15px}.license-faq{padding:75px 0}}
+
+
+/* Refined navigation: lighter labels and shorter separators */
+.nav-links{gap:0;font-weight:400;white-space:nowrap}
+.nav-links a{position:relative;display:inline-flex;align-items:center;padding:0 25px;font-weight:400;font-size:13px;letter-spacing:.01em}
+.nav-links a+a::before{content:"";position:absolute;left:0;top:50%;width:1px;height:16px;transform:translateY(-50%);background:rgba(220,224,222,.58)}
+.nav-buy{text-transform:uppercase;font-weight:500;letter-spacing:.035em}
+@media(max-width:950px){.nav-links{display:none}}
