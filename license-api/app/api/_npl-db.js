@@ -240,7 +240,7 @@ export function checkAdmin(request) {
 export function makeLicenseKey(plan) {
   const prefix = plan === "30day" ? "NPL-30D" : "NPL-1Y";
   const group = () => randomBytes(2).toString("hex").toUpperCase();
-  return prefix + "-" + group() + "-" + group() + "-" + group();
+  return prefix + "-" + [group(), group(), group(), group(), group(), group()].join("-");
 }
 export function safeError(error) {
   const code = String(error && error.code || "");
