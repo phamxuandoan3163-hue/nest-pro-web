@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Check, Layers3, Move, RotateCw, ScanLine, Sparkles, Zap, ShieldCheck, Workflow, BookOpen, BadgeCheck } from "lucide-react";
 import { defaultContent } from "./content";
 
-const STORAGE="nestpro-cms-v1";
+const STORAGE="nestpro-cms-en-v2";
 const SLUGS={"Nest-Pro V2.0":"nest-pro","Sticker Layout":"sticker-layout","Production Tools":"production-tools"};
 function Brand({c}){return <a href="/" className="brand"><span>{c.site.brand}</span><sup>{c.site.brandTag}</sup></a>}
 function Nav({c}){return <header className="nav-wrap"><nav className="nav shell"><Brand c={c}/><div className="nav-links"><a href="#tools">Tools</a><a href="#features">Features</a><a href="#workflow">Workflow</a><a href="#resources">Resources</a><a href="/tools/nest-pro#resources">Guides</a></div><a href="/license" className="nav-buy">Licensing <ArrowRight size={15}/></a></nav></header>}
