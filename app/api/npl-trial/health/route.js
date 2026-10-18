@@ -2,14 +2,16 @@ import { json, preflight } from "../_lib.js";
 
 export function OPTIONS() { return preflight(); }
 export async function GET() {
-  const configured = Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+  const now = Date.now();
   return json({
-    ok: configured,
+    ok: true,
     service: "nest-pro-laser-online-trial",
-    apiVersion: "1.0.0",
+    apiVersion: "1.1.0",
     mode: "online-7-day-trial",
-    storageConfigured: configured,
-    serverTime: Date.now(),
-    message: configured ? "Online trial API is configured." : "Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Vercel, then redeploy."
-  }, configured ? 200 : 503);
+    storageConfigured: true,
+    verification: "online-clock",
+    persistence: "local-device-record",
+    serverTime: now,
+    message: "Online trial time verification API is ready. Trial timestamps are persisted on the client machine; this mode does not provide server-side anti-reset storage."
+  });
 }
