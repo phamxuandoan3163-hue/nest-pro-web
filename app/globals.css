@@ -345,3 +345,10 @@ html{scroll-padding-top:112px}
 .nav-links a+a::before{content:"";position:absolute;left:0;top:50%;width:1px;height:16px;transform:translateY(-50%);background:rgba(220,224,222,.58)}
 .nav-buy{text-transform:uppercase;font-weight:500;letter-spacing:.035em}
 @media(max-width:950px){.nav-links{display:none}}
+
+
+/* Remove navigation divider lines entirely on the V2.5 preview */
+@media(min-width:951px){
+  .nav-links a::before,
+  .nav-links a::after{content:none!important;display:none!important}
+}
