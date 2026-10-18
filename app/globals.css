@@ -501,3 +501,9 @@ html{scroll-padding-top:112px}
 .product-primary .product-icon-active svg {
   stroke-width: 2.1;
 }
+
+
+/* Keep the available product title dark on the light card */
+.product-primary h3 {
+  color: #111415;
+}
