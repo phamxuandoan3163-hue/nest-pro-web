@@ -7,7 +7,7 @@ export async function GET() {
     service: "nest-pro-laser-online-trial",
     apiVersion: "1.1.0",
     mode: "online-7-day-trial",
-    storageConfigured: true,
+    serverSidePersistence: false,
     verification: "online-clock",
     persistence: "local-device-record",
     serverTime: Date.now(),
