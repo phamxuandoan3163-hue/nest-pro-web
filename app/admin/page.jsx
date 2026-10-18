@@ -4,7 +4,7 @@ import { Download, Upload, RotateCcw, Save, ChevronDown, Plus, Trash2 } from 'lu
 import { cloneDefault } from '../content';
 import '../admin.css';
 
-const STORAGE='nestpro-cms-v1';
+const STORAGE='nestpro-cms-en-v2';
 const clone=x=>JSON.parse(JSON.stringify(x));
 function Input({label,value,onChange,textarea=false}){return <label className="cms-field"><span>{label}</span>{textarea?<textarea value={value??''} onChange={e=>onChange(e.target.value)}/>:<input value={value??''} onChange={e=>onChange(e.target.value)}/>}</label>}
 function Section({title,open,onToggle,children}){return <section className="cms-section"><button className="cms-section-head" onClick={onToggle}><strong>{title}</strong><ChevronDown className={open?'rotate':''}/></button>{open&&<div className="cms-section-body">{children}</div>}</section>}
