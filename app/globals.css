@@ -474,3 +474,30 @@ html{scroll-padding-top:112px}
 .product-card:hover .card-action svg {
   transform: translateX(3px);
 }
+
+
+/* Available product: clear green active/official status */
+.product-primary .product-status-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #218247;
+}
+.product-primary .product-status-active::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: #2eaa5f;
+  box-shadow: 0 0 0 3px rgba(46,170,95,.13);
+}
+.product-primary .product-icon-active {
+  color: #19723e;
+  border-color: #35a864;
+  background: #dcf4e4;
+  box-shadow: 0 0 0 3px rgba(46,170,95,.12);
+}
+.product-primary .product-icon-active svg {
+  stroke-width: 2.1;
+}
