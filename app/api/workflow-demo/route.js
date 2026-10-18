@@ -3,10 +3,11 @@ import part1 from "../../workflow-gif-data/chunk-1.js";
 import part2 from "../../workflow-gif-data/chunk-2.js";
 import part3 from "../../workflow-gif-data/chunk-3.js";
 import part4 from "../../workflow-gif-data/chunk-4.js";
+import part5 from "../../workflow-gif-data/chunk-5.js";
 
 export const runtime = "nodejs";
 
-const gifBase64 = part0 + part1 + part2 + part3 + part4;
+const gifBase64 = part0 + part1 + part2 + part3 + part4 + part5;
 const gifBytes = Buffer.from(gifBase64, "base64");
 
 export async function GET() {
