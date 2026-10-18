@@ -439,3 +439,38 @@ html{scroll-padding-top:112px}
     bottom: -1px !important;
   }
 }
+
+
+/* Entire product directory cards are direct links */
+.product-card {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+.product-card:focus-visible {
+  outline: 2px solid #f2f2ef;
+  outline-offset: 4px;
+}
+.product-card .card-action {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.45);
+  padding-bottom: 7px;
+}
+.product-primary .card-action {
+  color: #111415;
+  border-bottom-color: rgba(17,20,21,.45);
+}
+.product-card .card-action svg {
+  transition: transform .2s ease;
+}
+.product-card:hover .card-action svg {
+  transform: translateX(3px);
+}
