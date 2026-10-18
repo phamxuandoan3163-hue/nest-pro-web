@@ -11,7 +11,7 @@ export async function POST(request) {
   const deviceId = readDeviceId(body && body.deviceId);
   const key = normalizeKey(body && body.licenseKey);
   if (!deviceId) return json({ ok: false, code: "INVALID_DEVICE_ID", message: "The device identifier is invalid." }, 400);
-  if (!/^NPL-(30D|1Y)-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{4}$/.test(key)) {
+  if (!/^NPL-(?:30D|1Y)(?:-[A-F0-9]{4}){3}(?:-[A-F0-9]{4}){0,3}$/.test(key)) {
     return json({ ok: false, code: "INVALID_LICENSE_KEY", message: "The license key format is invalid." }, 400);
   }
   try {
@@ -61,6 +61,7 @@ export async function POST(request) {
         WHERE a.license_id = ${licenseId} AND a.device_hash = ${hash} AND a.deactivated_at IS NULL
       ), occupied AS (
         SELECT COUNT(DISTINCT a.device_hash)::int AS n FROM npl_license_activations a
+        CROSS JOIN license_lock
         WHERE a.license_id = ${licenseId} AND a.deactivated_at IS NULL
       )
       INSERT INTO npl_license_activations (
