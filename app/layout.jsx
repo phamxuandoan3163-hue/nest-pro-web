@@ -1,4 +1,5 @@
 import "./globals.css";
+import ActiveNavMarker from "./active-nav-marker";
 
 export const metadata = {
   metadataBase: new URL("https://nest-pro-web.vercel.app"),
@@ -30,5 +31,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return <html lang="en"><body><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content">{children}</div></body></html>;
+  return <html lang="en"><body><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content">{children}</div><ActiveNavMarker /></body></html>;
 }
