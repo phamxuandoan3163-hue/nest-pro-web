@@ -13,7 +13,7 @@ const gifBytes = Buffer.from(gifBase64, "base64");
 export async function GET() {
   return new Response(gifBytes, {
     headers: {
-      "Content-Type": "image/webp",
+      "Content-Type": "image/gif",
       "Content-Length": String(gifBytes.length),
       "Cache-Control": "public, max-age=3600, s-maxage=86400"
     }
