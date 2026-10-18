@@ -519,3 +519,13 @@ html{scroll-padding-top:112px}
   background: #2eaa5f;
   box-shadow: 0 0 0 3px rgba(46,170,95,.13);
 }
+
+
+/* Animated Nest-Pro workflow demo in the homepage hero */
+.landing-workflow-gif {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 300 / 229;
+  object-fit: contain;
+}
