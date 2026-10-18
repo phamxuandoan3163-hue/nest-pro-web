@@ -15,13 +15,62 @@ const workflowSlides=[
 {number:"02",short:"Nesting result",eyebrow:"RUN NESTING",title:"Arrange the artwork on the print area.",description:"Run Nesting to place the matched artwork into a compact print layout. Review the full arrangement on the artboard before preparing output.",src:"/nest-pro-workflow/step-02.webp",alt:"Original Nest-Pro Laser screenshot showing the garment artwork nested on the Illustrator artboard."},
 {number:"03",short:"Laser Cut",eyebrow:"OPTIONAL CUT PATHS",title:"Add cut strokes when your workflow needs them.",description:"Enable Laser Cut to prepare inside and outside stroke paths, with adjustable stroke widths and colors, on the dedicated LASER CUT layer.",src:"/nest-pro-workflow/step-03.webp",alt:"Original Nest-Pro Laser screenshot showing close-up outline paths and the Laser Cut control panel."}
 ];
+function WorkflowStepIllustration({active}){
+ return <svg className="workflow-step-illustration" viewBox="0 0 1000 680" role="img" aria-label={active===0?"Illustration of source pattern pieces and artwork in Illustrator":active===1?"Illustration of artwork arranged on a nesting artboard":"Illustration of optional Laser Cut outline paths"} preserveAspectRatio="xMidYMid meet">
+ <defs>
+  <pattern id="workflow-fabric" width="34" height="34" patternUnits="userSpaceOnUse"><rect width="34" height="34" fill="#f4ddd4"/><path d="M16 30 C16 22 15 12 18 4 M17 10 C5 2 4 12 15 14 M16 20 C6 14 4 23 14 25 M17 25 C23 17 30 23 18 29" fill="none" stroke="#8d9678" strokeWidth="2"/><circle cx="27" cy="8" r="2" fill="#c4ac72"/></pattern>
+  <pattern id="workflow-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#aeb5b1" strokeOpacity=".2" strokeWidth="1"/></pattern>
+ </defs>
+ <rect width="1000" height="680" fill="#565b5b"/><rect width="1000" height="680" fill="url(#workflow-grid)"/>
+ <path d="M0 30H1000" stroke="#333839" strokeWidth="2"/>{Array.from({length:33},(_,i)=><path key={"r"+i} d={`M${i*31+12} 28v${i%4===0?10:5}`} stroke="#888f8c" strokeWidth="1"/>)}
+ {active===0 ? <>
+  <g transform="translate(38 115)"><rect width="220" height="420" rx="8" fill="#15191a" stroke="#252a2a"/><rect width="220" height="28" rx="8" fill="#232829"/><text x="12" y="18" fill="#d9ddd8" fontSize="11" fontWeight="700">Nest-Pro Laser · V2.5</text><text x="15" y="54" fill="#e9ece6" fontSize="12" fontWeight="700">01 NESTING / MATCHING</text><text x="15" y="87" fill="#9ba49f" fontSize="10">Matching tolerance</text><rect x="15" y="98" width="188" height="29" rx="4" fill="#252b2c" stroke="#454d4d"/><text x="28" y="117" fill="#edf0eb" fontSize="12">2 cm</text><text x="15" y="159" fill="#e9ece6" fontSize="12" fontWeight="700">02 LASER CUT</text><rect x="15" y="173" width="12" height="12" rx="2" fill="none" stroke="#c2c9c3"/><text x="35" y="183" fill="#c7cec8" fontSize="10">Enable Laser Cut</text><path d="M15 202H204" stroke="#343b3c"/><text x="15" y="226" fill="#8c9690" fontSize="10">Inside / Outside stroke</text><rect x="15" y="241" width="188" height="30" rx="4" fill="#202526" stroke="#394142"/><text x="27" y="260" fill="#9da69f" fontSize="10">Stroke settings (optional)</text><rect x="15" y="300" width="188" height="39" rx="4" fill="#eceee8"/><text x="109" y="324" fill="#191d1d" fontSize="12" textAnchor="middle" fontWeight="700">RUN</text><text x="15" y="383" fill="#748079" fontSize="9">Source files ready</text></g>
+  <rect x="303" y="93" width="270" height="484" fill="#f1f0e9" stroke="#303535" strokeWidth="2"/><text x="318" y="116" fill="#747b77" fontSize="9" letterSpacing="2">SOURCE PATTERN / RẬP</text>
+  <g fill="none" stroke="#303737" strokeWidth="2">
+   <path d="M329 150 l40 -15 22 14 24 -7 22 22 -13 33 -8 116 -30 0 -6 -74 -10 74 -31 0 -10 -116 -16 -29Z"/>
+   <path d="M451 148 l24 -10 22 8 18 -5 23 24 -10 35 -10 115 -29 0 -7 -72 -8 72 -30 0 -8 -116 -13 -34Z"/>
+   <path d="M326 335 l37 -6 31 8 -6 78 -8 92 -29 0 -6 -93 -6 93 -29 0 -7 -92Z"/>
+   <path d="M423 337 l40 -7 36 7 -8 76 -9 94 -30 0 -5 -95 -8 95 -29 0 -5 -92Z"/>
+   <path d="M330 530 l34 -7 29 8 -6 35 -18 0 -6 -22 -6 22 -20 0 -7 -36Z"/>
+  </g>
+  <text x="620" y="92" fill="#d8ddd7" fontSize="10" letterSpacing="2">MATCHING ARTWORK</text>
+  <path d="M600 106H970" stroke="#7b8380" strokeWidth="1" strokeDasharray="4 5"/>
+  <g stroke="#b6b7a6" strokeWidth="1.5" fill="url(#workflow-fabric)">
+   <path d="M667 132 l32 -13 21 14 19 -7 23 20 -11 32 -8 89 -25 0 -6 -62 -8 62 -25 0 -7 -90 -15 -24Z"/>
+   <path d="M799 134 l25 -14 19 13 22 -7 24 21 -12 34 -7 88 -25 0 -6 -62 -8 62 -25 0 -7 -89 -15 -25Z"/>
+   <path d="M909 150 l17 -6 15 7 14 -4 14 15 -8 25 -6 59 -18 0 -5 -39 -6 39 -18 0 -4 -60 -9 -20Z"/>
+   <path d="M682 392 l33 -8 30 8 -7 49 -8 67 -24 0 -6 -68 -8 68 -24 0 -6 -66Z"/>
+   <path d="M803 390 l36 -7 29 9 -6 48 -9 67 -23 0 -7 -68 -7 68 -24 0 -5 -65Z"/>
+   <path d="M918 389 l29 -7 24 7 -5 39 -7 48 -20 0 -5 -49 -5 49 -20 0 -5 -47Z"/>
+  </g>
+  <text x="630" y="592" fill="#aab1ac" fontSize="10">Designs stay separate until matching</text>
+ </> : active===1 ? <>
+  <g transform="translate(35 122)"><rect width="205" height="405" rx="7" fill="#15191a" stroke="#252a2a"/><rect width="205" height="27" rx="7" fill="#232829"/><text x="12" y="18" fill="#d9ddd8" fontSize="11" fontWeight="700">Nest-Pro Laser</text><text x="14" y="54" fill="#e9ece6" fontSize="12" fontWeight="700">NESTING / MATCHING</text><text x="14" y="86" fill="#9ba49f" fontSize="10">Matching tolerance</text><rect x="14" y="97" width="177" height="27" rx="4" fill="#252b2c" stroke="#454d4d"/><text x="26" y="115" fill="#edf0eb" fontSize="11">2 cm</text><rect x="14" y="147" width="177" height="28" rx="4" fill="#eceee8"/><text x="102" y="165" fill="#191d1d" fontSize="11" textAnchor="middle" fontWeight="700">RUN</text><text x="14" y="222" fill="#8a948e" fontSize="10">Output</text><text x="14" y="242" fill="#d6dbd5" fontSize="11">Artwork layout</text><path d="M14 259H190" stroke="#343b3c"/><text x="14" y="284" fill="#8a948e" fontSize="10">Ready for review</text></g>
+  <rect x="275" y="55" width="450" height="565" fill="#f3ded5" stroke="#272c2b" strokeWidth="2"/><rect x="285" y="65" width="430" height="545" fill="url(#workflow-fabric)" opacity=".58"/>
+  <text x="294" y="83" fill="#626959" fontSize="9" letterSpacing="2">NESTING LAYOUT / ARTBOARD</text>
+  {Array.from({length:15},(_,i)=>{const x=300+(i%3)*136, y=108+Math.floor(i/3)*99;return <g key={"nested"+i} transform={`translate(${x} ${y})`} stroke="#a9a994" strokeWidth="1.4" fill="url(#workflow-fabric)"><path d="M8 5 l25 -7 18 10 16 -4 16 17 -9 24 -6 51 -21 0 -5 -37 -7 37 -21 0 -4 -52 -10 -17Z"/></g>})}
+  <rect x="757" y="155" width="205" height="118" rx="6" fill="#1c2222" stroke="#454c4b"/><text x="775" y="181" fill="#a8b1aa" fontSize="10" letterSpacing="1.5">NEST-PRO RESULT</text><text x="775" y="211" fill="#f0f1eb" fontSize="18" fontWeight="700">Layout arranged</text><text x="775" y="236" fill="#9aa49d" fontSize="10">Review the artboard</text><circle cx="777" cy="254" r="4" fill="#a5bc96"/><text x="789" y="258" fill="#bdc8bd" fontSize="10">Artwork placed</text>
+  <rect x="757" y="298" width="205" height="90" rx="6" fill="#262d2d" stroke="#454c4b"/><text x="775" y="324" fill="#9aa49d" fontSize="9" letterSpacing="1.3">BEFORE EXPORT</text><path d="M776 344h163" stroke="#414848"/><text x="775" y="366" fill="#dde1da" fontSize="11">Check placement + gaps</text>
+ </> : <>
+  <rect width="1000" height="680" fill="#f4dcd2"/><rect x="0" y="0" width="1000" height="680" fill="url(#workflow-fabric)" opacity=".16"/>
+  <g transform="translate(35 120)"><rect width="210" height="408" rx="7" fill="#15191a" stroke="#252a2a"/><rect width="210" height="28" rx="7" fill="#232829"/><text x="12" y="18" fill="#d9ddd8" fontSize="11" fontWeight="700">Nest-Pro Laser · V2.5</text><text x="14" y="57" fill="#e9ece6" fontSize="12" fontWeight="700">02 LASER CUT</text><rect x="14" y="72" width="13" height="13" rx="2" fill="#b0c19d"/><path d="M17 78l3 3 5 -6" fill="none" stroke="#18201a" strokeWidth="1.5"/><text x="35" y="82" fill="#d6ddd5" fontSize="10">Enable Laser Cut</text><text x="14" y="118" fill="#aab3ad" fontSize="10">Inside stroke</text><rect x="14" y="129" width="180" height="28" rx="4" fill="#242a2b" stroke="#414948"/><rect x="23" y="137" width="10" height="10" rx="2" fill="#111"/><text x="43" y="147" fill="#e1e6df" fontSize="11">1 pt</text><text x="14" y="180" fill="#aab3ad" fontSize="10">Outside stroke</text><rect x="14" y="191" width="180" height="28" rx="4" fill="#242a2b" stroke="#414948"/><rect x="23" y="199" width="10" height="10" rx="2" fill="#fff"/><text x="43" y="209" fill="#e1e6df" fontSize="11">2 pt</text><text x="14" y="243" fill="#aab3ad" fontSize="10">Output layer</text><rect x="14" y="254" width="180" height="28" rx="4" fill="#242a2b" stroke="#414948"/><text x="24" y="272" fill="#e1e6df" fontSize="10">LASER CUT</text><rect x="14" y="316" width="180" height="36" rx="4" fill="#eceee8"/><text x="104" y="338" textAnchor="middle" fill="#191d1d" fontWeight="700" fontSize="12">RUN</text><text x="14" y="386" fill="#8a948e" fontSize="9">Optional output</text></g>
+  <g stroke="#15191a" strokeWidth="4" strokeLinejoin="round" fill="#f8e4dc">
+   <path d="M338 -10 L590 -10 620 190 550 250 538 405 500 430 456 420 449 272 420 390 370 402 354 222 293 180Z"/>
+   <path d="M700 -12 L930 -8 1015 185 987 257 934 240 884 155 858 92 836 305 802 308 770 120 741 180 680 197 670 99Z"/>
+   <path d="M290 470 L500 446 547 530 515 691 472 691 448 578 423 690 380 690 354 580Z"/>
+  </g>
+  <g fill="none" stroke="#b5a67c" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round"><path d="M410 160c-8 -30 -8 -65 2 -93m-2 19c-31 -19 -42 13 -6 20m7 17c29 -29 50 4 8 18"/><path d="M782 200c-10 -28 -8 -57 0 -80m0 22c-28 -18 -36 11 -5 18m8 17c26 -25 43 6 7 14"/><path d="M438 530c-9 -22 -8 -40 0 -60m0 15c-23 -16 -31 10 -5 15m7 16c23 -20 36 4 6 12"/></g>
+  <rect x="724" y="512" width="238" height="70" rx="7" fill="#ffffff" fillOpacity=".78" stroke="#d6bfb5"/><text x="744" y="539" fill="#252c2a" fontSize="13" fontWeight="700">Laser Cut paths</text><text x="744" y="559" fill="#6e7771" fontSize="10">Inside + outside strokes</text><text x="744" y="574" fill="#6e7771" fontSize="10">Separate output layer</text>
+ </>}
+ </svg>
+}
 function LandingWorkflowVisual(){
  const [active,setActive]=useState(0);
  const slide=workflowSlides[active];
  return <div className="landing-visual workflow-showcase">
   <div className="landing-visual-top"><span className="showcase-brand"><span className="showcase-mark">N</span><b>NEST-PRO LASER</b><span className="showcase-brand-ai">V2.5</span></span><span className="showcase-mode"><i/> PRODUCT WORKFLOW</span></div>
   <div className="workflow-gallery-media">
-   <img key={slide.src} src={slide.src} alt={slide.alt} width={1100} height={854} fetchPriority={active===0?"high":"auto"}/>
+   <WorkflowStepIllustration active={active}/>
    <span className="workflow-gallery-badge">STEP {slide.number} <i/> {slide.eyebrow}</span>
   </div>
   <div className="workflow-gallery-tabs" role="group" aria-label="Nest-Pro Laser workflow steps">
