@@ -1095,3 +1095,48 @@ body{
 @media(prefers-reduced-motion:reduce){
   body{background-attachment:scroll}
 }
+
+
+/* Use the full horizontal Nest-Pro wordmark in the video window title bar */
+.product-video-player-bar{
+  height:48px;
+  grid-template-columns:132px minmax(0,1fr) auto;
+  gap:10px;
+  padding:0 0 0 14px;
+}
+.product-video-player-bar .windows-app-logo{
+  display:block!important;
+  width:132px!important;
+  height:36px!important;
+  max-width:100%;
+  object-fit:contain;
+  object-position:left center;
+  justify-self:start;
+  align-self:center;
+}
+.product-video-player-bar>b{
+  justify-self:start;
+  font-size:11px;
+  line-height:1;
+  font-weight:500;
+  letter-spacing:.05px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color:#dfe3df;
+}
+.product-video-player-bar .windows-title-controls{justify-self:end}
+@media(max-width:600px){
+  .product-video-player-bar{
+    height:42px;
+    grid-template-columns:96px minmax(0,1fr) auto;
+    gap:7px;
+    padding-left:9px;
+  }
+  .product-video-player-bar .windows-app-logo{
+    width:96px!important;
+    height:28px!important;
+  }
+  .product-video-player-bar>b{font-size:9px}
+  .product-video-player-bar .windows-title-controls i{width:28px}
+}
