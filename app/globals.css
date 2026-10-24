@@ -759,3 +759,21 @@ html{scroll-padding-top:112px}
 @media(max-width:600px){
   .directory-hero-visual img{width:100%;max-width:100%;transform:none}
 }
+
+
+/* Crisp scalable jersey collection hero visual */
+.directory-hero{grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(25px,3vw,48px)}
+.directory-hero-visual{min-width:0;overflow:visible}
+.directory-hero-visual img{
+  display:block;width:clamp(620px,58vw,850px);max-width:calc(100% + 140px);
+  height:auto;aspect-ratio:2/1;object-fit:contain;object-position:center;
+  image-rendering:auto;transform:translateX(-34px);
+  filter:drop-shadow(0 22px 44px rgba(0,0,0,.45))
+}
+@media(max-width:950px){
+  .directory-hero{grid-template-columns:1fr}
+  .directory-hero-visual img{width:min(100%,820px);max-width:100%;transform:none}
+}
+@media(max-width:600px){
+  .directory-hero-visual img{width:100%;max-width:100%;transform:none}
+}

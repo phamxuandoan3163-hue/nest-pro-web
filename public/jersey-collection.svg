@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="750" viewBox="0 0 1500 750" fill="none" role="img" aria-labelledby="title desc">
+<title id="title">Nest-Pro jersey collection</title><desc id="desc">Five modern 3D-style jerseys shown from front and back in black and red, white and blue, navy and cyan, black and gold, and white and green.</desc>
+<defs>
+ <radialGradient id="backGlow" cx="50%" cy="38%" r="72%"><stop stop-color="#202628"/><stop offset=".56" stop-color="#111516"/><stop offset="1" stop-color="#0d0f10"/></radialGradient>
+ <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#43494a" stop-opacity="0"/><stop offset=".65" stop-color="#303738" stop-opacity=".26"/><stop offset="1" stop-color="#151819" stop-opacity=".05"/></linearGradient>
+ <linearGradient id="black" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#080a0c"/><stop offset=".45" stop-color="#202427"/><stop offset=".72" stop-color="#111416"/><stop offset="1" stop-color="#050607"/></linearGradient>
+ <linearGradient id="red" x1="0" y1="0" x2="1" y2=".25"><stop stop-color="#a90716"/><stop offset=".45" stop-color="#fb2337"/><stop offset=".78" stop-color="#e91029"/><stop offset="1" stop-color="#850b18"/></linearGradient>
+ <linearGradient id="white" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#aeb8bd"/><stop offset=".28" stop-color="#f8f9f7"/><stop offset=".68" stop-color="#e3e7e7"/><stop offset="1" stop-color="#a5afb4"/></linearGradient>
+ <linearGradient id="navy" x1="0" y1="0" x2="1" y2=".1"><stop stop-color="#071321"/><stop offset=".45" stop-color="#142c49"/><stop offset=".72" stop-color="#0d2037"/><stop offset="1" stop-color="#050c15"/></linearGradient>
+ <linearGradient id="blue" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#0755a5"/><stop offset=".5" stop-color="#31a9ff"/><stop offset="1" stop-color="#06396e"/></linearGradient>
+ <linearGradient id="green" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#05251e"/><stop offset=".45" stop-color="#155342"/><stop offset=".7" stop-color="#0b392d"/><stop offset="1" stop-color="#03140f"/></linearGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="1" y2=".25"><stop stop-color="#8a5b1c"/><stop offset=".5" stop-color="#f5d89b"/><stop offset="1" stop-color="#8d662b"/></linearGradient>
+ <linearGradient id="clothSheen" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#fff" stop-opacity=".02"/><stop offset=".48" stop-color="#fff" stop-opacity=".14"/><stop offset=".7" stop-color="#fff" stop-opacity=".025"/><stop offset="1" stop-color="#fff" stop-opacity=".01"/></linearGradient>
+ <pattern id="mesh" width="7" height="7" patternUnits="userSpaceOnUse"><path d="M0 0H7M0 0V7" stroke="#fff" stroke-opacity=".12" stroke-width=".6"/><path d="M0 7L7 0" stroke="#050709" stroke-opacity=".2" stroke-width=".5"/></pattern>
+ <pattern id="microDots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r=".55" fill="#fff" fill-opacity=".23"/></pattern>
+ <filter id="shirtShadow" x="-28%" y="-20%" width="156%" height="165%"><feGaussianBlur in="SourceAlpha" stdDeviation="8"/><feOffset dy="11"/><feComponentTransfer><feFuncA type="linear" slope=".48"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <clipPath id="teeClip"><path d="M91 21C76 22 63 32 50 44L10 74 35 119 61 105V294Q61 311 80 314H180Q199 311 199 294V105L225 119 250 74 210 44C197 32 184 22 169 21 162 37 147 44 130 44S98 37 91 21Z"/></clipPath>
+ <g id="teeBase">
+  <path d="M91 21C76 22 63 32 50 44L10 74 35 119 61 105V294Q61 311 80 314H180Q199 311 199 294V105L225 119 250 74 210 44C197 32 184 22 169 21 162 37 147 44 130 44S98 37 91 21Z" fill="url(#black)" stroke="#0a0c0d" stroke-width="2"/>
+  <g clip-path="url(#teeClip)">
+   <rect x="0" y="0" width="260" height="320" fill="url(#clothSheen)"/>
+   <rect x="0" y="0" width="260" height="320" fill="url(#mesh)" opacity=".55"/>
+   <path d="M17 105L62 90V290L75 319H41L31 198Z" fill="#000" opacity=".16"/>
+   <path d="M243 105L198 90V290L185 319H219L229 198Z" fill="#fff" opacity=".05"/>
+   <path d="M63 301Q130 309 197 301" stroke="#fff" stroke-opacity=".22" stroke-width="1.4"/>
+   <path d="M66 110V286M194 110V286" stroke="#fff" stroke-opacity=".12" stroke-width="1.2"/>
+  </g>
+  <path d="M91 21C99 41 111 49 130 49S161 41 169 21" stroke="#090b0c" stroke-width="10"/>
+  <path d="M92 21C100 40 112 47 130 47S160 40 168 21" stroke="#81898c" stroke-opacity=".7" stroke-width="1.4"/>
+  <path d="M63 288Q130 300 197 288" stroke="#050607" stroke-width="5" stroke-opacity=".6"/>
+  <path d="M63 294Q130 306 197 294" stroke="#b6bcb9" stroke-opacity=".25" stroke-width="1"/>
+  <path d="M16 74L35 119 61 105M244 74L225 119 199 105" stroke="#fff" stroke-opacity=".13" stroke-width="1.2"/>
+ </g>
+ <g id="collar"><path d="M91 21C97 43 110 52 130 52S163 43 169 21" stroke="#050708" stroke-width="12" stroke-linecap="round"/><path d="M95 24C102 41 113 47 130 47S158 41 165 24" stroke="#81898b" stroke-opacity=".55" stroke-width="1.6"/><path d="M101 29C108 40 117 44 130 44S152 40 159 29" stroke="#e9eeee" stroke-opacity=".22" stroke-width="1"/></g>
+ <g id="backSeams"><path d="M70 72Q130 103 190 72M79 91Q130 118 181 91" stroke="#fff" stroke-opacity=".16" stroke-width="1.2"/><path d="M79 94L80 273M181 94L180 273" stroke="#050708" stroke-opacity=".2" stroke-width="1.4"/></g>
+</defs>
+<rect width="1500" height="750" fill="url(#backGlow)"/>
+<ellipse cx="750" cy="667" rx="690" ry="80" fill="#020303" opacity=".5"/>
+<path d="M35 659H1465" stroke="#4a5254" stroke-opacity=".28"/>
+<rect x="0" y="620" width="1500" height="130" fill="url(#floor)"/>
+<g opacity=".15" stroke="#6b7475" stroke-width="1"><path d="M50 691H1450"/><path d="M180 715H1320"/></g>
+<!-- FRONT ROW -->
+<g transform="translate(32 23) scale(.91)" filter="url(#shirtShadow)">
+ <use href="#teeBase"/>
+ <g clip-path="url(#teeClip)">
+  <path d="M49 38L94 21Q99 36 115 44L68 67 37 102 15 76Z" fill="url(#red)"/>
+  <path d="M211 38L166 21Q161 36 145 44L192 67 223 102 245 76Z" fill="url(#red)"/>
+  <path d="M47 56L65 48 36 99 19 75Z" fill="#f3f5f5"/>
+  <path d="M213 56L195 48 224 99 241 75Z" fill="#f3f5f5"/>
+  <path d="M60 99L77 123 71 177 89 209 91 281 75 239 57 202Z" fill="url(#red)"/>
+  <path d="M200 99L183 123 189 177 171 209 169 281 185 239 203 202Z" fill="url(#red)"/>
+  <path d="M62 120L75 144 75 173 94 205 93 232 82 204 64 176Z" fill="#fff" opacity=".96"/>
+  <path d="M198 120L185 144 185 173 166 205 167 232 178 204 196 176Z" fill="#fff" opacity=".96"/>
+  <path d="M68 70L109 99 117 120 88 100Z" fill="#333a3d" opacity=".7"/>
+  <path d="M192 70L151 99 143 120 172 100Z" fill="#333a3d" opacity=".7"/>
+ </g>
+ <use href="#collar"/>
+ <path d="M72 113L80 123M188 113L180 123M62 285Q130 298 198 285" stroke="#fff" stroke-opacity=".45" stroke-width="1.1"/>
+</g>
+<g transform="translate(325 23) scale(.91)" filter="url(#shirtShadow)">
+ <use href="#teeBase" fill="url(#white)"/>
+ <g clip-path="url(#teeClip)">
+  <rect width="260" height="320" fill="url(#white)"/>
+  <path d="M0 10H61L80 38 61 105 43 165 51 320H0Z" fill="url(#navy)"/>
+  <path d="M260 10H199L180 38 199 105 217 165 209 320H260Z" fill="url(#navy)"/>
+  <path d="M35 119L61 105 77 132 56 172 66 216 48 198Z" fill="url(#blue)"/>
+  <path d="M225 119L199 105 183 132 204 172 194 216 212 198Z" fill="url(#blue)"/>
+  <path d="M45 88L60 84 49 131 35 120Z M215 88L200 84 211 131 225 120Z" fill="#f8fbff"/>
+  <path d="M66 130L87 190 93 235 78 211 63 174ZM194 130L173 190 167 235 182 211 197 174Z" fill="#dbeeff" opacity=".85"/>
+  <path d="M0 0H260V320H0Z" fill="url(#clothSheen)" opacity=".4"/>
+ </g>
+ <use href="#collar"/>
+ <path d="M64 294Q130 306 196 294" stroke="#0a1d35" stroke-opacity=".7" stroke-width="2"/>
+</g>
+<g transform="translate(618 23) scale(.91)" filter="url(#shirtShadow)">
+ <use href="#teeBase" fill="url(#navy)"/>
+ <g clip-path="url(#teeClip)">
+  <rect width="260" height="320" fill="url(#navy)"/>
+  <path d="M54 34L91 21 113 42 65 77 47 120 23 79Z" fill="url(#blue)"/>
+  <path d="M206 34L169 21 147 42 195 77 213 120 237 79Z" fill="url(#blue)"/>
+  <path d="M59 108L78 125 87 177 103 218 99 281 83 237 66 195Z" fill="url(#blue)"/>
+  <path d="M201 108L182 125 173 177 157 218 161 281 177 237 194 195Z" fill="url(#blue)"/>
+  <path d="M62 111L73 126 83 167 76 185 64 160Z M198 111L187 126 177 167 184 185 196 160Z" fill="#eaf7ff"/>
+  <path d="M44 88L67 84 53 127 38 117ZM216 88L193 84 207 127 222 117Z" fill="#2e9dff"/>
+  <rect width="260" height="320" fill="url(#microDots)" opacity=".14"/>
+ </g>
+ <use href="#collar"/>
+ <path d="M62 285Q130 301 198 285" stroke="#39b6ff" stroke-opacity=".6" stroke-width="1.4"/>
+</g>
+<g transform="translate(911 23) scale(.91)" filter="url(#shirtShadow)">
+ <use href="#teeBase" fill="url(#black)"/>
+ <g clip-path="url(#teeClip)">
+  <path d="M48 39L91 21Q100 37 115 44L70 72 32 112 11 77Z" fill="#16191b"/>
+  <path d="M212 39L169 21Q160 37 145 44L190 72 228 112 249 77Z" fill="#16191b"/>
+  <path d="M47 53L63 48 38 95 19 74Z M213 53L197 48 222 95 241 74Z" fill="url(#gold)"/>
+  <path d="M61 100L77 124 71 174 88 211 91 279 75 239 56 201Z M199 100L183 124 189 174 172 211 169 279 185 239 204 201Z" fill="url(#gold)"/>
+  <path d="M67 123L79 143 77 173 93 201 92 225 80 201 65 176Z M193 123L181 143 183 173 167 201 168 225 180 201 195 176Z" fill="#f9e4b8"/>
+  <path d="M70 72L108 99 116 118 89 101Z M190 72L152 99 144 118 171 101Z" fill="#373a3b"/>
+ </g>
+ <use href="#collar"/>
+ <path d="M63 286Q130 300 197 286" stroke="#d5b276" stroke-opacity=".55" stroke-width="1.2"/>
+</g>
+<g transform="translate(1204 23) scale(.91)" filter="url(#shirtShadow)">
+ <use href="#teeBase" fill="url(#white)"/>
+ <g clip-path="url(#teeClip)">
+  <rect width="260" height="320" fill="url(#white)"/>
+  <path d="M0 0H61L80 38 61 105 41 160 50 320H0Z" fill="url(#green)"/>
+  <path d="M260 0H199L180 38 199 105 219 160 210 320H260Z" fill="url(#green)"/>
+  <path d="M35 120L61 105 77 132 56 172 66 216 48 198Z M225 120L199 105 183 132 204 172 194 216 212 198Z" fill="#f3dfb2"/>
+  <path d="M65 130L86 188 93 233 79 211 63 174Z M195 130L174 188 167 233 181 211 197 174Z" fill="#15513d"/>
+  <path d="M45 86L60 82 49 130 35 119Z M215 86L200 82 211 130 225 119Z" fill="#e9fff4"/>
+  <rect width="260" height="320" fill="url(#clothSheen)" opacity=".3"/>
+ </g>
+ <use href="#collar"/>
+ <path d="M64 294Q130 306 196 294" stroke="#154735" stroke-opacity=".8" stroke-width="2"/>
+</g>
+<!-- BACK ROW, MATCHING FIVE COLORWAYS -->
+<g transform="translate(32 386) scale(.91)" filter="url(#shirtShadow)">
+ <use href="#teeBase"/>
+ <g clip-path="url(#teeClip)">
+  <path d="M49 38L94 21Q99 36 115 44L68 67 37 102 15 76Z M211 38L166 21Q161 36 145 44L192 67 223 102 245 76Z" fill="url(#red)"/>
+  <path d="M47 56L65 48 36 99 19 75Z M213 56L195 48 224 99 241 75Z" fill="#f5f7f7"/>
+  <path d="M60 99L77 123 71 177 89 209 91 281 75 239 57 202Z M200 99L183 123 189 177 171 209 169 281 185 239 203 202Z" fill="url(#red)"/>
+  <path d="M63 112Q130 130 197 112" stroke="#fff" stroke-opacity=".21" stroke-width="1.4"/>
+ </g><use href="#backSeams"/><use href="#collar"/>
+</g>
+<g transform="translate(325 386) scale(.91)" filter="url(#shirtShadow)">
+ <use href="#teeBase" fill="url(#white)"/>
+ <g clip-path="url(#teeClip)">
+  <rect width="260" height="320" fill="url(#white)"/>
+  <path d="M0 10H61L80 38 61 105 43 165 51 320H0Z M260 10H199L180 38 199 105 217 165 209 320H260Z" fill="url(#navy)"/>
+  <path d="M35 119L61 105 77 132 56 172 66 216 48 198Z M225 119L199 105 183 132 204 172 194 216 212 198Z" fill="url(#blue)"/>
+  <path d="M0 0H260V320H0Z" fill="url(#clothSheen)" opacity=".35"/>
+ </g><use href="#backSeams"/><use href="#collar"/>
+</g>
+<g transform="translate(618 386) scale(.91)" filter="url(#shirtShadow)">
+ <use href="#teeBase" fill="url(#navy)"/>
+ <g clip-path="url(#teeClip)">
+  <rect width="260" height="320" fill="url(#navy)"/>
+  <path d="M54 34L91 21 113 42 65 77 47 120 23 79Z M206 34L169 21 147 42 195 77 213 120 237 79Z" fill="url(#blue)"/>
+  <path d="M59 108L78 125 87 177 103 218 99 281 83 237 66 195Z M201 108L182 125 173 177 157 218 161 281 177 237 194 195Z" fill="url(#blue)"/>
+  <rect width="260" height="320" fill="url(#microDots)" opacity=".2"/>
+ </g><use href="#backSeams"/><use href="#collar"/>
+</g>
+<g transform="translate(911 386) scale(.91)" filter="url(#shirtShadow)">
+ <use href="#teeBase" fill="url(#black)"/>
+ <g clip-path="url(#teeClip)">
+  <path d="M48 39L91 21Q100 37 115 44L70 72 32 112 11 77Z M212 39L169 21Q160 37 145 44L190 72 228 112 249 77Z" fill="#16191b"/>
+  <path d="M47 53L63 48 38 95 19 74Z M213 53L197 48 222 95 241 74Z" fill="url(#gold)"/>
+  <path d="M61 100L77 124 71 174 88 211 91 279 75 239 56 201Z M199 100L183 124 189 174 172 211 169 279 185 239 204 201Z" fill="url(#gold)"/>
+ </g><use href="#backSeams"/><use href="#collar"/>
+</g>
+<g transform="translate(1204 386) scale(.91)" filter="url(#shirtShadow)">
+ <use href="#teeBase" fill="url(#white)"/>
+ <g clip-path="url(#teeClip)">
+  <rect width="260" height="320" fill="url(#white)"/>
+  <path d="M0 0H61L80 38 61 105 41 160 50 320H0Z M260 0H199L180 38 199 105 219 160 210 320H260Z" fill="url(#green)"/>
+  <path d="M35 120L61 105 77 132 56 172 66 216 48 198Z M225 120L199 105 183 132 204 172 194 216 212 198Z" fill="#f3dfb2"/>
+ </g><use href="#backSeams"/><use href="#collar"/>
+</g>
+<path d="M36 690H1464" stroke="#6a7475" stroke-opacity=".12"/>
+</svg>
