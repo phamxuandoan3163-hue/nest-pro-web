@@ -699,3 +699,36 @@ html{scroll-padding-top:112px}
 .product-video-frame{aspect-ratio:16/9}
 @media(min-width:1400px){.product-video-layout{grid-template-columns:minmax(300px,.58fr) minmax(0,1.42fr);gap:72px}.product-video-player{max-width:none}}
 @media(max-width:950px){.product-video-layout{grid-template-columns:1fr;gap:32px}.product-video-copy{max-width:680px}.product-video-brand-logo{margin-bottom:22px}.product-video-player{width:100%}}
+
+
+/* Video clarity pass: maximize the available viewport for the embedded player */
+.product-video-layout.shell{
+  width:min(1660px,calc(100% - 88px));
+  grid-template-columns:minmax(300px,.42fr) minmax(0,1.58fr);
+  gap:clamp(42px,4vw,76px);
+}
+.product-video-player{
+  width:100%;
+  min-width:0;
+  max-width:none;
+}
+.product-video-frame{
+  width:100%;
+  aspect-ratio:16/9;
+  min-height:0;
+}
+.product-video-frame iframe{
+  width:100%;
+  height:100%;
+  display:block;
+}
+@media(max-width:950px){
+  .product-video-layout.shell{
+    width:min(900px,calc(100% - 48px));
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+}
+@media(max-width:600px){
+  .product-video-layout.shell{width:calc(100% - 32px);gap:25px}
+}
