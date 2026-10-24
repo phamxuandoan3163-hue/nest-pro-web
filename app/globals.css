@@ -1140,3 +1140,36 @@ body{
   .product-video-player-bar>b{font-size:9px}
   .product-video-player-bar .windows-title-controls i{width:28px}
 }
+
+
+/* Nest-Pro product demo title bar: full wordmark instead of the N app tile */
+.tool-video-titlebar{
+  grid-template-columns:104px minmax(0,1fr) auto;
+  gap:10px;
+  padding-left:13px;
+}
+.tool-video-app-logo{
+  display:block;
+  width:104px;
+  height:28px;
+  max-width:100%;
+  object-fit:contain;
+  object-position:left center;
+  align-self:center;
+  justify-self:start;
+}
+.tool-video-window-title{
+  min-width:0;
+  font-size:11px;
+}
+.tool-video-app-icon{display:none!important}
+@media(max-width:950px){
+  .tool-video-titlebar{grid-template-columns:100px minmax(0,1fr) auto;gap:8px;padding-left:11px}
+  .tool-video-app-logo{width:100px;height:27px}
+}
+@media(max-width:600px){
+  .tool-video-titlebar{grid-template-columns:82px minmax(0,1fr) auto;gap:6px;padding-left:8px}
+  .tool-video-app-logo{width:82px;height:23px}
+  .tool-video-window-title{font-size:9px}
+  .tool-video-window-controls i{width:27px}
+}
