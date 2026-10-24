@@ -1028,3 +1028,70 @@ html{scroll-padding-top:112px}
   .tool-video-window-title{font-size:10px}
   .tool-video-window-controls i{width:30px}
 }
+
+
+/* Nest-Pro sports-tech background: Geometric Shapes (option 04)
+   Low-contrast angular panels add athletic energy without competing with content. */
+:root{
+  --sport-geo-olive:rgba(91,105,65,.12);
+  --sport-geo-blue:rgba(34,65,93,.16);
+  --sport-geo-line:rgba(170,184,182,.055);
+}
+body{
+  background-color:#0d0f10;
+  background-image:
+    radial-gradient(ellipse at 84% 12%,rgba(48,66,70,.12),transparent 34%),
+    linear-gradient(135deg,transparent 0 68%,rgba(35,56,78,.12) 68.1% 78%,transparent 78.1%),
+    linear-gradient(45deg,transparent 0 82%,rgba(78,91,61,.10) 82.1% 89%,transparent 89.1%);
+  background-attachment:fixed;
+}
+.directory-hero,
+.tool-hero{
+  background-image:
+    linear-gradient(135deg,transparent 0 61%,rgba(35,56,78,.17) 61.1% 72%,transparent 72.1%),
+    linear-gradient(45deg,transparent 0 78%,rgba(84,98,62,.11) 78.1% 86%,transparent 86.1%),
+    linear-gradient(135deg,transparent 0 87%,var(--sport-geo-line) 87.1% 87.4%,transparent 87.5%);
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+}
+.products-section,
+.landing-features,
+.landing-standards,
+.tool-features,
+.tool-resources{
+  background-image:
+    linear-gradient(135deg,transparent 0 76%,rgba(45,65,82,.09) 76.1% 85%,transparent 85.1%),
+    linear-gradient(45deg,transparent 0 88%,rgba(83,96,61,.07) 88.1% 94%,transparent 94.1%);
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+}
+.product-video-section{
+  background:
+    linear-gradient(135deg,transparent 0 70%,rgba(37,59,80,.13) 70.1% 80%,transparent 80.1%),
+    linear-gradient(45deg,transparent 0 84%,rgba(86,99,63,.08) 84.1% 91%,transparent 91.1%),
+    linear-gradient(180deg,#101314 0%,#0d0f10 100%)!important;
+}
+.landing-workflow,
+.tool-workflow{
+  background:
+    linear-gradient(135deg,transparent 0 73%,rgba(38,61,83,.13) 73.1% 84%,transparent 84.1%),
+    linear-gradient(45deg,transparent 0 86%,rgba(82,95,60,.09) 86.1% 93%,transparent 93.1%),
+    #171a1b!important;
+}
+.tool-feature-card,
+.article-card,
+.product-card,
+.value-card,
+.landing-step-grid article{
+  backdrop-filter:blur(2px);
+}
+@media(max-width:700px){
+  body{background-attachment:scroll}
+  .directory-hero,.tool-hero,.products-section,.landing-features,.landing-standards,
+  .product-video-section,.landing-workflow,.tool-workflow,.tool-features,.tool-resources{
+    background-size:cover;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body{background-attachment:scroll}
+}
