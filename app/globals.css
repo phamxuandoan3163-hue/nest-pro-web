@@ -669,15 +669,18 @@ html{scroll-padding-top:112px}
 .product-video-meta i{width:6px;height:6px;border-radius:50%;background:#a8bd9a;box-shadow:0 0 0 4px rgba(168,189,154,.09)}
 .product-video-copy .feature-link{display:inline-flex;margin-top:4px}
 .product-video-player{min-width:0;overflow:hidden;border:1px solid #343b3c;border-radius:17px;background:#15191a;box-shadow:0 28px 70px rgba(0,0,0,.25)}
-.product-video-player-bar{height:46px;display:grid;grid-template-columns:58px 1fr auto;align-items:center;gap:12px;padding:0 16px;border-bottom:1px solid #303637;color:#a5ada8}
-.product-video-player-bar>span{display:flex;gap:5px}
-.product-video-player-bar>span i{width:7px;height:7px;border-radius:50%;background:#505857}
-.product-video-player-bar>b{font-size:8px;letter-spacing:1.2px;font-weight:800}
-.product-video-player-bar>small{font-size:7px;letter-spacing:.7px;color:#747e79}
+.product-video-player-bar{height:46px;display:grid;grid-template-columns:20px minmax(0,1fr) auto;align-items:center;gap:11px;padding:0 0 0 14px;border-bottom:1px solid #343b3c;background:#202324;color:#e5e8e5}
+.windows-app-icon{width:16px;height:16px;display:grid;place-items:center;border:1px solid #77817c;border-radius:3px;font-size:9px;line-height:1;font-weight:800;color:#f1f2ee}
+.product-video-player-bar>b{font-size:11px;letter-spacing:0;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.windows-title-controls{height:100%;display:flex;align-items:stretch}
+.windows-title-controls i{position:relative;display:block;width:44px;height:100%;border-left:1px solid rgba(255,255,255,.035)}
+.windows-minimize:before{content:"";position:absolute;width:10px;height:1px;background:#cbd0cc;left:50%;top:50%;transform:translate(-50%,-50%)}
+.windows-maximize:before{content:"";position:absolute;width:9px;height:9px;border:1px solid #cbd0cc;left:50%;top:50%;transform:translate(-50%,-50%)}
+.windows-close:before,.windows-close:after{content:"";position:absolute;width:12px;height:1px;background:#d7dbd8;left:50%;top:50%;transform:translate(-50%,-50%) rotate(45deg)}
+.windows-close:after{transform:translate(-50%,-50%) rotate(-45deg)}
+.windows-close:hover{background:#c42b1c}
+.windows-close:hover:before,.windows-close:hover:after{background:#fff}
 .product-video-frame{aspect-ratio:16/9;background:#080a0a;overflow:hidden}
 .product-video-frame iframe{display:block;width:100%;height:100%;border:0;background:#080a0a}
-.product-video-caption{min-height:43px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 16px;color:#7f8984;font-size:7px;letter-spacing:.8px}
-.product-video-caption span{display:inline-flex;align-items:center;gap:8px}
-.product-video-caption b{display:grid;place-items:center;width:20px;height:20px;border:1px solid #414948;border-radius:5px;color:#e6e9e2;font-size:8px}
 @media(max-width:950px){.product-video-section{padding:72px 0 78px}.product-video-layout{grid-template-columns:1fr;gap:30px}.product-video-copy{max-width:680px}.product-video-copy>p:not(.eyebrow){max-width:600px}.product-video-player{width:100%}}
-@media(max-width:600px){.product-video-section{padding:58px 0 62px}.product-video-layout{gap:25px}.product-video-copy h2{font-size:clamp(36px,10vw,48px);letter-spacing:-2.2px}.product-video-copy>p:not(.eyebrow){font-size:13px;line-height:1.75;margin-top:18px}.product-video-meta{margin:21px 0 17px}.product-video-player{border-radius:12px}.product-video-player-bar{height:39px;grid-template-columns:35px 1fr;gap:8px;padding:0 10px}.product-video-player-bar>b{font-size:7px;letter-spacing:.65px}.product-video-player-bar>small{display:none}.product-video-caption{padding:9px 10px;font-size:6px;letter-spacing:.35px}.product-video-caption span{gap:6px}.product-video-caption b{width:18px;height:18px}}
+@media(max-width:600px){.product-video-section{padding:58px 0 62px}.product-video-layout{gap:25px}.product-video-copy h2{font-size:clamp(36px,10vw,48px);letter-spacing:-2.2px}.product-video-copy>p:not(.eyebrow){font-size:13px;line-height:1.75;margin-top:18px}.product-video-meta{margin:21px 0 17px}.product-video-player{border-radius:12px}.product-video-player-bar{height:39px;grid-template-columns:18px minmax(0,1fr) auto;gap:8px;padding-left:10px}.product-video-player-bar>b{font-size:10px}.windows-title-controls i{width:34px}}
