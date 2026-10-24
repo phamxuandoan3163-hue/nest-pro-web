@@ -732,3 +732,9 @@ html{scroll-padding-top:112px}
 @media(max-width:600px){
   .product-video-layout.shell{width:calc(100% - 32px);gap:25px}
 }
+
+/* Homepage hero jersey collection artwork */
+.directory-hero-visual{min-width:0;display:flex;align-items:center;justify-content:center;align-self:stretch;position:relative}
+.directory-hero-visual img{display:block;width:clamp(440px,52vw,730px);max-width:calc(100% + 70px);height:auto;aspect-ratio:2/1;object-fit:contain;filter:drop-shadow(0 20px 38px rgba(0,0,0,.42))}
+@media(max-width:950px){.directory-hero{grid-template-columns:1fr}.directory-hero-visual{margin-top:8px}.directory-hero-visual img{width:min(100%,650px);max-width:100%}}
+@media(max-width:600px){.directory-hero-visual{margin-top:0}.directory-hero-visual img{width:100%}}
