@@ -1257,3 +1257,19 @@ body{
     object-position: left center;
   }
 }
+
+
+/* Slightly enlarge the supplied NOVA NESTING logo in the site header */
+.brand-mark-img{
+  width:116px!important;
+  height:60px!important;
+  max-width:100%;
+  object-fit:contain;
+  object-position:left center;
+}
+@media(max-width:600px){
+  .brand-mark-img{
+    width:100px!important;
+    height:54px!important;
+  }
+}
