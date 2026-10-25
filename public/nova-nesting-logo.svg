@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 270" role="img" aria-labelledby="title desc">
+  <title id="title">Nova AI Nesting</title>
+  <desc id="desc">Metallic silver and electric blue ribbon N, chrome OVA with a small silver AI superscript, and cyan NESTING beneath on transparent background.</desc>
+  <defs>
+    <linearGradient id="silver" x1="0" y1="0" x2="0.08" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".24" stop-color="#dce4ef"/>
+      <stop offset=".48" stop-color="#778597"/>
+      <stop offset=".68" stop-color="#f5f8ff"/>
+      <stop offset="1" stop-color="#9ba8ba"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#00eaff"/>
+      <stop offset=".42" stop-color="#087cff"/>
+      <stop offset="1" stop-color="#0039bb"/>
+    </linearGradient>
+    <linearGradient id="nest" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00efff"/>
+      <stop offset=".52" stop-color="#09b7f4"/>
+      <stop offset="1" stop-color="#0065ed"/>
+    </linearGradient>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <path d="M28 92 L28 178 Q28 190 39 183 L72 161 Q78 157 78 149 L78 93 Q61 73 48 77 Z" fill="url(#blue)" stroke="#00cfff" stroke-width="2"/>
+    <path d="M145 70 L188 40 Q199 33 199 46 L199 132 Q199 143 189 136 L157 115 Q151 111 151 102 Z" fill="url(#blue)" stroke="#138dff" stroke-width="2"/>
+    <path d="M39 69 C50 55 64 56 77 68 L190 151 C203 160 205 173 193 183 C181 194 169 189 157 180 L42 94 C29 84 29 78 39 69 Z" fill="#001e59" opacity=".7"/>
+    <path d="M39 61 C50 47 64 49 77 62 L190 151 C204 162 205 174 193 184 C181 194 168 189 156 180 L42 91 C29 81 29 72 39 61 Z" fill="url(#silver)" stroke="#d7f5ff" stroke-width="2"/>
+    <path d="M43 70 C52 61 60 64 70 72 L183 159 C192 166 194 172 188 179 C181 186 174 182 165 176 L48 87 C40 81 37 76 43 70 Z" fill="url(#blue)" opacity=".96"/>
+    <path d="M37 62 C49 48 63 50 77 62 L190 151" fill="none" stroke="#ffffff" stroke-width="2" opacity=".9" filter="url(#softGlow)"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-weight="800" letter-spacing="-4">
+    <text x="220" y="144" font-size="112" fill="url(#silver)" stroke="#edf6ff" stroke-width="1.2" paint-order="stroke">OVA</text>
+  </g>
+  <text x="647" y="56" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="800" letter-spacing="-1.2" fill="url(#silver)" stroke="#eaf5ff" stroke-width=".4" paint-order="stroke">AI</text>
+  <text x="445" y="225" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="65" font-weight="900" letter-spacing="1.5" fill="url(#nest)" stroke="#00baff" stroke-width=".8" paint-order="stroke">NESTING</text>
+</svg>
