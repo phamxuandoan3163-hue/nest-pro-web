@@ -45,7 +45,7 @@ export default function GuidesPage() {
     <main className="guides-page">
       <header className="nav-wrap">
         <nav className="nav shell">
-          <a href="/" className="brand brand-mark-link" aria-label="Nest-Pro home" title="Nest-Pro"><img src="/nest-pro-horizontal-logo.webp" className="brand-mark-img" alt="Nest-Pro AI logo" width={120} height={100}/></a>
+          <a href="/" className="brand brand-mark-link" aria-label="Nest-Pro home" title="Nest-Pro"><img src="https://drive.usercontent.google.com/download?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&export=download" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a>
           <div className="nav-links">
             {navItems.map((item) => (
               <a key={item.label} href={item.href} aria-current={item.current ? "page" : undefined}>{item.label}</a>
