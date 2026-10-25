@@ -1173,3 +1173,10 @@ body{
   .tool-video-window-title{font-size:9px}
   .tool-video-window-controls i{width:27px}
 }
+
+
+/* NOVA NESTING identity: transparent chrome/electric-blue logo */
+.brand-mark-img{width:92px;height:50px;object-fit:contain;object-position:left center}
+@media(max-width:600px){.brand-mark-img{width:78px;height:43px}}
+.windows-app-logo{width:52px!important;height:28px!important;object-fit:contain;object-position:left center}
+.tool-video-app-logo{width:52px!important;height:28px!important;object-fit:contain;object-position:left center}

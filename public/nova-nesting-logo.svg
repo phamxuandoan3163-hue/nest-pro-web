@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" role="img" aria-labelledby="title desc">
+<title id="title">NOVA AI NESTING</title><desc id="desc">Chrome and electric-blue NOVA NESTING logo on a transparent background.</desc>
+<defs>
+ <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".24" stop-color="#dce5f0"/><stop offset=".48" stop-color="#657181"/><stop offset=".64" stop-color="#f8fbff"/><stop offset=".84" stop-color="#929eae"/><stop offset="1" stop-color="#fff"/></linearGradient>
+ <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00f4ff"/><stop offset=".45" stop-color="#087cff"/><stop offset=".72" stop-color="#0050ff"/><stop offset="1" stop-color="#31eaff"/></linearGradient>
+ <linearGradient id="edge" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#9affff"/><stop offset=".5" stop-color="#0088ff"/><stop offset="1" stop-color="#002bba"/></linearGradient>
+ <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<!-- Ribbon N mark -->
+<g stroke-linejoin="round" stroke-linecap="round">
+ <path d="M44 58 Q44 42 60 42 H101 L262 220 Q277 236 292 220 L405 88 Q418 72 432 85 L459 111 L315 280 Q287 313 256 280 L103 111 H77 V263 Q77 278 61 278 H48 Q34 278 34 263 V75 Q34 58 44 58Z" fill="#002f95" stroke="#03dfff" stroke-width="7" filter="url(#glow)"/>
+ <path d="M50 52 H95 L260 228 Q278 245 294 226 L409 91 Q420 79 432 91 L450 111 L315 273 Q287 305 257 272 L98 102 H65 V257 Q65 269 53 269 Q41 269 41 257 V65 Q41 52 50 52Z" fill="url(#blue)" stroke="#7efbff" stroke-width="4"/>
+ <path d="M94 52 L261 229 Q277 245 294 226 L409 91 Q420 79 432 91 L450 111 L315 273 Q287 305 257 272 L98 102Z" fill="none" stroke="url(#chrome)" stroke-width="16"/>
+ <path d="M102 60 L267 235 Q278 247 290 233 L407 97" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="3"/>
+</g>
+<text x="474" y="272" font-family="Arial, Helvetica, sans-serif" font-size="205" font-weight="800" letter-spacing="-10" fill="url(#chrome)" stroke="#09152a" stroke-width="4" paint-order="stroke">OVA</text>
+<text x="891" y="150" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700" fill="url(#chrome)" stroke="#101d31" stroke-width="2" paint-order="stroke">AI</text>
+<text x="38" y="485" font-family="Arial, Helvetica, sans-serif" font-size="138" font-weight="900" letter-spacing="4" fill="url(#blue)" stroke="url(#edge)" stroke-width="7" paint-order="stroke" filter="url(#glow)">NESTING</text>
+<text x="38" y="485" font-family="Arial, Helvetica, sans-serif" font-size="138" font-weight="900" letter-spacing="4" fill="none" stroke="#91fbff" stroke-opacity=".7" stroke-width="2">NESTING</text>
+</svg>
