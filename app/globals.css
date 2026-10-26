@@ -1475,3 +1475,41 @@ body{
   .license-page .license-grid{grid-template-columns:1fr}
   .license-page .license-card{padding:24px}
 }
+
+
+/* Compact annual savings badge so it never covers the plan title or card label */
+.license-page .license-card-featured .license-card-top>b{
+  box-sizing:border-box!important;
+  width:210px!important;
+  max-width:calc(100% - 10px);
+  height:66px!important;
+  min-height:66px!important;
+  padding:9px 12px!important;
+  top:18px!important;
+  right:18px!important;
+  border-radius:15px!important;
+  gap:4px!important;
+  font-size:11px!important;
+  line-height:1.25!important;
+  letter-spacing:.75px!important;
+  white-space:normal;
+}
+.license-page .license-card-featured .license-card-top>b::after{
+  font-size:8px!important;
+  line-height:1.3!important;
+  letter-spacing:.45px!important;
+}
+@media(max-width:700px){
+  .license-page .license-card-featured .license-card-top>b{
+    width:176px!important;
+    height:60px!important;
+    min-height:60px!important;
+    top:16px!important;
+    right:16px!important;
+    padding:8px 9px!important;
+    font-size:9px!important;
+  }
+  .license-page .license-card-featured .license-card-top>b::after{
+    font-size:7px!important;
+  }
+}
