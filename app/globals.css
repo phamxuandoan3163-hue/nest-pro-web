@@ -1362,3 +1362,56 @@ body{
     transform:none;
   }
 }
+
+
+/* Annual best-value badge: larger two-line callout, clear and easy to scan */
+.license-page .license-card-featured .license-card-top{
+  align-items:flex-start;
+  min-height:116px;
+  gap:16px;
+}
+.license-page .license-card-featured .license-card-top>b{
+  box-sizing:border-box;
+  width:clamp(210px, 45%, 290px);
+  min-height:112px;
+  padding:18px 22px!important;
+  white-space:normal;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  font-size:15px!important;
+  line-height:1.35;
+  letter-spacing:1.15px!important;
+  border-radius:18px;
+  transform:none;
+  flex-shrink:0;
+}
+.license-page .license-card-featured .license-card-top>b::after{
+  content:"12 MONTHS · 2 COMPUTERS";
+  display:block;
+  font-size:10px;
+  line-height:1.45;
+  letter-spacing:.8px;
+  font-weight:700;
+}
+@media(max-width:700px){
+  .license-page .license-card-featured .license-card-top{
+    min-height:90px;
+    gap:10px;
+  }
+  .license-page .license-card-featured .license-card-top>b{
+    width:min(54%,230px);
+    min-height:86px;
+    padding:12px 10px!important;
+    font-size:11px!important;
+    gap:5px;
+    border-radius:14px;
+  }
+  .license-page .license-card-featured .license-card-top>b::after{
+    font-size:8px;
+    letter-spacing:.4px;
+  }
+}
