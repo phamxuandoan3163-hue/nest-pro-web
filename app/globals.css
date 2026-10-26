@@ -1415,3 +1415,36 @@ body{
     letter-spacing:.4px;
   }
 }
+
+
+/* Keep annual duration and all card content aligned with the monthly card.
+   The enlarged savings badge is removed from document flow and anchored top-right. */
+.license-page .license-card-featured .license-card-top{
+  min-height:0!important;
+  align-items:center;
+  gap:8px;
+}
+.license-page .license-card-featured .license-card-top>b{
+  position:absolute;
+  top:22px;
+  right:22px;
+  width:clamp(210px,45%,290px);
+  height:112px;
+  min-height:112px;
+  margin:0;
+  padding:16px 20px!important;
+  z-index:1;
+}
+@media(max-width:700px){
+  .license-page .license-card-featured .license-card-top{
+    min-height:0!important;
+  }
+  .license-page .license-card-featured .license-card-top>b{
+    top:18px;
+    right:18px;
+    width:min(54%,230px);
+    height:86px;
+    min-height:86px;
+    padding:12px 10px!important;
+  }
+}
