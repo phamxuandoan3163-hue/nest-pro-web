@@ -1513,3 +1513,39 @@ body{
     font-size:7px!important;
   }
 }
+
+
+/* Position Annual Pro as the recommended upgrade without oversized overlays */
+.license-page .license-card-pro.license-card-featured-pro{
+  border:1px solid #55b995;
+  background:linear-gradient(155deg,#1c302a 0%,#171e1b 58%,#15191a 100%);
+  box-shadow:0 0 0 1px rgba(53,208,127,.13),0 14px 40px rgba(0,0,0,.18);
+}
+.license-page .license-card-pro.license-card-featured-pro .license-card-top>span{
+  color:#a6e8cb;
+}
+.license-page .license-card-pro.license-card-featured-pro .license-card-top>b{
+  display:inline-flex;
+  align-items:center;
+  background:#baf2d9;
+  color:#123b2d;
+  border-radius:999px;
+  font-size:8px;
+  letter-spacing:.75px;
+  padding:8px 10px;
+  white-space:normal;
+  text-align:center;
+}
+.license-page .license-card-pro.license-card-featured-pro .license-card h3,
+.license-page .license-card-pro.license-card-featured-pro h3{
+  color:#f4f7f4;
+}
+.license-page .license-card-pro.license-card-featured-pro .button.dark{
+  background:#baf2d9;
+  color:#123b2d;
+  border-color:#baf2d9;
+  font-weight:800;
+}
+.license-page .license-card-pro.license-card-featured-pro .button.dark:hover{
+  background:#d7ffea;
+}
