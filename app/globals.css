@@ -1549,3 +1549,35 @@ body{
 .license-page .license-card-pro.license-card-featured-pro .button.dark:hover{
   background:#d7ffea;
 }
+
+
+/* Align all four pricing cards: keep the Pro badge out of the heading flow
+   and reserve equal space for the plan summaries. */
+.license-page .license-card-pro{
+  position:relative;
+}
+.license-page .license-card-pro .license-card-top{
+  min-height:0!important;
+  align-items:center;
+}
+.license-page .license-card-pro .license-card-top>b{
+  position:absolute;
+  top:30px;
+  right:22px;
+  margin:0;
+  z-index:2;
+}
+.license-page .license-card>p{
+  height:96px;
+  min-height:96px!important;
+  max-height:96px;
+  overflow:hidden;
+}
+@media(max-width:1200px){
+  .license-page .license-card-pro .license-card-top>b{top:30px;right:22px}
+  .license-page .license-card>p{height:82px;min-height:82px!important;max-height:82px}
+}
+@media(max-width:600px){
+  .license-page .license-card-pro .license-card-top>b{top:32px;right:24px;max-width:52%}
+  .license-page .license-card>p{height:auto;min-height:0!important;max-height:none;overflow:visible}
+}
