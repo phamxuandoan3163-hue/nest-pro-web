@@ -4,24 +4,24 @@ import CookieConsent from "./cookie-consent";
 
 export const metadata = {
   metadataBase: new URL("https://www.ainovanesting.pro"),
-  applicationName: "Nest-Pro",
+  applicationName: "Nova Nesting",
   title: {
-    default: "Nest-Pro — Production tools for Adobe Illustrator",
-    template: "%s | Nest-Pro"
+    default: "Nova Nesting — Production tools for Adobe Illustrator",
+    template: "%s | Nova Nesting"
   },
   description: "Production automation tools for Adobe Illustrator, including apparel pattern preparation, size detection, artwork placement and nesting workflows.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    siteName: "Nest-Pro",
-    title: "Nest-Pro — Production tools for Adobe Illustrator",
+    siteName: "Nova Nesting",
+    title: "Nova Nesting — Production tools for Adobe Illustrator",
     description: "Explore production automation tools for apparel, print preparation and repetitive Illustrator workflows.",
     url: "https://www.ainovanesting.pro/",
     locale: "en_US"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nest-Pro — Production tools for Adobe Illustrator",
+    title: "Nova Nesting — Production tools for Adobe Illustrator",
     description: "Production automation tools for Adobe Illustrator and apparel workflows."
   },
   robots: {
