@@ -1,16 +1,20 @@
-import { json, preflight } from "../_lib.js";
+import { database, json, preflight, safeError } from "../../_npl-db.js";
 
 export function OPTIONS() { return preflight(); }
 export async function GET() {
-  return json({
-    ok: true,
-    service: "nest-pro-laser-online-trial",
-    apiVersion: "1.1.0",
-    mode: "online-7-day-trial",
-    serverSidePersistence: false,
-    verification: "online-clock",
-    persistence: "local-device-record",
-    serverTime: Date.now(),
-    message: "Online trial time verification API is ready. Trial timestamps are stored locally by the CEP. This mode does not provide server-side anti-reset storage."
-  });
+  try {
+    const sql = await database();
+    const rows = await sql`SELECT NOW() AS server_time, current_database() AS database_name`;
+    return json({
+      ok: true,
+      service: "nest-pro-laser-license-server",
+      apiVersion: "2.0.0",
+      databaseConfigured: true,
+      databaseReady: true,
+      serverTime: new Date(rows[0].server_time).getTime(),
+      message: "Database-backed license and trial API is ready."
+    });
+  } catch (error) {
+    return safeError(error);
+  }
 }
