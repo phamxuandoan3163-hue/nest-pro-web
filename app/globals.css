@@ -1448,3 +1448,13 @@ body{
     padding:12px 10px!important;
   }
 }
+
+
+/* Anchor the annual badge to its card in every state, not only on hover */
+.license-page .license-card-featured{
+  position:relative;
+}
+.license-page .license-card-featured .license-card-top>b{
+  visibility:visible;
+  opacity:1;
+}
