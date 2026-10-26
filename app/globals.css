@@ -1329,3 +1329,11 @@ body{
 .license-page .license-price>small{margin-left:2px}
 .license-page .license-section-head{margin-bottom:8px}
 .license-page .license-savings{position:relative;z-index:1;margin-top:24px;margin-bottom:0}
+
+
+/* Green checkmarks for license feature lists */
+.license-page .license-card li svg{
+  color:#35d07f!important;
+  stroke:#35d07f!important;
+  flex-shrink:0;
+}
