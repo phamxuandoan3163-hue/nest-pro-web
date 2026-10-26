@@ -1337,3 +1337,28 @@ body{
   stroke:#35d07f!important;
   flex-shrink:0;
 }
+
+
+/* Make the annual-plan value badge unmistakable without overwhelming the card */
+.license-page .license-card-featured .license-card-top>b{
+  font-size:11px!important;
+  letter-spacing:1.05px!important;
+  line-height:1.25;
+  padding:13px 17px!important;
+  border-radius:999px;
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 5px 18px rgba(53,208,127,.14);
+  transform:scale(1.08);
+  transform-origin:right center;
+}
+@media(max-width:700px){
+  .license-page .license-card-featured .license-card-top>b{
+    font-size:9px!important;
+    padding:10px 12px!important;
+    min-height:36px;
+    transform:none;
+  }
+}
