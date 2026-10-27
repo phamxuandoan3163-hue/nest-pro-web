@@ -1581,3 +1581,15 @@ body{
   .license-page .license-card-pro .license-card-top>b{top:32px;right:24px;max-width:52%}
   .license-page .license-card>p{height:auto;min-height:0!important;max-height:none;overflow:visible}
 }
+
+
+/* Promotional pricing rows on the licensing preview */
+.license-page .license-price-wrap{margin-top:19px}
+.license-page .license-price-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:24px;margin-bottom:7px}
+.license-page .license-price-meta del{font-size:12px;color:#929a99;text-decoration-thickness:1px;white-space:nowrap}
+.license-page .license-discount{display:inline-flex;align-items:center;justify-content:center;padding:5px 10px;border-radius:999px;background:#35d5a0;color:#06271e;font-size:10px;font-weight:800;white-space:nowrap}
+.license-page .license-discount-pro{background:#a4a0ff;color:#17143d}
+.license-page .license-price-wrap .license-price{margin-top:0}
+.license-page .license-price-wrap .license-price>span{color:#9ff3d7}
+.license-page .license-card-pro .license-price-wrap .license-price>span{color:#9ff3d7}
+@media(max-width:950px){.license-page .license-price-meta{justify-content:flex-start;gap:12px}}
