@@ -1273,3 +1273,336 @@ body{
     height:59px!important;
   }
 }
+
+
+/* Nova Nesting pricing launch: USD price hierarchy and annual value callout */
+.license-hero-cta{
+  display:inline-flex;align-items:center;gap:9px;margin-top:27px;
+  padding:12px 16px;border:1px solid #535b5b;border-radius:999px;
+  color:#f0f2ef;font-size:12px;text-decoration:none;transition:background .2s,border-color .2s;
+}
+.license-hero-cta:hover{background:#1c2223;border-color:#a3acab}
+.license-savings{
+  display:flex;align-items:center;gap:13px;margin-top:28px;padding:17px 20px;
+  border:1px solid #3a4545;border-radius:14px;background:linear-gradient(100deg,rgba(40,69,75,.35),rgba(23,27,28,.6));
+  color:#dff8f4;
+}
+.license-savings>svg{flex-shrink:0;color:#83d9cf}
+.license-savings>span{display:grid;gap:4px}
+.license-savings strong{font-size:13px;font-weight:700}
+.license-savings small{font-size:11px;color:#a9b8b6}
+.license-savings>a{display:flex;align-items:center;gap:6px;margin-left:auto;font-size:11px;color:#e6efec;text-decoration:none;white-space:nowrap}
+.license-price{display:flex;align-items:baseline;gap:8px;margin-top:23px}
+.license-price>span{font-size:43px;line-height:1;font-weight:700;letter-spacing:-2px;color:#f3f4f1}
+.license-price>small{font-size:10px;color:#9ba3a1}
+.license-card-featured .license-price>span{color:#f3f4f1}
+.license-note{margin:20px 0 0;color:#858e8d;font-size:10px;line-height:1.8}
+.license-page .license-card{min-height:480px}
+.license-page .license-card h3{margin-top:25px}
+.license-page .license-card>p{min-height:58px}
+.license-page .license-card-featured .license-card-top>b{background:#d5f1e8;color:#17372f}
+@media(max-width:950px){
+  .license-page .license-card{min-height:0}
+  .license-page .license-card>p{min-height:0}
+}
+@media(max-width:600px){
+  .license-savings{align-items:flex-start;flex-wrap:wrap;padding:15px}
+  .license-savings>a{margin-left:30px}
+  .license-price>span{font-size:39px}
+  .license-hero-cta{margin-top:22px}
+}
+
+
+/* Pricing duration labels should use the site's native Inter typography, not Orbitron */
+.license-page .license-card h3{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  font-weight:750!important;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.055em!important;
+  text-transform:none;
+}
+.license-page .license-price{
+  gap:7px;
+  flex-wrap:wrap;
+}
+.license-page .license-price>span{letter-spacing:-.055em}
+.license-page .license-price>small{margin-left:2px}
+.license-page .license-section-head{margin-bottom:8px}
+.license-page .license-savings{position:relative;z-index:1;margin-top:24px;margin-bottom:0}
+
+
+/* Green checkmarks for license feature lists */
+.license-page .license-card li svg{
+  color:#35d07f!important;
+  stroke:#35d07f!important;
+  flex-shrink:0;
+}
+
+
+/* Make the annual-plan value badge unmistakable without overwhelming the card */
+.license-page .license-card-featured .license-card-top>b{
+  font-size:11px!important;
+  letter-spacing:1.05px!important;
+  line-height:1.25;
+  padding:13px 17px!important;
+  border-radius:999px;
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 5px 18px rgba(53,208,127,.14);
+  transform:scale(1.08);
+  transform-origin:right center;
+}
+@media(max-width:700px){
+  .license-page .license-card-featured .license-card-top>b{
+    font-size:9px!important;
+    padding:10px 12px!important;
+    min-height:36px;
+    transform:none;
+  }
+}
+
+
+/* Annual best-value badge: larger two-line callout, clear and easy to scan */
+.license-page .license-card-featured .license-card-top{
+  align-items:flex-start;
+  min-height:116px;
+  gap:16px;
+}
+.license-page .license-card-featured .license-card-top>b{
+  box-sizing:border-box;
+  width:clamp(210px, 45%, 290px);
+  min-height:112px;
+  padding:18px 22px!important;
+  white-space:normal;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  font-size:15px!important;
+  line-height:1.35;
+  letter-spacing:1.15px!important;
+  border-radius:18px;
+  transform:none;
+  flex-shrink:0;
+}
+.license-page .license-card-featured .license-card-top>b::after{
+  content:"12 MONTHS · 2 COMPUTERS";
+  display:block;
+  font-size:10px;
+  line-height:1.45;
+  letter-spacing:.8px;
+  font-weight:700;
+}
+@media(max-width:700px){
+  .license-page .license-card-featured .license-card-top{
+    min-height:90px;
+    gap:10px;
+  }
+  .license-page .license-card-featured .license-card-top>b{
+    width:min(54%,230px);
+    min-height:86px;
+    padding:12px 10px!important;
+    font-size:11px!important;
+    gap:5px;
+    border-radius:14px;
+  }
+  .license-page .license-card-featured .license-card-top>b::after{
+    font-size:8px;
+    letter-spacing:.4px;
+  }
+}
+
+
+/* Keep annual duration and all card content aligned with the monthly card.
+   The enlarged savings badge is removed from document flow and anchored top-right. */
+.license-page .license-card-featured .license-card-top{
+  min-height:0!important;
+  align-items:center;
+  gap:8px;
+}
+.license-page .license-card-featured .license-card-top>b{
+  position:absolute;
+  top:22px;
+  right:22px;
+  width:clamp(210px,45%,290px);
+  height:112px;
+  min-height:112px;
+  margin:0;
+  padding:16px 20px!important;
+  z-index:1;
+}
+@media(max-width:700px){
+  .license-page .license-card-featured .license-card-top{
+    min-height:0!important;
+  }
+  .license-page .license-card-featured .license-card-top>b{
+    top:18px;
+    right:18px;
+    width:min(54%,230px);
+    height:86px;
+    min-height:86px;
+    padding:12px 10px!important;
+  }
+}
+
+
+/* Anchor the annual badge to its card in every state, not only on hover */
+.license-page .license-card-featured{
+  position:relative;
+}
+.license-page .license-card-featured .license-card-top>b{
+  visibility:visible;
+  opacity:1;
+}
+
+
+/* Four-tier pricing with a clearly marked upcoming Pro plan */
+.license-page .license-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.license-page .license-card{padding:22px;min-width:0}
+.license-page .license-card-pro{border-color:#3b6f60;background:linear-gradient(160deg,#172421,#15191a 65%);box-shadow:inset 0 0 0 1px rgba(53,208,127,.08)}
+.license-page .license-card-pro .license-card-top>b{background:#25473c;color:#b9f5d8;font-size:8px;letter-spacing:.7px;padding:8px 10px}
+.license-page .license-card-pro .license-price>span{color:#a9f1ce}
+.license-page .license-card-pro li svg{color:#35d07f;stroke:#35d07f}
+.license-page .license-card-pro .button{opacity:.9}
+@media(max-width:1200px){
+  .license-page .license-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  .license-page .license-grid{grid-template-columns:1fr}
+  .license-page .license-card{padding:24px}
+}
+
+
+/* Compact annual savings badge so it never covers the plan title or card label */
+.license-page .license-card-featured .license-card-top>b{
+  box-sizing:border-box!important;
+  width:210px!important;
+  max-width:calc(100% - 10px);
+  height:66px!important;
+  min-height:66px!important;
+  padding:9px 12px!important;
+  top:18px!important;
+  right:18px!important;
+  border-radius:15px!important;
+  gap:4px!important;
+  font-size:11px!important;
+  line-height:1.25!important;
+  letter-spacing:.75px!important;
+  white-space:normal;
+}
+.license-page .license-card-featured .license-card-top>b::after{
+  font-size:8px!important;
+  line-height:1.3!important;
+  letter-spacing:.45px!important;
+}
+@media(max-width:700px){
+  .license-page .license-card-featured .license-card-top>b{
+    width:176px!important;
+    height:60px!important;
+    min-height:60px!important;
+    top:16px!important;
+    right:16px!important;
+    padding:8px 9px!important;
+    font-size:9px!important;
+  }
+  .license-page .license-card-featured .license-card-top>b::after{
+    font-size:7px!important;
+  }
+}
+
+
+/* Position Annual Pro as the recommended upgrade without oversized overlays */
+.license-page .license-card-pro.license-card-featured-pro{
+  border:1px solid #55b995;
+  background:linear-gradient(155deg,#1c302a 0%,#171e1b 58%,#15191a 100%);
+  box-shadow:0 0 0 1px rgba(53,208,127,.13),0 14px 40px rgba(0,0,0,.18);
+}
+.license-page .license-card-pro.license-card-featured-pro .license-card-top>span{
+  color:#a6e8cb;
+}
+.license-page .license-card-pro.license-card-featured-pro .license-card-top>b{
+  display:inline-flex;
+  align-items:center;
+  background:#baf2d9;
+  color:#123b2d;
+  border-radius:999px;
+  font-size:8px;
+  letter-spacing:.75px;
+  padding:8px 10px;
+  white-space:normal;
+  text-align:center;
+}
+.license-page .license-card-pro.license-card-featured-pro .license-card h3,
+.license-page .license-card-pro.license-card-featured-pro h3{
+  color:#f4f7f4;
+}
+.license-page .license-card-pro.license-card-featured-pro .button.dark{
+  background:#baf2d9;
+  color:#123b2d;
+  border-color:#baf2d9;
+  font-weight:800;
+}
+.license-page .license-card-pro.license-card-featured-pro .button.dark:hover{
+  background:#d7ffea;
+}
+
+
+/* Align all four pricing cards: keep the Pro badge out of the heading flow
+   and reserve equal space for the plan summaries. */
+.license-page .license-card-pro{
+  position:relative;
+}
+.license-page .license-card-pro .license-card-top{
+  min-height:0!important;
+  align-items:center;
+}
+.license-page .license-card-pro .license-card-top>b{
+  position:absolute;
+  top:30px;
+  right:22px;
+  margin:0;
+  z-index:2;
+}
+.license-page .license-card>p{
+  height:96px;
+  min-height:96px!important;
+  max-height:96px;
+  overflow:hidden;
+}
+@media(max-width:1200px){
+  .license-page .license-card-pro .license-card-top>b{top:30px;right:22px}
+  .license-page .license-card>p{height:82px;min-height:82px!important;max-height:82px}
+}
+@media(max-width:600px){
+  .license-page .license-card-pro .license-card-top>b{top:32px;right:24px;max-width:52%}
+  .license-page .license-card>p{height:auto;min-height:0!important;max-height:none;overflow:visible}
+}
+
+
+/* Promotional pricing rows on the licensing preview */
+.license-page .license-price-wrap{margin-top:19px}
+.license-page .license-price-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:24px;margin-bottom:7px}
+.license-page .license-price-meta del{font-size:12px;color:#929a99;text-decoration-thickness:1px;white-space:nowrap}
+.license-page .license-discount{display:inline-flex;align-items:center;justify-content:center;padding:5px 10px;border-radius:999px;background:#35d5a0;color:#06271e;font-size:10px;font-weight:800;white-space:nowrap}
+.license-page .license-discount-pro{background:#a4a0ff;color:#17143d}
+.license-page .license-price-wrap .license-price{margin-top:0}
+.license-page .license-price-wrap .license-price>span{color:#9ff3d7}
+.license-page .license-card-pro .license-price-wrap .license-price>span{color:#9ff3d7}
+@media(max-width:950px){.license-page .license-price-meta{justify-content:flex-start;gap:12px}}
+
+
+/* Pricing CTA row only: match the site's bold Inter typography */
+.license-page .license-card .button{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  font-size:14px!important;
+  font-weight:750!important;
+  letter-spacing:-.025em!important;
+}
+.license-page .license-card .button svg{
+  width:17px;
+  height:17px;
+}

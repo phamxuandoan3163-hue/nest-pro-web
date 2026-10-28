@@ -12,7 +12,7 @@ const navItems = [
 const guides = [
   {
     category: "START HERE",
-    title: "Getting started with Nest-Pro and Laser Cut",
+    title: "Getting started with Nova Nesting and Laser Cut",
     description: "Prepare an Illustrator file, set tolerance, decide whether to use Laser Cut, and review the output.",
     href: "/tools/nest-pro/articles/getting-started",
     icon: BookOpen
@@ -26,7 +26,7 @@ const guides = [
   },
   {
     category: "WORKFLOW",
-    title: "The Nest-Pro run sequence",
+    title: "The Nova Nesting run sequence",
     description: "Follow the practical order from preparing the source file through checking the result and saving.",
     href: "/tools/nest-pro/articles/nesting-workflow",
     icon: Workflow
@@ -45,7 +45,7 @@ export default function GuidesPage() {
     <main className="guides-page">
       <header className="nav-wrap">
         <nav className="nav shell">
-          <a href="/" className="brand brand-mark-link" aria-label="Nest-Pro home" title="Nest-Pro"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a>
+          <a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a>
           <div className="nav-links">
             {navItems.map((item) => (
               <a key={item.label} href={item.href} aria-current={item.current ? "page" : undefined}>{item.label}</a>
@@ -58,7 +58,7 @@ export default function GuidesPage() {
       <section className="guides-hero shell">
         <p className="eyebrow">HELP CENTER / TOOL GUIDES</p>
         <h1>Learn the tool.<br/><em>Use it with confidence.</em></h1>
-        <p className="guides-lead">Find practical guides for setting up your Illustrator file, running Nest-Pro, configuring optional Laser Cut output, and checking the result before production.</p>
+        <p className="guides-lead">Find practical guides for setting up your Illustrator file, running Nova Nesting, configuring optional Laser Cut output, and checking the result before production.</p>
         <div className="guides-hero-actions">
           <a className="button dark" href="/tools/nest-pro/articles/getting-started">Start with the basics <ArrowRight size={15}/></a>
           <a className="button outline" href="#guide-library"><BookOpen size={15}/> Browse all guides</a>
@@ -72,7 +72,7 @@ export default function GuidesPage() {
         </div>
         <div className="guides-steps">
           <article className="guides-step"><span>01 / PREPARE</span><h3>Set up the source file</h3><p>Open the right Illustrator document and prepare the artboard and artwork before running.</p></article>
-          <article className="guides-step"><span>02 / RUN</span><h3>Follow the workflow</h3><p>Set the tolerance, run Nest-Pro, then check placement and the final document.</p></article>
+          <article className="guides-step"><span>02 / RUN</span><h3>Follow the workflow</h3><p>Set the tolerance, run Nova Nesting, then check placement and the final document.</p></article>
           <article className="guides-step"><span>03 / REVIEW</span><h3>Check before production</h3><p>Inspect the geometry and layer contents, then save the Illustrator file manually.</p></article>
         </div>
       </section>
@@ -104,12 +104,12 @@ export default function GuidesPage() {
       <section className="guides-footer-cta">
         <div className="shell guides-footer-inner">
           <div><p className="eyebrow">PRODUCT DETAILS</p><h2>Need the feature overview?</h2><p>Visit the product page for capabilities, basic workflow, requirements, and release-specific resources.</p></div>
-          <a className="button light" href="/tools/nest-pro">Explore Nest-Pro <ArrowRight size={15}/></a>
+          <a className="button light" href="/tools/nest-pro">Explore Nova Nesting <ArrowRight size={15}/></a>
         </div>
       </section>
 
       <footer className="footer shell">
-        <a href="/">Nest-Pro</a>
+        <a href="/">Nova Nesting</a>
         <nav className="footer-legal" aria-label="Legal and support">
           <a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a>
         </nav>
