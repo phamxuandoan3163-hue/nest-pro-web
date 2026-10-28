@@ -2,6 +2,9 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 15;
 
+const EXPECTED_STORE_ID = "500658";
+const EXPECTED_PRODUCT_ID = "1449378";
+
 export async function POST(request) {
   let body;
   try {
@@ -45,9 +48,11 @@ export async function POST(request) {
 
   const data = payload?.license_key || {};
   const meta = payload?.meta || {};
+  const belongsToProduct = String(meta.store_id ?? "") === EXPECTED_STORE_ID && String(meta.product_id ?? "") === EXPECTED_PRODUCT_ID;
+  const valid = Boolean(payload?.valid) && belongsToProduct;
   return Response.json({
-    valid: Boolean(payload?.valid),
-    error: payload?.error || null,
+    valid,
+    error: !belongsToProduct ? "license_for_different_product" : (payload?.error || null),
     license: {
       status: data.status ?? null,
       activationLimit: data.activation_limit ?? null,
@@ -58,9 +63,7 @@ export async function POST(request) {
     meta: {
       storeId: meta.store_id ?? null,
       productId: meta.product_id ?? null,
-      variantId: meta.variant_id ?? null,
-      customerId: meta.customer_id ?? null,
-      orderId: meta.order_id ?? null
+      variantId: meta.variant_id ?? null
     }
   }, { headers: { "Cache-Control": "no-store" } });
 }
