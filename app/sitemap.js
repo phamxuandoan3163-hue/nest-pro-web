@@ -1,4 +1,4 @@
-const BASE = "https://nest-pro-web.vercel.app";
+const BASE = "https://www.ainovanesting.pro";
 
 export default function sitemap() {
   const now = new Date();
