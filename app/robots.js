@@ -7,6 +7,6 @@ export default function robots() {
         disallow: ["/admin", "/order-confirmation"]
       }
     ],
-    sitemap: "https://nest-pro-web.vercel.app/sitemap.xml"
+    sitemap: "https://www.ainovanesting.pro/sitemap.xml"
   };
 }
