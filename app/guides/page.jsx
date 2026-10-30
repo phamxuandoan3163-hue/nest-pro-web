@@ -3,9 +3,9 @@ import { ArrowRight, BookOpen, ScanLine, Scissors, Workflow } from "lucide-react
 
 const navItems = [
   { label: "Tools", href: "/#tools" },
-  { label: "Features", href: "/tools/nest-pro#features" },
+  { label: "Features", href: "/tools/nest-pro#workflow" },
   { label: "Workflow", href: "/tools/nest-pro#workflow" },
-  { label: "Resources", href: "/tools/nest-pro#resources" },
+  { label: "Resources", href: "/guides#guide-library" },
   { label: "Guides", href: "/guides", current: true }
 ];
 
