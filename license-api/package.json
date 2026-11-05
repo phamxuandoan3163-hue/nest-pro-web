@@ -1,6 +1,6 @@
 {
   "name": "nest-pro-license-api",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,6 +11,7 @@
     "@modelcontextprotocol/server": "^2.0.0",
     "mcp-handler": "^2.0.0",
     "next": "latest",
+    "postgres": "^3.4.7",
     "react": "latest",
     "react-dom": "latest",
     "zod": "^4.2.0"
