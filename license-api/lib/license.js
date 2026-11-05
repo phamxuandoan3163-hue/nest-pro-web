@@ -52,7 +52,11 @@ export async function deliverLicense(email, key, plan, transactionId) {
   if (!process.env.RESEND_API_KEY || !process.env.LICENSE_EMAIL_FROM) throw new Error("RESEND_API_KEY and LICENSE_EMAIL_FROM are required for fulfillment.");
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: { Authorization: "Bearer " + process.env.RESEND_API_KEY, "Content-Type": "application/json" },
+    headers: {
+      Authorization: "Bearer " + process.env.RESEND_API_KEY,
+      "Content-Type": "application/json",
+      "Idempotency-Key": "nova-license-" + transactionId
+    },
     body: JSON.stringify({
       from: process.env.LICENSE_EMAIL_FROM,
       to: [email],
@@ -71,25 +75,4 @@ export async function deliverLicense(email, key, plan, transactionId) {
     })
   });
   if (!response.ok) throw new Error("License email delivery failed with HTTP " + response.status + ".");
-}
-
-export function parseForm(requestBody) {
-  return new URLSearchParams(requestBody);
-}
-
-export function licensePayload(row, device = null) {
-  return {
-    valid: true,
-    activated: Boolean(device),
-    license_key: {
-      key: null,
-      status: row.status,
-      activation_limit: row.max_activations,
-      activation_usage: Number(row.activation_usage || 0),
-      expires_at: row.expires_at,
-      test_mode: process.env.PADDLE_ENVIRONMENT !== "live"
-    },
-    instance: device ? { id: device.id, name: device.device_name } : null,
-    meta: { store_id: STORE_ID, product_id: PRODUCT_ID, variant_id: row.variant_id || null }
-  };
 }
