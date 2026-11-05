@@ -1,3 +1,4 @@
+import { json, options } from "../../../../../lib/http";
 import { randomUUID } from "node:crypto";
 import { db, ensureLicenseSchema } from "../../../../../lib/db";
 import { hashLicenseKey } from "../../../../../lib/license";
@@ -13,7 +14,7 @@ export async function POST(request) {
   const deviceId = splitAt >= 0 ? instanceName.slice(splitAt + 3).trim() : "";
   const deviceName = splitAt >= 0 ? instanceName.slice(0, splitAt).trim() : instanceName;
   if (!key || key.length > 512 || !deviceId || deviceId.length > 100) {
-    return Response.json({ error: "invalid_request", message: "A license key and stable device identifier are required." }, { status: 400 });
+    return json(request, { error: "invalid_request", message: "A license key and stable device identifier are required." }, { status: 400 });
   }
 
   const sql = db();
@@ -50,12 +51,14 @@ export async function POST(request) {
     return { license, device };
   });
 
-  if (result.error) return Response.json({ activated: false, error: result.error }, { headers: { "Cache-Control": "no-store" } });
+  if (result.error) return json(request, { activated: false, error: result.error }, { headers: { "Cache-Control": "no-store" } });
   const count = await sql`SELECT COUNT(*)::int AS n FROM nova_license_devices WHERE key_hash=${result.license.key_hash} AND deactivated_at IS NULL`;
-  return Response.json({
+  return json(request, {
     activated: true,
     license_key: { status: "active", activation_limit: result.license.max_activations, activation_usage: Number(count[0]?.n || 0), expires_at: result.license.expires_at },
     instance: { id: result.device.id, name: result.device.device_name },
     meta: { store_id: "500658", product_id: "1449378", variant_id: result.license.variant_id }
   }, { headers: { "Cache-Control": "no-store" } });
 }
+
+export function OPTIONS(request) { return options(request); }
