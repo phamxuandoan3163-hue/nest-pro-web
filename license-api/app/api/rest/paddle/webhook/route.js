@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { db, ensureLicenseSchema } from "../../../../lib/db";
-import { decryptLicenseKey, deliverLicense, encryptLicenseKey, hashLicenseKey, makeLicenseKey, planForPrice } from "../../../../lib/license";
+import { db, ensureLicenseSchema } from "../../../../../lib/db";
+import { decryptLicenseKey, deliverLicense, encryptLicenseKey, hashLicenseKey, makeLicenseKey, planForPrice } from "../../../../../lib/license";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,8 +23,7 @@ function signatureIsValid(rawBody, header, secret) {
 
 export async function POST(request) {
   const rawBody = await request.text();
-  const secret = process.env.PADDLE_NOTIFICATION_SECRET;
-  if (!signatureIsValid(rawBody, request.headers.get("paddle-signature"), secret)) {
+  if (!signatureIsValid(rawBody, request.headers.get("paddle-signature"), process.env.PADDLE_NOTIFICATION_SECRET)) {
     return Response.json({ error: "invalid_signature" }, { status: 401 });
   }
 
@@ -70,6 +69,7 @@ export async function POST(request) {
     `;
     licenses = await sql`SELECT * FROM nova_licenses WHERE paddle_transaction_id = ${transactionId} LIMIT 1`;
   }
+
   const license = licenses[0];
   await deliverLicense(license.customer_email, decryptLicenseKey(license.key_cipher), plan, transactionId);
   await sql`INSERT INTO paddle_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
