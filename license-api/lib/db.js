@@ -14,6 +14,7 @@ export async function ensureLicenseSchema(sql) {
       key_hash TEXT PRIMARY KEY,
       key_cipher TEXT NOT NULL,
       plan_key TEXT NOT NULL,
+      variant_id TEXT NOT NULL,
       paddle_transaction_id TEXT NOT NULL UNIQUE,
       customer_email TEXT NOT NULL,
       expires_at TIMESTAMPTZ NOT NULL,
