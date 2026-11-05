@@ -1,3 +1,4 @@
+import { json, options } from "../../../../../lib/http";
 import { db, ensureLicenseSchema } from "../../../../../lib/db";
 import { hashLicenseKey } from "../../../../../lib/license";
 
@@ -8,7 +9,7 @@ export async function POST(request) {
   const form = new URLSearchParams(await request.text());
   const key = String(form.get("license_key") || "").trim();
   const instanceId = String(form.get("instance_id") || "").trim();
-  if (!key || !instanceId) return Response.json({ error: "invalid_request" }, { status: 400 });
+  if (!key || !instanceId) return json(request, { error: "invalid_request" }, { status: 400 });
 
   const sql = db();
   await ensureLicenseSchema(sql);
@@ -18,5 +19,7 @@ export async function POST(request) {
     WHERE id=${instanceId} AND key_hash=${hashLicenseKey(key)} AND deactivated_at IS NULL
     RETURNING id
   `;
-  return Response.json({ deactivated: result.length > 0 }, { headers: { "Cache-Control": "no-store" } });
+  return json(request, { deactivated: result.length > 0 }, { headers: { "Cache-Control": "no-store" } });
 }
+
+export function OPTIONS(request) { return options(request); }
