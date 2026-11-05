@@ -1,3 +1,4 @@
+import { json, options } from "../../../../../lib/http";
 import { db, ensureLicenseSchema } from "../../../../../lib/db";
 import { hashLicenseKey } from "../../../../../lib/license";
 
@@ -9,7 +10,7 @@ export async function POST(request) {
   const key = String(form.get("license_key") || "").trim();
   const instanceId = String(form.get("instance_id") || "").trim();
   if (!key || key.length > 512 || instanceId.length > 256) {
-    return Response.json({ error: "invalid_request" }, { status: 400 });
+    return json(request, { error: "invalid_request" }, { status: 400 });
   }
 
   const sql = db();
@@ -23,7 +24,7 @@ export async function POST(request) {
   `;
   const license = rows[0];
   if (!license || license.status !== "active" || new Date(license.expires_at).getTime() <= Date.now()) {
-    return Response.json({ valid: false, error: "license_invalid_or_expired" }, { headers: { "Cache-Control": "no-store" } });
+    return json(request, { valid: false, error: "license_invalid_or_expired" }, { headers: { "Cache-Control": "no-store" } });
   }
 
   let device = null;
@@ -33,14 +34,16 @@ export async function POST(request) {
       WHERE id = ${instanceId} AND key_hash = ${license.key_hash} AND deactivated_at IS NULL LIMIT 1
     `;
     device = found[0] || null;
-    if (!device) return Response.json({ valid: false, error: "device_not_activated" }, { headers: { "Cache-Control": "no-store" } });
+    if (!device) return json(request, { valid: false, error: "device_not_activated" }, { headers: { "Cache-Control": "no-store" } });
     await sql`UPDATE nova_license_devices SET last_seen_at=NOW() WHERE id=${device.id}`;
   }
 
-  return Response.json({
+  return json(request, {
     valid: true,
     license_key: { status: "active", activation_limit: license.max_activations, activation_usage: Number(license.activation_usage || 0), expires_at: license.expires_at },
     instance: device ? { id: device.id, name: device.device_name } : null,
     meta: { store_id: "500658", product_id: "1449378", variant_id: license.variant_id }
   }, { headers: { "Cache-Control": "no-store" } });
 }
+
+export function OPTIONS(request) { return options(request); }
