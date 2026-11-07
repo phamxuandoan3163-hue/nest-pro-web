@@ -12,7 +12,7 @@ Returns service status and does not require secrets.
 
 `POST /paddle/webhook`
 
-Verifies the Paddle `Paddle-Signature` header over the exact raw request body. Only completed transactions containing one of the configured NovaNesting Sandbox price IDs are fulfilled. The handler creates an expiring license, persists it idempotently, and emails the license key. Configure a Paddle Sandbox notification destination for `transaction.completed`.
+Verifies the Paddle `Paddle-Signature` header over the exact raw request body. Only completed transactions containing one of the configured NovaNesting Sandbox price IDs are fulfilled. The handler resolves the signed transaction's `customer_id` to the buyer's email using the server-side Paddle API key, creates an expiring license, persists it idempotently, and emails the license key. Configure a Paddle Sandbox notification destination for `transaction.completed`.
 
 ## License activation
 
@@ -56,6 +56,7 @@ Releases a device seat.
 ## Required server environment variables
 
 - `PADDLE_ENVIRONMENT=sandbox`
+- `PADDLE_API_KEY` with only the `customer.read` permission
 - `PADDLE_NOTIFICATION_SECRET`
 - `DATABASE_URL`
 - `LICENSE_ENCRYPTION_KEY` (32 random bytes in 64 hexadecimal characters)
