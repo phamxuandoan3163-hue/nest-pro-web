@@ -4,7 +4,7 @@ import { decryptLicenseKey, deliverLicense, encryptLicenseKey, hashLicenseKey, m
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const maxDuration = 15;
+export const maxDuration = 30;
 
 function signatureIsValid(rawBody, header, secret) {
   if (!header || !secret) return false;
@@ -48,14 +48,35 @@ export async function POST(request) {
   const transaction = event?.data || {};
   if (transaction.status !== "completed") return Response.json({ error: "transaction_not_completed" }, { status: 400 });
   const transactionId = String(transaction.id || "");
-  const items = Array.isArray(transaction.items) ? transaction.items : [];
-  if (!transactionId || items.length !== 1) return Response.json({ error: "invalid_transaction_items" }, { status: 400 });
+  const items = Array.isArray(transaction.items) && transaction.items.length
+    ? transaction.items
+    : (Array.isArray(transaction.details?.line_items) ? transaction.details.line_items : []);
+  if (!transactionId || items.length !== 1 || Number(items[0]?.quantity || 1) !== 1) {
+    return Response.json({ error: "invalid_transaction_items" }, { status: 400 });
+  }
   const priceId = items[0]?.price_id || items[0]?.price?.id;
   const plan = planForPrice(priceId);
   if (!plan) return Response.json({ error: "unknown_price_id" }, { status: 400 });
 
-  const email = String(transaction.customer?.email || transaction.billing_details?.email || transaction.customer_email || "").trim().toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return Response.json({ error: "missing_customer_email" }, { status: 400 });
+  let email = String(transaction.customer?.email || transaction.billing_details?.email || transaction.customer_email || "").trim().toLowerCase();
+  if (!email) {
+    const customerId = String(transaction.customer_id || "");
+    const apiKey = process.env.PADDLE_API_KEY;
+    if (!customerId || !apiKey) return Response.json({ error: "customer_lookup_not_configured" }, { status: 500 });
+    const apiBase = process.env.PADDLE_ENVIRONMENT === "live" ? "https://api.paddle.com" : "https://sandbox-api.paddle.com";
+    const customerResponse = await fetch(apiBase + "/customers/" + encodeURIComponent(customerId), {
+      headers: { Authorization: "Bearer " + apiKey, Accept: "application/json" },
+      cache: "no-store"
+    });
+    const customerPayload = await customerResponse.json().catch(() => null);
+    if (!customerResponse.ok || !customerPayload?.data?.email) {
+      return Response.json({ error: "customer_lookup_failed" }, { status: 502 });
+    }
+    email = String(customerPayload.data.email).trim().toLowerCase();
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return Response.json({ error: "invalid_customer_email" }, { status: 502 });
+  }
 
   let licenses = await sql`SELECT * FROM nova_licenses WHERE paddle_transaction_id = ${transactionId} LIMIT 1`;
   if (!licenses.length) {
