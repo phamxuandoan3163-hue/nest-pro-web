@@ -19,6 +19,7 @@ These are one-time purchases. The 7-day free trial is not a Paddle price in this
 Use the Vercel project `nest-pro-license-api` and set these variables in **Preview** only:
 
 - `PADDLE_ENVIRONMENT=sandbox`
+- `PADDLE_API_KEY`: server API key with only the `customer.read` permission, used to resolve the email for the signed webhook's `customer_id`
 - `DATABASE_URL`: PostgreSQL connection string for the license database
 - `PADDLE_NOTIFICATION_SECRET`: signing secret from the Sandbox notification destination
 - `LICENSE_ENCRYPTION_KEY`: 32 random bytes as 64 hexadecimal characters; preserve it for key recovery
