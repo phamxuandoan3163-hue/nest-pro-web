@@ -21,6 +21,82 @@ function signatureIsValid(rawBody, header, secret) {
   return a.length === b.length && timingSafeEqual(a, b);
 }
 
+function eventItems(transaction) {
+  if (Array.isArray(transaction.items) && transaction.items.length) return transaction.items;
+  return Array.isArray(transaction.details?.line_items) ? transaction.details.line_items : [];
+}
+
+function priceIdFor(item) {
+  return item?.price_id || item?.price?.id || null;
+}
+
+function paddleApiBase() {
+  if (process.env.PADDLE_ENVIRONMENT === "sandbox") return "https://sandbox-api.paddle.com";
+  if (process.env.PADDLE_ENVIRONMENT === "live") return "https://api.paddle.com";
+  throw new Error("PADDLE_ENVIRONMENT must be explicitly set to sandbox or live.");
+}
+
+async function transactionCustomerEmail(transaction, existingLicense) {
+  const savedEmail = String(existingLicense?.customer_email || "").trim().toLowerCase();
+  if (savedEmail) return savedEmail;
+  let email = String(transaction.customer?.email || transaction.billing_details?.email || transaction.customer_email || "").trim().toLowerCase();
+  if (email) return email;
+
+  const customerId = String(transaction.customer_id || "");
+  const apiKey = process.env.PADDLE_API_KEY;
+  if (!customerId || !apiKey) throw new Error("A Paddle API key with customer.read is required when the webhook payload omits the customer email.");
+  const response = await fetch(paddleApiBase() + "/customers/" + encodeURIComponent(customerId), {
+    headers: { Authorization: "Bearer " + apiKey, Accept: "application/json" },
+    cache: "no-store"
+  });
+  const payload = await response.json().catch(() => null);
+  if (!response.ok || !payload?.data?.email) throw new Error("Paddle customer lookup failed.");
+  email = String(payload.data.email).trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Paddle returned an invalid customer email.");
+  return email;
+}
+
+async function syncSubscriptionEvent(sql, event, eventType) {
+  const subscription = event?.data || {};
+  const subscriptionId = String(subscription.id || "");
+  if (!subscriptionId) return { ignored: true, reason: "missing_subscription_id" };
+
+  const existingRows = await sql`SELECT * FROM nova_licenses WHERE paddle_subscription_id=${subscriptionId} LIMIT 1`;
+  const existing = existingRows[0];
+  if (!existing) return { ignored: true, reason: "subscription_license_not_created_yet" };
+
+  const occurredAt = String(event.occurred_at || new Date().toISOString());
+  const currentStatus = eventType === "subscription.canceled"
+    ? "canceled"
+    : String(subscription.status || eventType.slice("subscription.".length));
+  const periodEnd = subscription.current_billing_period?.ends_at || existing.expires_at;
+  const scheduledChange = subscription.scheduled_change || null;
+  const scheduledCancelAt = scheduledChange?.action === "cancel" ? scheduledChange.effective_at || null : null;
+  const mappedItem = Array.isArray(subscription.items) ? subscription.items[0] : null;
+  const newPriceId = priceIdFor(mappedItem);
+  const plan = newPriceId ? planForPrice(newPriceId) : null;
+  const periodEndMs = new Date(periodEnd).getTime();
+  const accessStatus = ["active", "trialing"].includes(currentStatus)
+    || (currentStatus === "past_due" && Number.isFinite(periodEndMs) && periodEndMs > Date.now());
+  const licenseStatus = accessStatus ? "active" : "revoked";
+
+  const updated = await sql`
+    UPDATE nova_licenses SET
+      plan_key=COALESCE(${plan?.key || null},plan_key),
+      variant_id=COALESCE(${newPriceId},variant_id),
+      expires_at=COALESCE(${periodEnd || null}::timestamptz,expires_at),
+      max_activations=COALESCE(${plan?.activations || null},max_activations),
+      status=${licenseStatus},
+      subscription_status=${currentStatus},
+      scheduled_cancel_at=${scheduledCancelAt}::timestamptz,
+      subscription_event_at=${occurredAt}::timestamptz
+    WHERE paddle_subscription_id=${subscriptionId}
+      AND (subscription_event_at IS NULL OR subscription_event_at < ${occurredAt}::timestamptz)
+    RETURNING key_hash
+  `;
+  return { synced: updated.length > 0, stale: updated.length === 0, status: currentStatus, license_status: licenseStatus };
+}
+
 export async function POST(request) {
   const rawBody = await request.text();
   if (!signatureIsValid(rawBody, request.headers.get("paddle-signature"), process.env.PADDLE_NOTIFICATION_SECRET)) {
@@ -40,6 +116,12 @@ export async function POST(request) {
   const seen = await sql`SELECT event_id FROM paddle_webhook_events WHERE event_id = ${eventId} LIMIT 1`;
   if (seen.length) return Response.json({ received: true, duplicate: true });
 
+  if (eventType.startsWith("subscription.")) {
+    const result = await syncSubscriptionEvent(sql, event, eventType);
+    await sql`INSERT INTO paddle_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
+    return Response.json({ received: true, ...result }, { headers: { "Cache-Control": "no-store" } });
+  }
+
   if (eventType !== "transaction.completed") {
     await sql`INSERT INTO paddle_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
     return Response.json({ received: true, ignored: true });
@@ -48,51 +130,78 @@ export async function POST(request) {
   const transaction = event?.data || {};
   if (transaction.status !== "completed") return Response.json({ error: "transaction_not_completed" }, { status: 400 });
   const transactionId = String(transaction.id || "");
-  const items = Array.isArray(transaction.items) && transaction.items.length
-    ? transaction.items
-    : (Array.isArray(transaction.details?.line_items) ? transaction.details.line_items : []);
+  const items = eventItems(transaction);
   if (!transactionId || items.length !== 1 || Number(items[0]?.quantity || 1) !== 1) {
     return Response.json({ error: "invalid_transaction_items" }, { status: 400 });
   }
-  const priceId = items[0]?.price_id || items[0]?.price?.id;
+
+  const item = items[0];
+  const priceId = priceIdFor(item);
   const plan = planForPrice(priceId);
   if (!plan) return Response.json({ error: "unknown_price_id" }, { status: 400 });
 
-  let email = String(transaction.customer?.email || transaction.billing_details?.email || transaction.customer_email || "").trim().toLowerCase();
-  if (!email) {
-    const customerId = String(transaction.customer_id || "");
-    const apiKey = process.env.PADDLE_API_KEY;
-    if (!customerId || !apiKey) return Response.json({ error: "customer_lookup_not_configured" }, { status: 500 });
-    const apiBase = process.env.PADDLE_ENVIRONMENT === "live" ? "https://api.paddle.com" : "https://sandbox-api.paddle.com";
-    const customerResponse = await fetch(apiBase + "/customers/" + encodeURIComponent(customerId), {
-      headers: { Authorization: "Bearer " + apiKey, Accept: "application/json" },
-      cache: "no-store"
-    });
-    const customerPayload = await customerResponse.json().catch(() => null);
-    if (!customerResponse.ok || !customerPayload?.data?.email) {
-      return Response.json({ error: "customer_lookup_failed" }, { status: 502 });
-    }
-    email = String(customerPayload.data.email).trim().toLowerCase();
+  const subscriptionId = plan.recurring ? String(transaction.subscription_id || "") : null;
+  const periodEnd = item?.billing_period?.ends_at || transaction.billing_period?.ends_at || null;
+  if (plan.recurring && (!subscriptionId || !periodEnd || !Number.isFinite(new Date(periodEnd).getTime()))) {
+    return Response.json({ error: "subscription_period_missing" }, { status: 500 });
   }
+  const occurredAt = String(event.occurred_at || new Date().toISOString());
+
+  let existingRows = plan.recurring
+    ? await sql`SELECT * FROM nova_licenses WHERE paddle_subscription_id=${subscriptionId} LIMIT 1`
+    : await sql`SELECT * FROM nova_licenses WHERE paddle_transaction_id=${transactionId} LIMIT 1`;
+  const existingLicense = existingRows[0] || null;
+  const email = await transactionCustomerEmail(transaction, existingLicense);
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return Response.json({ error: "invalid_customer_email" }, { status: 502 });
   }
 
-  let licenses = await sql`SELECT * FROM nova_licenses WHERE paddle_transaction_id = ${transactionId} LIMIT 1`;
-  if (!licenses.length) {
+  const expiresAt = plan.recurring
+    ? periodEnd
+    : new Date(Date.now() + plan.days * 24 * 60 * 60 * 1000).toISOString();
+  if (existingLicense) {
+    if (!plan.recurring || !existingLicense.subscription_event_at || new Date(existingLicense.subscription_event_at).getTime() < new Date(occurredAt).getTime()) {
+      await sql`
+        UPDATE nova_licenses SET
+          plan_key=${plan.key},
+          variant_id=${priceId},
+          paddle_transaction_id=${transactionId},
+          customer_email=${email},
+          expires_at=${expiresAt}::timestamptz,
+          max_activations=${plan.activations},
+          status='active',
+          subscription_status=${plan.recurring ? "active" : null},
+          subscription_event_at=${plan.recurring ? occurredAt : null}::timestamptz
+        WHERE key_hash=${existingLicense.key_hash}
+      `;
+    }
+  } else {
     const key = makeLicenseKey();
-    const keyHash = hashLicenseKey(key);
-    const expiresAt = new Date(Date.now() + plan.days * 24 * 60 * 60 * 1000).toISOString();
     await sql`
-      INSERT INTO nova_licenses(key_hash,key_cipher,plan_key,variant_id,paddle_transaction_id,customer_email,expires_at,max_activations)
-      VALUES (${keyHash},${encryptLicenseKey(key)},${plan.key},${priceId},${transactionId},${email},${expiresAt},${plan.activations})
-      ON CONFLICT (paddle_transaction_id) DO NOTHING
+      INSERT INTO nova_licenses(
+        key_hash,key_cipher,plan_key,variant_id,paddle_transaction_id,paddle_subscription_id,
+        customer_email,expires_at,max_activations,status,subscription_status,subscription_event_at
+      )
+      VALUES (
+        ${hashLicenseKey(key)},${encryptLicenseKey(key)},${plan.key},${priceId},${transactionId},${subscriptionId},
+        ${email},${expiresAt}::timestamptz,${plan.activations},'active',
+        ${plan.recurring ? "active" : null},${plan.recurring ? occurredAt : null}::timestamptz
+      )
+      ON CONFLICT DO NOTHING
     `;
-    licenses = await sql`SELECT * FROM nova_licenses WHERE paddle_transaction_id = ${transactionId} LIMIT 1`;
   }
 
-  const license = licenses[0];
-  await deliverLicense(license.customer_email, decryptLicenseKey(license.key_cipher), plan, transactionId);
+  existingRows = plan.recurring
+    ? await sql`SELECT * FROM nova_licenses WHERE paddle_subscription_id=${subscriptionId} LIMIT 1`
+    : await sql`SELECT * FROM nova_licenses WHERE paddle_transaction_id=${transactionId} LIMIT 1`;
+  const license = existingRows[0];
+  if (!license) return Response.json({ error: "license_not_persisted" }, { status: 500 });
+
+  if (!license.license_email_sent_at) {
+    await deliverLicense(license.customer_email, decryptLicenseKey(license.key_cipher), plan, transactionId);
+    await sql`UPDATE nova_licenses SET license_email_sent_at=NOW() WHERE key_hash=${license.key_hash} AND license_email_sent_at IS NULL`;
+  }
+
   await sql`INSERT INTO paddle_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
-  return Response.json({ received: true, fulfilled: true }, { headers: { "Cache-Control": "no-store" } });
+  return Response.json({ received: true, fulfilled: true, recurring: Boolean(plan.recurring) }, { headers: { "Cache-Control": "no-store" } });
 }
