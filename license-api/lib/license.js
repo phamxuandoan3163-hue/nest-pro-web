@@ -76,7 +76,9 @@ export async function deliverLicense(email, key, plan, transactionId) {
         "",
         "Plan: " + plan.label,
         "License key: " + key,
-        "Valid for: " + plan.days + " days",
+        plan.recurring
+          ? "Subscription billing: " + plan.billingCycle + ". Access renews while the subscription is active."
+          : "Valid for: " + plan.days + " days",
         "Devices: " + plan.activations,
         "",
         "Open Nova Nesting in Illustrator and enter this key to activate your device.",
