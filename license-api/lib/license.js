@@ -6,7 +6,13 @@ export const PRODUCT_ID = "1449378";
 const sandboxPlans = {
   "pri_01m6p22fft85kps6amjeca7jnh": { key: "monthly", days: 30, activations: 1, label: "30-Day License" },
   "pri_01m6p22fr8gvdze7nqpc4v0mz8": { key: "annual", days: 365, activations: 1, label: "1-Year License" },
-  "pri_01m6p22gqb9n68a73ggqdcvsm": { key: "annual_pro", days: 365, activations: 2, label: "1-Year Pro License" }
+  "pri_01m6p22gqb9n68a73gggqdcvsm": { key: "annual_pro", days: 365, activations: 2, label: "1-Year Pro License" },
+  "pri_01m7dhh5w6s5p813d21czxhxsk": { key: "starter", days: 30, activations: 1, label: "Starter", recurring: true, billingCycle: "month" },
+  "pri_01m7dhh649rzh6vwg49j3aprkc": { key: "starter", days: 365, activations: 1, label: "Starter", recurring: true, billingCycle: "year" },
+  "pri_01m7dhh6chhq7byvejq080tr9h": { key: "pro", days: 30, activations: 1, label: "Pro", recurring: true, billingCycle: "month" },
+  "pri_01m7dhh6mb1w7becawn2dja6s8": { key: "pro", days: 365, activations: 1, label: "Pro", recurring: true, billingCycle: "year" },
+  "pri_01m7dhh6vrjrsm1z12y8g3ahe3": { key: "advanced", days: 30, activations: 2, label: "Advanced", recurring: true, billingCycle: "month" },
+  "pri_01m7dhh73b6hva9sv9qv1brrnc": { key: "advanced", days: 365, activations: 2, label: "Advanced", recurring: true, billingCycle: "year" }
 };
 const livePlans = {
   "pri_01m6p0xa84j4whhqbv1cy41098": { key: "monthly", days: 30, activations: 1, label: "30-Day License" },
@@ -15,7 +21,11 @@ const livePlans = {
 };
 
 export function planForPrice(priceId) {
-  const plans = process.env.PADDLE_ENVIRONMENT === "live" ? livePlans : sandboxPlans;
+  const environment = process.env.PADDLE_ENVIRONMENT;
+  if (environment !== "sandbox" && environment !== "live") {
+    throw new Error("PADDLE_ENVIRONMENT must be explicitly set to sandbox or live.");
+  }
+  const plans = environment === "live" ? livePlans : sandboxPlans;
   return plans[String(priceId || "")] || null;
 }
 
