@@ -42,4 +42,14 @@ export async function ensureLicenseSchema(sql) {
       received_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
+  await sql`ALTER TABLE nova_licenses ADD COLUMN IF NOT EXISTS paddle_subscription_id TEXT`;
+  await sql`ALTER TABLE nova_licenses ADD COLUMN IF NOT EXISTS subscription_status TEXT`;
+  await sql`ALTER TABLE nova_licenses ADD COLUMN IF NOT EXISTS scheduled_cancel_at TIMESTAMPTZ`;
+  await sql`ALTER TABLE nova_licenses ADD COLUMN IF NOT EXISTS subscription_event_at TIMESTAMPTZ`;
+  await sql`ALTER TABLE nova_licenses ADD COLUMN IF NOT EXISTS license_email_sent_at TIMESTAMPTZ`;
+  await sql`
+    CREATE UNIQUE INDEX IF NOT EXISTS nova_licenses_paddle_subscription_id_unique
+    ON nova_licenses(paddle_subscription_id)
+    WHERE paddle_subscription_id IS NOT NULL
+  `;
 }
