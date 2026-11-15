@@ -8,7 +8,22 @@ export function db() {
   return sqlClient;
 }
 
-export async function ensureLicenseSchema(sql) {
+let schemaReady;
+
+// Run the schema setup once per server instance. Every request used to re-run
+// the full set of CREATE/ALTER statements, which slowed webhooks past the
+// 30s function limit when several events arrived together.
+export function ensureLicenseSchema(sql) {
+  if (!schemaReady) {
+    schemaReady = createLicenseSchema(sql).catch((error) => {
+      schemaReady = undefined;
+      throw error;
+    });
+  }
+  return schemaReady;
+}
+
+async function createLicenseSchema(sql) {
   await sql`
     CREATE TABLE IF NOT EXISTS nova_licenses (
       key_hash TEXT PRIMARY KEY,
