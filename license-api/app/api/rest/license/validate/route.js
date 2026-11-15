@@ -1,5 +1,5 @@
 import { json, options } from "../../../../../lib/http";
-import { db, ensureLicenseSchema } from "../../../../../lib/db";
+import { db } from "../../../../../lib/db";
 import { hashLicenseKey } from "../../../../../lib/license";
 
 export const runtime = "nodejs";
@@ -14,7 +14,6 @@ export async function POST(request) {
   }
 
   const sql = db();
-  await ensureLicenseSchema(sql);
   const rows = await sql`
     SELECT l.*, COUNT(d.id) FILTER (WHERE d.deactivated_at IS NULL)::int AS activation_usage
     FROM nova_licenses l

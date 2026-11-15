@@ -1,5 +1,5 @@
 import { json, options } from "../../../../../lib/http";
-import { db, ensureLicenseSchema } from "../../../../../lib/db";
+import { db } from "../../../../../lib/db";
 import { hashLicenseKey } from "../../../../../lib/license";
 
 export const runtime = "nodejs";
@@ -12,7 +12,6 @@ export async function POST(request) {
   if (!key || !instanceId) return json(request, { error: "invalid_request" }, { status: 400 });
 
   const sql = db();
-  await ensureLicenseSchema(sql);
   const result = await sql`
     UPDATE nova_license_devices
     SET deactivated_at=NOW()

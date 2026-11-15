@@ -1,5 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { db, ensureLicenseSchema } from "../../../../../lib/db";
+import { db } from "../../../../../lib/db";
 import { decryptLicenseKey, deliverLicense, encryptLicenseKey, hashLicenseKey, makeLicenseKey, planForPrice } from "../../../../../lib/license";
 
 export const runtime = "nodejs";
@@ -112,7 +112,6 @@ export async function POST(request) {
   if (!eventId || eventId.length > 200) return Response.json({ error: "missing_event_id" }, { status: 400 });
 
   const sql = db();
-  await ensureLicenseSchema(sql);
   const seen = await sql`SELECT event_id FROM paddle_webhook_events WHERE event_id = ${eventId} LIMIT 1`;
   if (seen.length) return Response.json({ received: true, duplicate: true });
 

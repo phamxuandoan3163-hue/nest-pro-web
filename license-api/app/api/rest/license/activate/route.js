@@ -1,6 +1,6 @@
 import { json, options } from "../../../../../lib/http";
 import { randomUUID } from "node:crypto";
-import { db, ensureLicenseSchema } from "../../../../../lib/db";
+import { db } from "../../../../../lib/db";
 import { hashLicenseKey } from "../../../../../lib/license";
 
 export const runtime = "nodejs";
@@ -18,7 +18,6 @@ export async function POST(request) {
   }
 
   const sql = db();
-  await ensureLicenseSchema(sql);
   const result = await sql.begin(async (tx) => {
     const rows = await tx`SELECT * FROM nova_licenses WHERE key_hash=${hashLicenseKey(key)} FOR UPDATE`;
     const license = rows[0];
