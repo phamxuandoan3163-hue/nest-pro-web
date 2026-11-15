@@ -3,7 +3,8 @@ const defaultOrigins = ["https://ainovanesting.pro", "https://www.ainovanesting.
 function allowedOrigin(request) {
   const origin = request?.headers?.get("origin") || "";
   const configured = String(process.env.LICENSE_ALLOWED_ORIGINS || defaultOrigins.join(","))
-    .split(",").map((value) => value.trim()).filter((value) => value && value !== "*");
+    .split(",").map((value) => value.trim())
+    .filter((value) => value && value !== "*" && value.toLowerCase() !== "null");
   return configured.includes(origin) ? origin : "";
 }
 
