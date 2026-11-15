@@ -98,6 +98,8 @@ async function syncSubscriptionEvent(sql, event, eventType) {
 }
 
 export async function POST(request) {
+  const startedAt = Date.now();
+  const mark = (step) => console.log(JSON.stringify({ webhook_step: step, ms: Date.now() - startedAt }));
   const rawBody = await request.text();
   if (!signatureIsValid(rawBody, request.headers.get("paddle-signature"), process.env.PADDLE_NOTIFICATION_SECRET)) {
     return Response.json({ error: "invalid_signature" }, { status: 401 });
@@ -111,13 +113,17 @@ export async function POST(request) {
   const eventType = String(event?.event_type || "");
   if (!eventId || eventId.length > 200) return Response.json({ error: "missing_event_id" }, { status: 400 });
 
+  mark("verified:" + eventType);
   const sql = db();
   const seen = await sql`SELECT event_id FROM paddle_webhook_events WHERE event_id = ${eventId} LIMIT 1`;
+  mark("dedupe_checked");
   if (seen.length) return Response.json({ received: true, duplicate: true });
 
   if (eventType.startsWith("subscription.")) {
     const result = await syncSubscriptionEvent(sql, event, eventType);
+    mark("subscription_synced");
     await sql`INSERT INTO paddle_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
+    mark("done");
     return Response.json({ received: true, ...result }, { headers: { "Cache-Control": "no-store" } });
   }
 
@@ -150,7 +156,9 @@ export async function POST(request) {
     ? await sql`SELECT * FROM nova_licenses WHERE paddle_subscription_id=${subscriptionId} LIMIT 1`
     : await sql`SELECT * FROM nova_licenses WHERE paddle_transaction_id=${transactionId} LIMIT 1`;
   const existingLicense = existingRows[0] || null;
+  mark("license_looked_up");
   const email = await transactionCustomerEmail(transaction, existingLicense);
+  mark("customer_email_resolved");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return Response.json({ error: "invalid_customer_email" }, { status: 502 });
   }
@@ -194,13 +202,16 @@ export async function POST(request) {
     ? await sql`SELECT * FROM nova_licenses WHERE paddle_subscription_id=${subscriptionId} LIMIT 1`
     : await sql`SELECT * FROM nova_licenses WHERE paddle_transaction_id=${transactionId} LIMIT 1`;
   const license = existingRows[0];
+  mark("license_persisted");
   if (!license) return Response.json({ error: "license_not_persisted" }, { status: 500 });
 
   if (!license.license_email_sent_at) {
     await deliverLicense(license.customer_email, decryptLicenseKey(license.key_cipher), plan, transactionId);
     await sql`UPDATE nova_licenses SET license_email_sent_at=NOW() WHERE key_hash=${license.key_hash} AND license_email_sent_at IS NULL`;
+    mark("email_sent");
   }
 
   await sql`INSERT INTO paddle_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
+  mark("done");
   return Response.json({ received: true, fulfilled: true, recurring: Boolean(plan.recurring) }, { headers: { "Cache-Control": "no-store" } });
 }
