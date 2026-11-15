@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@paddle/paddle-js": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",

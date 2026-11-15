@@ -1,35 +1,69 @@
-# Nest-Pro License REST API
+# Nova Nesting License REST API
 
-Base URL: `https://nest-pro-license-api.vercel.app/api/rest`
+Preview base URL: `https://<license-api-preview-host>/api/rest`
 
-## Endpoints
+## Health
 
-### Health
 `GET /health`
 
-Returns service status. Does not require secrets.
+Returns service status and does not require secrets.
 
-### Product catalog
-`GET /products`
+## Paddle Sandbox webhook
 
-Returns the configured Lemon Squeezy product and its variants. Requires the Vercel environment variable `LEMON_SQUEEZY_API_KEY`. Never exposes the key.
+`POST /paddle/webhook`
 
-### License validation
-`POST /license/validate`
+Verifies the Paddle `Paddle-Signature` header over the exact raw request body. Only completed transactions containing one of the configured NovaNesting Sandbox price IDs are fulfilled. The handler resolves the signed transaction's `customer_id` to the buyer's email using the server-side Paddle API key, creates an expiring license, persists it idempotently, and emails the license key. Configure a Paddle Sandbox notification destination for `transaction.completed`.
 
-JSON body:
-```json
-{
-  "license_key": "LICENSE-KEY",
-  "instance_id": "OPTIONAL-INSTANCE-ID"
-}
+## License activation
+
+`POST /license/activate`
+
+Form body:
+
+```text
+license_key=NOVA-...
+instance_name=Nova%20Nesting%20AI%20-%20<stable-device-id>
 ```
 
-This forwards the validation request to Lemon Squeezy and returns a restricted response. It does not activate or deactivate a device, persist license keys, or create a local license database.
+Activates a device within the plan's limit and returns a provider-compatible response to the CEP app.
 
-## Security notes
+## License validation
 
-- Do not put `LEMON_SQUEEZY_API_KEY` in the browser or Illustrator plugin.
-- The validate endpoint accepts public requests; apply rate limiting and abuse monitoring before relying on it for a commercial production rollout.
-- Do not log request bodies or license keys.
-- Use the provider's official license API behavior as the source of truth for validity and expiry.
+`POST /license/validate`
+
+Form body:
+
+```text
+license_key=NOVA-...
+instance_id=<returned-instance-id>
+```
+
+Validates status, expiry, and an optional active device.
+
+## Device deactivation
+
+`POST /license/deactivate`
+
+Form body:
+
+```text
+license_key=NOVA-...
+instance_id=<returned-instance-id>
+```
+
+Releases a device seat.
+
+## Required server environment variables
+
+- `PADDLE_ENVIRONMENT=sandbox`
+- `PADDLE_API_KEY` with only the `customer.read` permission
+- `PADDLE_NOTIFICATION_SECRET`
+- `DATABASE_URL`
+- `LICENSE_ENCRYPTION_KEY` (32 random bytes in 64 hexadecimal characters)
+- `RESEND_API_KEY`
+- `LICENSE_EMAIL_FROM`
+- `LICENSE_ALLOWED_ORIGINS` (explicit list; never use `*`)
+
+The Paddle client-side token belongs only in the website's public `NEXT_PUBLIC_PADDLE_SANDBOX_CLIENT_TOKEN` variable. Never put Paddle API keys or webhook secrets in the website or Illustrator extension. Keep these routes on Preview and keep `PADDLE_ENVIRONMENT=sandbox` until Sandbox checks are complete.
+
+The separate Lemon Squeezy MCP catalog endpoint is read-only and remains unchanged by this REST API.
