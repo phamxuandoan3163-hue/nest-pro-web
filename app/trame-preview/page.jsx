@@ -5,6 +5,13 @@ import data from "./styles.json";
 
 const GROUP_LABELS = { basic: "Basic", street: "Grunge", shape: "Shapes", pattern: "Patterns", trend: "Trends", vintage: "Vintage", color: "Color" };
 
+const PLANS = [
+  { kicker: "START HERE", name: "Free trial", price: "$0", period: "for 7 days", text: "Test NOVA Trame with your own artwork before you commit.", features: ["7-day trial period", "All 130 halftone styles", "Live preview", "Evaluate on your Photoshop setup"] },
+  { kicker: "FLEXIBLE", name: "Monthly", price: "$5", period: "per month", text: "Flexible access for a production run, a busy month, or occasional jobs.", features: ["30 days of licensed access", "All 130 halftone styles", "Print-size LPI", "Black and white shirt modes"] },
+  { kicker: "STANDARD", name: "Yearly", price: "$50", period: "per year", text: "Everyday halftone work with a full year of access at a lower price than monthly.", features: ["12 months of licensed access", "All 130 halftone styles", "Print-size LPI", "Black and white shirt modes"] },
+  { kicker: "PRO TIER", name: "Yearly Pro", price: "$60", period: "per year", recommended: true, text: "Everything in Yearly, for demanding production and longer work sessions.", features: ["Everything in Yearly", "All 130 halftone styles", "Print-size LPI", "Built for demanding production"] }
+];
+
 const FEATURES = [
   ["130 halftone styles", "Dot, line, shape, pattern, grunge, vintage and color styles, each with its own icon and description."],
   ["Print-size LPI", "Frequency is set from the document's longest side, so the dots suit the size you print."],
@@ -40,7 +47,7 @@ export default function TramePreviewPage() {
   }, [active, query]);
 
   return <main className="tool-page trame-page">
-    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><div className="nav-links"><a href="/#tools">Tools</a><a href="#features">Features</a><a href="#workflow">Workflow</a><a href="#styles">Styles</a><a href="/guides">Guides</a></div><a href="/license" className="nav-buy">Licensing <ArrowRight size={15}/></a></nav></header>
+    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><div className="nav-links"><a href="/#tools">Tools</a><a href="#features">Features</a><a href="#workflow">Workflow</a><a href="#styles">Styles</a><a href="#pricing">Pricing</a><a href="/guides">Guides</a></div><a href="#pricing" className="nav-buy">Pricing <ArrowRight size={15}/></a></nav></header>
 
     <div className="tool-breadcrumb shell"><a href="/">All tools</a><span>/</span><span>NOVA Trame</span></div>
 
@@ -89,7 +96,19 @@ export default function TramePreviewPage() {
       {shown.length === 0 && <p className="trame-empty">No styles match your search.</p>}
     </section>
 
-    <section id="licensing" className="tool-licensing"><div className="shell licensing-inner"><div><p className="eyebrow">ACCESS & LICENSING</p><h2>Be ready when NOVA Trame launches.</h2><p>License details will be published when this plugin is ready to launch.</p></div><a className="button light" href="/license">Licensing information <ArrowRight size={15}/></a></div></section>
+    <section id="pricing" className="trame-pricing shell">
+      <div className="tool-section-head"><p className="eyebrow">PICK YOUR ACCESS</p><h2>NOVA Trame pricing.</h2><p>Choose the access period that fits your production. Prices are in USD.</p></div>
+      <div className="trame-plans">{PLANS.map(p => <article key={p.name} className={"trame-plan" + (p.recommended ? " trame-plan-pro" : "")}>
+        {p.recommended && <span className="trame-badge">RECOMMENDED</span>}
+        <p className="eyebrow">{p.kicker}</p>
+        <h3>{p.name}</h3>
+        <p className="trame-price"><b>{p.price}</b><span>{p.period}</span></p>
+        <p className="trame-plan-text">{p.text}</p>
+        <ul>{p.features.map(f => <li key={f}><Check size={14}/>{f}</li>)}</ul>
+        <span className="trame-cta" aria-disabled="true">Available at launch</span>
+      </article>)}</div>
+      <p className="trame-note">Purchase and automatic license activation are not yet available on this page.</p>
+    </section>
 
     <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Legal and support"><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
 
@@ -111,6 +130,21 @@ export default function TramePreviewPage() {
       .trame-tile h3{font-size:1rem;margin:0 0 4px}
       .trame-tile p{font-size:.85rem;opacity:.75;margin:0;line-height:1.4}
       .trame-empty{opacity:.65}
+      .trame-pricing{margin:40px auto 0;padding-bottom:40px}
+      .trame-plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px}
+      .trame-plan{position:relative;border:1px solid rgba(128,128,128,.3);border-radius:18px;padding:24px;display:flex;flex-direction:column;background:#15191a;color:#f0efeb}
+      .trame-plan-pro{border-color:#8fd4a8;background:linear-gradient(160deg,#1d2a24,#15191a)}
+      .trame-plan h3{font-size:1.6rem;margin:6px 0 10px}
+      .trame-price{display:flex;align-items:baseline;gap:8px;margin:6px 0 12px}
+      .trame-price b{font-size:2.6rem;line-height:1;color:#b9ecd0}
+      .trame-price span{opacity:.7;font-size:.9rem}
+      .trame-plan-text{opacity:.75;font-size:.92rem;line-height:1.5;min-height:66px}
+      .trame-plan ul{list-style:none;padding:0;margin:14px 0 20px;display:grid;gap:8px;flex:1}
+      .trame-plan li{display:flex;gap:8px;font-size:.9rem;align-items:flex-start}
+      .trame-cta{display:block;text-align:center;border:1px solid rgba(128,128,128,.5);border-radius:999px;padding:12px;opacity:.6}
+      .trame-plan-pro .trame-cta{background:#b9ecd0;color:#0d1f16;border-color:#b9ecd0;opacity:.8}
+      .trame-badge{position:absolute;top:18px;right:18px;background:#b9ecd0;color:#0d1f16;border-radius:999px;padding:4px 10px;font-size:.7rem;font-weight:700;letter-spacing:.06em}
+      .trame-note{opacity:.6;font-size:.85rem;margin-top:20px}
     `}</style>
   </main>;
 }
