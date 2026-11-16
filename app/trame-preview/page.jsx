@@ -106,6 +106,14 @@ export default function TramePreviewPage() {
       <p className="trame-note">Purchase and automatic license activation are not yet available on this page.</p>
     </section>
 
+    <section id="resources" className="tool-resources shell">
+      <div className="tool-section-head"><p className="eyebrow">RESOURCES</p><h2>Guides for NOVA Trame.</h2><p>Install the plugin, then learn the workflow step by step.</p></div>
+      <div className="article-grid">
+        <a className="article-card" href="/trame-preview/install"><div className="article-art"><span>INSTALLATION GUIDE</span></div><div className="article-meta"><span>GUIDE</span></div><h3>How to install NOVA Trame</h3><p>Install the plugin on Windows or macOS, without Creative Cloud.</p><strong>Read article <ArrowRight size={14}/></strong></a>
+        <a className="article-card" href="/trame-preview/guide"><div className="article-art"><span>USAGE GUIDE</span></div><div className="article-meta"><span>GUIDE</span></div><h3>How to use NOVA Trame</h3><p>From artwork to a RIP-ready file: shirt color, styles, preview and export.</p><strong>Read article <ArrowRight size={14}/></strong></a>
+      </div>
+    </section>
+
     <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Legal and support"><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
 
     <style>{`
