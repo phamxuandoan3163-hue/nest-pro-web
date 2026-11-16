@@ -12,7 +12,7 @@ const navItems = [
 const guides = [
   {
     category: "START HERE",
-    title: "Getting started with Nova Nesting and Laser Cut",
+    title: "Getting started with Nova Marker Making and Nesting",
     description: "Prepare an Illustrator file, set tolerance, decide whether to use Laser Cut, and review the output.",
     href: "/tools/nest-pro/articles/getting-started",
     icon: BookOpen
