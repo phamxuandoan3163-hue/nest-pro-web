@@ -6,7 +6,7 @@ export const defaultContent = {
   products:{eyebrow:"PRODUCTS",title:"Tools built for real production.",text:"Start with Nova Marker Making and Nesting, including the combined nesting and laser-stroke workflow, then add more focused tools as your workflow grows.",cards:[
     {tag:"AVAILABLE NOW",name:"Nova Marker Making and Nesting",description:"Match pattern outlines to design silhouettes, align artwork and optionally generate configurable laser strokes in Adobe Illustrator.",features:["Active-artboard matching","0° / 180° orientation","Laser Cut optional","Inside 1 pt / Outside 2 pt"],cta:"Explore Nova Nesting",href:"#features"},
     {tag:"AVAILABLE NOW",available:true,name:"NOVA Trame",description:"Halftone styles for DTF printing on black and white shirts, with print-size LPI and a live preview.",features:["130 halftone styles","Print-size LPI","Black and white shirts","Live preview"],cta:"Explore styles",href:"/trame-preview"},
-    {tag:"COMING SOON",name:"Production Tools",description:"More focused Illustrator utilities for apparel, print preparation and repetitive production work.",features:["Workflow automation","Batch operations","Production presets","Export tools"],cta:"Coming soon",href:"#products"}
+    {tag:"COMING SOON",name:"Production Tools",description:"More focused Illustrator utilities for apparel, print preparation and repetitive production work.",features:["Workflow automation","Batch operations","Production presets","Export tools"],cta:"Coming soon",href:"/tools/production-tools"}
   ]},
   features:[
     {n:"01",icon:"Scan",title:"Pattern recognition",text:"Scan AI and PDF pattern files and identify the working shapes without rebuilding the pattern manually."},
