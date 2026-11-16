@@ -1,0 +1,821 @@
+{
+ "groups": [
+  {
+   "id": "basic",
+   "name": "Chấm in truyền thống và hạt",
+   "short": "Cơ bản"
+  },
+  {
+   "id": "street",
+   "name": "Streetwear / grunge",
+   "short": "Grunge"
+  },
+  {
+   "id": "shape",
+   "name": "Hình chấm đặc biệt",
+   "short": "Hình chấm"
+  },
+  {
+   "id": "pattern",
+   "name": "Hoa văn đường nét",
+   "short": "Hoa văn"
+  },
+  {
+   "id": "trend",
+   "name": "Hiệu ứng áo thun đang thịnh hành",
+   "short": "Xu hướng"
+  },
+  {
+   "id": "vintage",
+   "name": "Vintage: ảnh cũ, in cũ, áo cũ",
+   "short": "Vintage"
+  },
+  {
+   "id": "color",
+   "name": "Màu: 4 màu CMYK và màu spot",
+   "short": "Màu"
+  }
+ ],
+ "styles": [
+  {
+   "id": "round",
+   "group": "basic",
+   "name": "Round dot",
+   "desc": "Even grid of round dots. The most popular halftone, with natural tonal transitions."
+  },
+  {
+   "id": "ellipse",
+   "group": "basic",
+   "name": "Ellipse",
+   "desc": "Elongated dots that chain together in midtones. Softer transitions than round dots."
+  },
+  {
+   "id": "line",
+   "group": "basic",
+   "name": "Line",
+   "desc": "Parallel lines that thicken with darkness, with adjustable angle. Great for engraved or vintage looks."
+  },
+  {
+   "id": "square",
+   "group": "basic",
+   "name": "Square dot",
+   "desc": "Square dots, clean and technical."
+  },
+  {
+   "id": "diamond",
+   "group": "basic",
+   "name": "Diamond dot",
+   "desc": "Diamond-shaped dots that form a checkerboard at 50%."
+  },
+  {
+   "id": "cross",
+   "group": "basic",
+   "name": "Cross",
+   "desc": "Repeating plus signs that create a distinctive grid texture."
+  },
+  {
+   "id": "stripeh",
+   "group": "basic",
+   "name": "Horizontal stripes",
+   "desc": "Even horizontal lines that thicken with darkness."
+  },
+  {
+   "id": "stripev",
+   "group": "basic",
+   "name": "Vertical stripes",
+   "desc": "Even vertical lines that thicken with darkness."
+  },
+  {
+   "id": "striped",
+   "group": "basic",
+   "name": "Diagonal stripes",
+   "desc": "135° diagonal lines that suggest motion."
+  },
+  {
+   "id": "diffusion",
+   "group": "basic",
+   "name": "Error diffusion",
+   "desc": "Floyd–Steinberg error diffusion. Fine grain that keeps detail well."
+  },
+  {
+   "id": "atkinson",
+   "group": "basic",
+   "name": "Atkinson",
+   "desc": "Bright, slightly contrasty grain like early Macs. Very dark areas keep white specks."
+  },
+  {
+   "id": "stucki",
+   "group": "basic",
+   "name": "Stucki",
+   "desc": "Wide error spread with high detail; more even grain than Floyd–Steinberg."
+  },
+  {
+   "id": "jarvis",
+   "group": "basic",
+   "name": "Jarvis",
+   "desc": "The widest error spread, smooth shading, good for large gradients."
+  },
+  {
+   "id": "bayer4",
+   "group": "basic",
+   "name": "Bayer 4×4",
+   "desc": "4×4 repeating matrix with chunky retro-game grain."
+  },
+  {
+   "id": "pattern",
+   "group": "basic",
+   "name": "Bayer 8×8",
+   "desc": "8×8 repeating matrix, finer than 4×4."
+  },
+  {
+   "id": "random",
+   "group": "basic",
+   "name": "Random grain",
+   "desc": "Randomly scattered grain (FM), with a rough grunge texture."
+  },
+  {
+   "id": "threshold",
+   "group": "basic",
+   "name": "Threshold",
+   "desc": "Pure black and white, no dots. For logos, text and simple line art."
+  },
+  {
+   "id": "euclid",
+   "group": "basic",
+   "name": "Euclidean dot",
+   "desc": "The print-industry standard: round in highlights, checkerboard at 50%, round holes in shadows. Holds shadow detail better than round dots."
+  },
+  {
+   "id": "celldot",
+   "group": "basic",
+   "name": "Cell dot",
+   "desc": "One perfect round dot per cell sized by its average tone, like Filter › Color Halftone. Crisp pop-art dots."
+  },
+  {
+   "id": "negative",
+   "group": "basic",
+   "name": "Negative dot",
+   "desc": "Round white holes in solid ink. With white ink on a black shirt, the holes show the shirt color."
+  },
+  {
+   "id": "fade",
+   "group": "basic",
+   "name": "Fade out",
+   "desc": "Round dots that fade toward the bottom edge so the image melts into the shirt. Adjust length and direction in Extra effects."
+  },
+  {
+   "id": "grain",
+   "group": "street",
+   "name": "Gritty grain",
+   "desc": "Uneven grains that clump like powdered ink. The Hellstar look. Lower LPI = bigger grain."
+  },
+  {
+   "id": "photocopy",
+   "group": "street",
+   "name": "Photocopy",
+   "desc": "Harsh black and white with noise and speckles, like a photocopy (Heaven/Hell style). The Threshold slider sets darkness."
+  },
+  {
+   "id": "grunge",
+   "group": "street",
+   "name": "Grunge",
+   "desc": "Worn, patchy black and white with pitted edges (Vicinity style). Set the wear in Extra effects."
+  },
+  {
+   "id": "grungedots",
+   "group": "street",
+   "name": "Distressed dots",
+   "desc": "Round dots that look worn, like an old print."
+  },
+  {
+   "id": "mezzo",
+   "group": "street",
+   "name": "Mezzotint",
+   "desc": "Short horizontal fibers like a mezzotint engraving."
+  },
+  {
+   "id": "stipple",
+   "group": "street",
+   "name": "Stipple",
+   "desc": "Same-size dots that only vary in density, like drawing with a fine pen."
+  },
+  {
+   "id": "sketch",
+   "group": "street",
+   "name": "Sketch",
+   "desc": "Pencil outlines plus cross-hatching in dark areas, like a hand sketch."
+  },
+  {
+   "id": "roundsq",
+   "group": "shape",
+   "name": "Rounded square",
+   "desc": "Square dots with rounded corners, softer and more retro."
+  },
+  {
+   "id": "clover",
+   "group": "shape",
+   "name": "Four-leaf clover",
+   "desc": "Four-leaf clover dots. Use a low LPI to see the shape."
+  },
+  {
+   "id": "flower",
+   "group": "shape",
+   "name": "Six-petal flower",
+   "desc": "Flower-shaped dots, nice for women's and kids' tees."
+  },
+  {
+   "id": "gear",
+   "group": "shape",
+   "name": "Gear",
+   "desc": "Gear-shaped dots for mechanical and car themes."
+  },
+  {
+   "id": "drop",
+   "group": "shape",
+   "name": "Water drop",
+   "desc": "Drop-shaped dots with a round base and pointed tip."
+  },
+  {
+   "id": "bullseye",
+   "group": "shape",
+   "name": "Bullseye",
+   "desc": "Each dot is a set of nested rings like a target."
+  },
+  {
+   "id": "squarering",
+   "group": "shape",
+   "name": "Square frame",
+   "desc": "Each dot is a hollow square that thickens with darkness."
+  },
+  {
+   "id": "jitterdash",
+   "group": "shape",
+   "name": "Random rain",
+   "desc": "Short dashes rotated randomly in each cell, like rain or straw."
+  },
+  {
+   "id": "jittertri",
+   "group": "shape",
+   "name": "Scattered triangles",
+   "desc": "Randomly rotated triangles for a geometric glitch look."
+  },
+  {
+   "id": "voronoidots",
+   "group": "shape",
+   "name": "Cells",
+   "desc": "Round dots placed randomly like cells; no grid, so no repeating pattern."
+  },
+  {
+   "id": "sunflower",
+   "group": "shape",
+   "name": "Sunflower",
+   "desc": "Dots arranged at the 137.5° golden angle like sunflower seeds, radiating from the center."
+  },
+  {
+   "id": "morse",
+   "group": "shape",
+   "name": "Morse code",
+   "desc": "Rows of dots and dashes like Morse code; dark areas get longer, thicker dashes."
+  },
+  {
+   "id": "hex",
+   "group": "shape",
+   "name": "Honeycomb dots",
+   "desc": "Round dots on a hexagonal grid. Smoother than a square grid, less visible direction."
+  },
+  {
+   "id": "hexagon",
+   "group": "shape",
+   "name": "Hexagon",
+   "desc": "Hexagon-shaped dots that join into a honeycomb in dark areas."
+  },
+  {
+   "id": "triangle",
+   "group": "shape",
+   "name": "Triangle",
+   "desc": "Triangle-shaped dots for geometric and streetwear designs."
+  },
+  {
+   "id": "star",
+   "group": "shape",
+   "name": "Star",
+   "desc": "Five-point star dots. Use a low LPI (10–25) to see the stars."
+  },
+  {
+   "id": "heart",
+   "group": "shape",
+   "name": "Heart",
+   "desc": "Heart-shaped dots. Use a low LPI to see them clearly."
+  },
+  {
+   "id": "dash",
+   "group": "shape",
+   "name": "Dash",
+   "desc": "Short dash dots rotated to the angle, like rain streaks."
+  },
+  {
+   "id": "donut",
+   "group": "shape",
+   "name": "Ring",
+   "desc": "Each dot is a hollow ring that thickens with darkness."
+  },
+  {
+   "id": "lattice",
+   "group": "pattern",
+   "name": "Lattice",
+   "desc": "Diagonal two-way grid like a lattice fence; lines thicken with darkness."
+  },
+  {
+   "id": "brick",
+   "group": "pattern",
+   "name": "Brick wall",
+   "desc": "Mortar lines of a brick wall that thicken in dark areas. Street style."
+  },
+  {
+   "id": "honeycomb",
+   "group": "pattern",
+   "name": "Honeycomb lines",
+   "desc": "Hexagon cell outlines like a honeycomb; lines thicken with darkness."
+  },
+  {
+   "id": "squarerings",
+   "group": "pattern",
+   "name": "Concentric squares",
+   "desc": "Concentric square frames. Supports the multi-center layout."
+  },
+  {
+   "id": "seigaiha",
+   "group": "pattern",
+   "name": "Japanese waves",
+   "desc": "Seigaiha pattern: nested arcs like stylized Japanese waves."
+  },
+  {
+   "id": "spiderweb",
+   "group": "pattern",
+   "name": "Spider web",
+   "desc": "Rings and spokes woven into a web. Multi-center ready; great for Halloween and rock tees."
+  },
+  {
+   "id": "weave",
+   "group": "pattern",
+   "name": "Basket weave",
+   "desc": "Alternating horizontal and vertical stripes like woven fabric."
+  },
+  {
+   "id": "diamondplate",
+   "group": "pattern",
+   "name": "Diamond plate",
+   "desc": "Diagonal ribs like anti-slip steel plate, for industrial and car themes."
+  },
+  {
+   "id": "zebra",
+   "group": "pattern",
+   "name": "Zebra",
+   "desc": "Wavy zebra stripes that thicken with darkness."
+  },
+  {
+   "id": "leopard",
+   "group": "pattern",
+   "name": "Leopard",
+   "desc": "Irregular ring spots like leopard skin."
+  },
+  {
+   "id": "marble",
+   "group": "pattern",
+   "name": "Marble",
+   "desc": "Thin flowing veins like marble."
+  },
+  {
+   "id": "camo",
+   "group": "pattern",
+   "name": "Camo",
+   "desc": "Large military blotches; coverage matches the tone exactly."
+  },
+  {
+   "id": "rings",
+   "group": "pattern",
+   "name": "Rings",
+   "desc": "Concentric circles. Use Multi-center layout for clusters of big and small rings."
+  },
+  {
+   "id": "spiral",
+   "group": "pattern",
+   "name": "Spiral",
+   "desc": "One continuous spiral. Turn on multiple centers for many spirals of different sizes twisting both ways."
+  },
+  {
+   "id": "radial",
+   "group": "pattern",
+   "name": "Sunburst",
+   "desc": "Rays from the center like sunbeams. Multiple centers give a fireworks or manga look."
+  },
+  {
+   "id": "polardots",
+   "group": "pattern",
+   "name": "Circular dots",
+   "desc": "Round dots arranged in concentric rings around the center."
+  },
+  {
+   "id": "wave",
+   "group": "pattern",
+   "name": "Waves",
+   "desc": "Parallel wavy lines, banknote-engraving style."
+  },
+  {
+   "id": "zigzag",
+   "group": "pattern",
+   "name": "Zigzag",
+   "desc": "Zigzag lines that thicken with darkness."
+  },
+  {
+   "id": "hatch",
+   "group": "pattern",
+   "name": "Cross-hatch",
+   "desc": "One-way hatching in light areas with a second perpendicular layer in dark areas, like pen drawing."
+  },
+  {
+   "id": "squiggle",
+   "group": "pattern",
+   "name": "Squiggle",
+   "desc": "Rows of horizontal waves; darker areas have denser, stronger waves."
+  },
+  {
+   "id": "wood",
+   "group": "pattern",
+   "name": "Wood grain",
+   "desc": "Curving wood grain with natural noise."
+  },
+  {
+   "id": "fingerprint",
+   "group": "pattern",
+   "name": "Fingerprint",
+   "desc": "Warped concentric rings like a fingerprint."
+  },
+  {
+   "id": "bulge",
+   "group": "pattern",
+   "name": "Bulge",
+   "desc": "Horizontal lines that bulge in the middle for a 3D sphere feel."
+  },
+  {
+   "id": "twirl",
+   "group": "pattern",
+   "name": "Twirl",
+   "desc": "Lines twisting around the center like a whirlpool."
+  },
+  {
+   "id": "interference",
+   "group": "pattern",
+   "name": "Interference",
+   "desc": "Two offset ring systems overlap into interference patterns."
+  },
+  {
+   "id": "truchet",
+   "group": "pattern",
+   "name": "Maze",
+   "desc": "Arcs joining at random into a maze (Truchet tiles)."
+  },
+  {
+   "id": "fishscale",
+   "group": "pattern",
+   "name": "Fish scales",
+   "desc": "Staggered arcs like fish or dragon scales."
+  },
+  {
+   "id": "contour",
+   "group": "pattern",
+   "name": "Contour lines",
+   "desc": "Only draws lines of equal tone, like a topographic map. Great for line art."
+  },
+  {
+   "id": "sunset",
+   "group": "trend",
+   "name": "Sunset stripes",
+   "desc": "70s retro stripes cutting the lower half, with gaps widening downward. Keeps the design colors."
+  },
+  {
+   "id": "dotfade",
+   "group": "trend",
+   "name": "Directional dot fade",
+   "desc": "The image dissolves into dots along a direction (90° = downward), regardless of light and dark."
+  },
+  {
+   "id": "crack",
+   "group": "trend",
+   "name": "Cracked ink",
+   "desc": "Cracks like a well-worn print; lighter areas crack more. Keeps the design colors."
+  },
+  {
+   "id": "engrave",
+   "group": "trend",
+   "name": "Banknote engraving",
+   "desc": "Engraved lines that bend with light and shadow, like banknotes and stamps."
+  },
+  {
+   "id": "stencil",
+   "group": "trend",
+   "name": "Stencil",
+   "desc": "Three-tone graffiti stencil: dark = solid, midtones = hatched, light = empty."
+  },
+  {
+   "id": "pixel1",
+   "group": "trend",
+   "name": "1-bit pixel",
+   "desc": "Large square pixels on or off by tone, old-school game style."
+  },
+  {
+   "id": "ascii",
+   "group": "trend",
+   "name": "ASCII text",
+   "desc": "The image is built from characters. Change the character set (or type your brand name) in Effect options."
+  },
+  {
+   "id": "glitch",
+   "group": "trend",
+   "name": "Glitch",
+   "desc": "RGB channel shift, displaced horizontal bands and scanlines, Y2K / VHS style."
+  },
+  {
+   "id": "riso",
+   "group": "trend",
+   "name": "2-color riso",
+   "desc": "Riso print: two grainy ink colors with slight misregistration. Change the two colors in Effect options."
+  },
+  {
+   "id": "popart",
+   "group": "trend",
+   "name": "2-color pop art",
+   "desc": "Two-color round dots like American comics, with offset angles and misregistration."
+  },
+  {
+   "id": "pixel8",
+   "group": "trend",
+   "name": "8-bit pixel",
+   "desc": "Square color blocks with few color levels, like 8-bit game graphics."
+  },
+  {
+   "id": "vintage",
+   "group": "trend",
+   "name": "Faded vintage",
+   "desc": "Faded, warm colors with worn, cracked ink like a tee washed for years."
+  },
+  {
+   "id": "trippy",
+   "group": "trend",
+   "name": "Trippy 70s",
+   "desc": "Psychedelic wavy distortion with a two-color echo outline."
+  },
+  {
+   "id": "thermal",
+   "group": "trend",
+   "name": "Thermal",
+   "desc": "Maps the image to a thermal-camera palette: purple, red, orange, yellow."
+  },
+  {
+   "id": "neon",
+   "group": "trend",
+   "name": "Neon outline",
+   "desc": "Keeps only the outlines and makes them glow like neon. Great on black shirts."
+  },
+  {
+   "id": "duotone",
+   "group": "trend",
+   "name": "Duotone",
+   "desc": "Maps the image to two colors (color 1 = shadows, color 2 = highlights), fashion-poster style."
+  },
+  {
+   "id": "rainbowdots",
+   "group": "trend",
+   "name": "Rainbow dots",
+   "desc": "Round-dot halftone colored by a diagonal rainbow. Strength rotates the colors."
+  },
+  {
+   "id": "rgbdots",
+   "group": "trend",
+   "name": "RGB LED dots",
+   "desc": "Three red, green and blue dots per cell like an LED screen. Pops on black shirts."
+  },
+  {
+   "id": "spray",
+   "group": "trend",
+   "name": "Spray paint",
+   "desc": "Edges dissolve into paint mist with drips running down, graffiti style."
+  },
+  {
+   "id": "v_sepia",
+   "group": "vintage",
+   "name": "Sepia photo",
+   "desc": "Turns the image into brown sepia tones like an early 20th-century photo, with light ink wear."
+  },
+  {
+   "id": "v_yellowed",
+   "group": "vintage",
+   "name": "Yellowed photo",
+   "desc": "Paper turned yellow with scattered age spots, like a photo stored for years."
+  },
+  {
+   "id": "v_scratch",
+   "group": "vintage",
+   "name": "Scratched film",
+   "desc": "Faded colors with vertical scratches and dust, like an old film reel."
+  },
+  {
+   "id": "v_washed",
+   "group": "vintage",
+   "name": "Washed-out tee",
+   "desc": "Faded, pale colors with patchy wear, like a shirt washed many times."
+  },
+  {
+   "id": "v_screenprint",
+   "group": "vintage",
+   "name": "Old screen print",
+   "desc": "Reduces to 5 flat colors like a screen print, then adds ink cracks and worn patches."
+  },
+  {
+   "id": "v_stamp",
+   "group": "vintage",
+   "name": "Rubber stamp",
+   "desc": "One ink color with uneven coverage and rough edges, like a hand stamp. Change the ink color in the Effect options card."
+  },
+  {
+   "id": "v_band80",
+   "group": "vintage",
+   "name": "80s band tee",
+   "desc": "Big one-color halftone dots with large worn patches, like an 80s tour shirt."
+  },
+  {
+   "id": "v_surf70",
+   "group": "vintage",
+   "name": "70s surf",
+   "desc": "Brown, orange, yellow and cream gradient of a 70s surf tee."
+  },
+  {
+   "id": "v_propaganda",
+   "group": "vintage",
+   "name": "Propaganda poster",
+   "desc": "Three flat areas: black, an accent color and a cream base, like a lithographed propaganda poster."
+  },
+  {
+   "id": "v_woodcut",
+   "group": "vintage",
+   "name": "Woodcut",
+   "desc": "Dark areas go solid and midtones become flowing carved lines, like a woodcut print."
+  },
+  {
+   "id": "v_linocut",
+   "group": "vintage",
+   "name": "Linocut",
+   "desc": "Large solid areas with short gouge marks scattered through, like a linocut print."
+  },
+  {
+   "id": "v_newspaper",
+   "group": "vintage",
+   "name": "Old newspaper",
+   "desc": "Coarse one-color halftone with ink that goes heavy and light, like an old printed newspaper."
+  },
+  {
+   "id": "v_comic",
+   "group": "vintage",
+   "name": "Vintage comic",
+   "desc": "Big yellow, magenta and cyan dots printed off-register with bold black lines, like a 1950s comic."
+  },
+  {
+   "id": "v_polaroid",
+   "group": "vintage",
+   "name": "Faded Polaroid",
+   "desc": "Low contrast, shadows tinted teal, highlights warm and a dissolving border, like an old Polaroid."
+  },
+  {
+   "id": "v_kodachrome",
+   "group": "vintage",
+   "name": "Kodachrome",
+   "desc": "Rich, warm colors with deep reds and film grain, like 1960s color film."
+  },
+  {
+   "id": "v_crossproc",
+   "group": "vintage",
+   "name": "Cross-process",
+   "desc": "Highlights shift yellow-green and shadows shift blue, like film developed in the wrong chemistry."
+  },
+  {
+   "id": "v_lomo",
+   "group": "vintage",
+   "name": "Lomo",
+   "desc": "Strongly saturated colors with dark corners, like a Lomo camera."
+  },
+  {
+   "id": "v_cyanotype",
+   "group": "vintage",
+   "name": "Cyanotype",
+   "desc": "Prussian-blue range of an old sun-printed blueprint."
+  },
+  {
+   "id": "v_brownduo",
+   "group": "vintage",
+   "name": "Brown duotone",
+   "desc": "Three-tone range of dark brown, café au lait and cream with light grain."
+  },
+  {
+   "id": "v_misreg",
+   "group": "vintage",
+   "name": "Misregistered print",
+   "desc": "Separates 4 flat colors and offsets each plate a little, like an old press running out of register."
+  },
+  {
+   "id": "v_matchbox",
+   "group": "vintage",
+   "name": "Matchbox label",
+   "desc": "Three flat colors on worn, patchy paper, like an old matchbox label."
+  },
+  {
+   "id": "v_peel",
+   "group": "vintage",
+   "name": "Peeling paint",
+   "desc": "The print flakes off in patches, like old paint on a wall."
+  },
+  {
+   "id": "v_rust",
+   "group": "vintage",
+   "name": "Rust",
+   "desc": "Orange-brown rust patches creep into the image, like an old metal sign."
+  },
+  {
+   "id": "v_sunfade",
+   "group": "vintage",
+   "name": "Sun-faded",
+   "desc": "The top fades more than the bottom, like a shirt left in the sun for a long time."
+  },
+  {
+   "id": "v_bleed",
+   "group": "vintage",
+   "name": "Ink bleed",
+   "desc": "Dark ink spreads and edges bleed unevenly, like printing on absorbent paper."
+  },
+  {
+   "id": "v_letterpress",
+   "group": "vintage",
+   "name": "Letterpress",
+   "desc": "Flat colors with mottled pressed ink, heavier in some spots and lighter in others, like letterpress printing."
+  },
+  {
+   "id": "v_varsity",
+   "group": "vintage",
+   "name": "2-color varsity",
+   "desc": "Dark parts filled with one color plus a thick outline in a second color, lightly cracked, like American college team lettering."
+  },
+  {
+   "id": "v_engstamp",
+   "group": "vintage",
+   "name": "Engraved stamp",
+   "desc": "One-color horizontal engraved lines, like an old postage stamp."
+  },
+  {
+   "id": "v_vhs",
+   "group": "vintage",
+   "name": "VHS tape",
+   "desc": "Color channels shift, with scan lines and noise bands like a VHS videotape."
+  },
+  {
+   "id": "v_thrift",
+   "group": "vintage",
+   "name": "Thrift tee",
+   "desc": "Lightly faded with fine cracks and tiny holes, like a shirt from a second-hand market."
+  },
+  {
+   "id": "cmykhex",
+   "group": "color",
+   "name": "Color honeycomb",
+   "desc": "Like the face_40x40 sample: 4 colors (yellow, pink, cyan, black), round dots on a honeycomb grid, each color rotated 15° to avoid moiré. Unprinted areas show the shirt."
+  },
+  {
+   "id": "cmykround",
+   "group": "color",
+   "name": "Color round dots",
+   "desc": "Offset-style color halftone: 4 colors of round dots at the standard angles C15 M75 Y0 K45."
+  },
+  {
+   "id": "cmykline",
+   "group": "color",
+   "name": "Color lines",
+   "desc": "Four colors of lines, each at its own angle, weaving a colored mesh."
+  },
+  {
+   "id": "cmykgrain",
+   "group": "color",
+   "name": "Color grain",
+   "desc": "Four colors of random grain; no grid, so never any moiré."
+  },
+  {
+   "id": "spot",
+   "group": "color",
+   "name": "Spot colors",
+   "desc": "Finds the main colors and prints each area as a flat color; the shirt color is dropped so the shirt shows through (Iron Muscle style)."
+  },
+  {
+   "id": "spotgrain",
+   "group": "color",
+   "name": "Grainy spot colors",
+   "desc": "Spot colors where transitions between colors and into the shirt use gritty grain (Hellstar style)."
+  }
+ ]
+}
