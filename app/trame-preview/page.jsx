@@ -61,13 +61,9 @@ export default function TramePreviewPage() {
         <div className="tool-hero-actions"><a className="button dark" href="#styles">Browse {data.styles.length} styles <ArrowRight size={16}/></a><a className="button outline" href="#workflow">See the workflow</a></div>
         <div className="tool-trust"><span><Check size={14}/> Built for DTF</span><span><Sparkles size={14}/> {data.styles.length} styles</span></div>
       </div>
-      <div className="tool-preview">
-        <div className="preview-head"><span className="preview-dots">● ● ●</span><span>Adobe Photoshop · NOVA Trame</span><span>PS</span></div>
-        <div className="preview-canvas trame-canvas">
-          {data.styles.slice(0, 8).map(s => <img key={s.id} src={"/trame/icons/" + s.id + ".png"} alt="" width={64} height={64}/>)}
-          <div className="preview-status"><Zap size={14}/> Live preview</div>
-        </div>
-        <div className="preview-foot"><span>STYLE PREVIEW</span><span>{data.styles.length} STYLES</span></div>
+      <div className="tool-preview tool-video-preview trame-video">
+        <div className="tool-video-titlebar"><span className="tool-video-window-title">NOVA Trame · Product video</span><div className="tool-video-window-controls" aria-hidden="true"><i className="tool-video-minimize"/><i className="tool-video-maximize"/><i className="tool-video-close"/></div></div>
+        <div className="tool-video-frame"><video src="/trame/nova-trame-ad.mp4" autoPlay muted loop playsInline controls preload="metadata" aria-label="NOVA Trame product video"/></div>
       </div>
     </section>
 
@@ -113,6 +109,7 @@ export default function TramePreviewPage() {
     <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Legal and support"><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
 
     <style>{`
+      .trame-video video{width:100%;height:100%;display:block;object-fit:contain;background:#000}
       .trame-canvas{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:18px;align-content:center;background:#fff}
       .trame-canvas img{width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;image-rendering:pixelated;border-radius:6px;background:#111}
       .trame-canvas .preview-status{grid-column:1/-1}
