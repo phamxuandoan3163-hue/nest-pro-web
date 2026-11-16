@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 const STEPS = [
-  { t: "Download and unzip the package", b: "Download NOVA-Trame-Studio-1.0.1-Setup.zip and extract the whole folder. Keep the folder together: the installer reads the plugin files from it, so do not run the script from inside the zip file." },
+  { t: "Download and unzip the package", b: "Download the NOVA Trame package and extract the whole folder. Keep the folder together: the installer reads the plugin files from it, so do not run the script from inside the zip file." },
   { t: "Windows: run the installer", b: "Double-click CAI-DAT-Windows.bat. The script allows Photoshop to load the plugin and copies it to your CEP extensions folder. When it prints that the install is complete, press any key to close the window." },
   { t: "macOS: open the installer", b: "Right-click CAI-DAT-Mac.command and choose Open. Confirm the warning if macOS asks. The script installs the plugin the same way as on Windows." },
   { t: "Restart Photoshop", b: "Quit Photoshop completely and open it again. The plugin is only detected when Photoshop starts." },
@@ -29,7 +29,7 @@ export default function InstallPage() {
       {STEPS.map((s, i) => <section className="article-section" key={s.t}><span>{String(i + 1).padStart(2, "0")}</span><div><h2>{s.t}</h2><p>{s.b}</p>{i === 4 && <figure className="guide-figure"><img src="/trame/guide/panel-new-file.png" alt="NOVA Trame Studio panel open in Photoshop, showing the New file tab" width={640} height={2000} loading="lazy"/><figcaption>The panel opens on the 1 · New file tab. The DTF halftone tab is next to it.</figcaption></figure>}</div></section>)}
 
       <section className="article-section"><span>!</span><div><h2>Updating to a newer version</h2><p>Run the installer again from the new package. It replaces the old files, then restart Photoshop.</p></div></section>
-      <section className="article-section"><span>?</span><div><h2>If the panel does not appear</h2><p>Check that you restarted Photoshop after installing. Then look at the status line under the Apply halftone button and copy the log. Send the log to support@ainovanesting.pro, together with your Photoshop version and operating system.</p></div></section>
+      <section className="article-section"><span>?</span><div><h2>If the panel does not appear</h2><p>Check that you restarted Photoshop after installing. Then look at the status line under the Apply halftone button and copy the log. Send the log to our <a href="/support">support page</a>, together with your Photoshop version and operating system.</p></div></section>
 
       <div className="article-bottom"><p>Ready to make your first halftone?</p><a className="button dark" href="/trame-preview/guide">Read the usage guide <ArrowRight size={15}/></a></div>
     </article>
