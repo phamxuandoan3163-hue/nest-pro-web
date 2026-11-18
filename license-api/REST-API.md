@@ -66,4 +66,3 @@ Releases a device seat.
 
 The Paddle client-side token belongs only in the website's public `NEXT_PUBLIC_PADDLE_SANDBOX_CLIENT_TOKEN` variable. Never put Paddle API keys or webhook secrets in the website or Illustrator extension. Keep these routes on Preview and keep `PADDLE_ENVIRONMENT=sandbox` until Sandbox checks are complete.
 
-The separate Lemon Squeezy MCP catalog endpoint is read-only and remains unchanged by this REST API.
