@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { ArrowRight, Check, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Check, Download, Sparkles, Zap } from "lucide-react";
 import data from "./styles.json";
 
 const GROUP_LABELS = { basic: "Basic", street: "Grunge", shape: "Shapes", pattern: "Patterns", trend: "Trends", vintage: "Vintage", color: "Color" };
@@ -53,12 +53,12 @@ export default function TramePreviewPage() {
 
     <section className="tool-hero shell">
       <div className="tool-hero-copy">
-        <span className="status-label"><i/> PREVIEW</span>
+        <span className="status-label status-label-active"><i/> AVAILABLE</span>
         <p className="eyebrow">PHOTOSHOP PLUGIN · DTF HALFTONE</p>
         <h1>NOVA Trame</h1>
         <p className="tool-intro">Halftone styles built for DTF printing on black and white shirts.</p>
         <p className="tool-description">Pick from {data.styles.length} halftone styles, set the frequency from the print size, and check the result in a live preview before you apply it.</p>
-        <div className="tool-hero-actions"><a className="button dark" href="#styles">Browse {data.styles.length} styles <ArrowRight size={16}/></a><a className="button outline" href="#workflow">See the workflow</a></div>
+        <div className="tool-hero-actions"><a className="button dark" href="#styles">Browse {data.styles.length} styles <ArrowRight size={16}/></a><a className="button outline" href="#workflow">See the workflow</a><a className="button outline" href="/trame-preview/install"><Download size={15}/> Free Download</a></div>
         <div className="tool-trust"><span><Check size={14}/> Built for DTF</span><span><Sparkles size={14}/> {data.styles.length} styles</span></div>
       </div>
       <div className="tool-preview tool-video-preview trame-video">
