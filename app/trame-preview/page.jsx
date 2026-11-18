@@ -6,10 +6,10 @@ import data from "./styles.json";
 const GROUP_LABELS = { basic: "Basic", street: "Grunge", shape: "Shapes", pattern: "Patterns", trend: "Trends", vintage: "Vintage", color: "Color" };
 
 const PLANS = [
-  { kicker: "START HERE", name: "Free trial", price: "$0", period: "for 7 days", text: "Test NOVA Trame with your own artwork before you commit.", features: ["7-day trial period", "All 130 halftone styles", "Live preview", "Evaluate on your Photoshop setup"] },
-  { kicker: "FLEXIBLE", name: "Monthly", price: "$5", period: "per month", text: "Flexible access for a production run, a busy month, or occasional jobs.", features: ["30 days of licensed access", "All 130 halftone styles", "Print-size LPI", "Black and white shirt modes"] },
-  { kicker: "STANDARD", name: "Yearly", price: "$50", period: "per year", text: "Everyday halftone work with a full year of access at a lower price than monthly.", features: ["12 months of licensed access", "All 130 halftone styles", "Print-size LPI", "Black and white shirt modes"] },
-  { kicker: "PRO TIER", name: "Yearly Pro", price: "$60", period: "per year", recommended: true, text: "Everything in Yearly, for demanding production and longer work sessions.", features: ["Everything in Yearly", "All 130 halftone styles", "Print-size LPI", "Built for demanding production"] }
+  { kicker: "START HERE", name: "Free trial", price: "$0", period: "for 7 days", text: "Test NOVA Trame with 21 classic styles on your own artwork before you commit.", features: ["21 halftone styles", "Classic dot and grain halftones", "7-day trial period", "Live preview"] },
+  { kicker: "FLEXIBLE", name: "Monthly", price: "$5", period: "per month", text: "75 styles for a production run, a busy month, or occasional jobs.", features: ["75 halftone styles", "Adds streetwear, special dots and line patterns", "30 days of licensed access", "Print-size LPI"] },
+  { kicker: "STANDARD", name: "Yearly", price: "$50", period: "per year", text: "94 styles for everyday halftone work, with a full year of access at a lower price than monthly.", features: ["94 halftone styles", "Adds trending tee effects", "12 months of licensed access", "Print-size LPI"] },
+  { kicker: "PRO TIER", name: "Yearly Pro", price: "$60", period: "per year", recommended: true, text: "All 130 styles, for demanding production and longer work sessions.", features: ["130 halftone styles", "Adds vintage styles and CMYK / spot colors", "Everything in Yearly", "Built for demanding production"] }
 ];
 
 const FEATURES = [
