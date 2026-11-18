@@ -1,4 +1,4 @@
-import { createCipheriv, createDecipheriv, createHash, createPrivateKey, randomBytes, sign } from "node:crypto";
+import { createCipheriv, createDecipheriv, createHash, createPrivateKey, createPublicKey, randomBytes, sign } from "node:crypto";
 
 export const TRAME_RENEW_URL = "https://ainovanesting.pro/trame-preview#pricing";
 export const TRAME_TRIAL_MS = 7 * 24 * 60 * 60 * 1000;
@@ -67,6 +67,24 @@ export function signEntitlement(payload) {
   if (!pem.includes("PRIVATE KEY")) throw new Error("TRAME_SIGNING_PRIVATE_KEY is not configured.");
   const body = Buffer.from(JSON.stringify(payload), "utf8");
   return sign(null, body, createPrivateKey(pem)).toString("base64");
+}
+
+// Raw 32-byte Ed25519 public key (base64) that the plugin embeds to verify offline codes.
+export function publicKeyB64() {
+  const pem = String(process.env.TRAME_SIGNING_PRIVATE_KEY || "").replace(/\\n/g, "\n");
+  if (!pem.includes("PRIVATE KEY")) throw new Error("TRAME_SIGNING_PRIVATE_KEY is not configured.");
+  const der = createPublicKey(createPrivateKey(pem)).export({ type: "spki", format: "der" });
+  return der.slice(der.length - 32).toString("base64");
+}
+
+// Offline activation code: base64(payloadJSON) + "." + base64(signature over those exact bytes).
+// The panel decodes the first part to raw bytes, verifies the signature over them, then parses JSON.
+export function makeOfflineToken(payload) {
+  const pem = String(process.env.TRAME_SIGNING_PRIVATE_KEY || "").replace(/\\n/g, "\n");
+  if (!pem.includes("PRIVATE KEY")) throw new Error("TRAME_SIGNING_PRIVATE_KEY is not configured.");
+  const body = Buffer.from(JSON.stringify(payload), "utf8");
+  const signature = sign(null, body, createPrivateKey(pem));
+  return body.toString("base64") + "." + signature.toString("base64");
 }
 
 export async function deliverTrameLicense(email, key, plan, reference) {
