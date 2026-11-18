@@ -8,12 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "@modelcontextprotocol/server": "^2.0.0",
-    "mcp-handler": "^2.0.0",
     "next": "latest",
     "postgres": "^3.4.7",
     "react": "latest",
-    "react-dom": "latest",
-    "zod": "^4.2.0"
+    "react-dom": "latest"
   }
 }
