@@ -41,9 +41,12 @@ export function hashDevice(deviceId) {
 }
 
 function encryptionKey() {
-  const value = String(process.env.TRAME_LICENSE_ENCRYPTION_KEY || "");
-  if (!/^[a-f0-9]{64}$/i.test(value)) throw new Error("TRAME_LICENSE_ENCRYPTION_KEY must be 64 hex characters.");
-  return Buffer.from(value, "hex");
+  const value = String(process.env.TRAME_LICENSE_ENCRYPTION_KEY || "").trim();
+  if (!value) throw new Error("TRAME_LICENSE_ENCRYPTION_KEY is not set.");
+  // A 64-char hex string is used directly; any other non-empty value is hashed
+  // to a stable 32-byte key, so the env var does not have to be hex.
+  if (/^[a-f0-9]{64}$/i.test(value)) return Buffer.from(value, "hex");
+  return createHash("sha256").update(value).digest();
 }
 
 export function encryptKey(key) {
