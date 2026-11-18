@@ -1,4 +1,5 @@
-const defaultOrigins = ["https://ainovanesting.pro", "https://www.ainovanesting.pro"];
+// "null" is the origin a CEP panel sends for its local HTML page.
+const defaultOrigins = ["https://ainovanesting.pro", "https://www.ainovanesting.pro", "null"];
 
 function allowedOrigin(request) {
   const origin = request?.headers?.get("origin") || "";
