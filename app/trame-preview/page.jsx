@@ -1,15 +1,18 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { ArrowRight, Check, Download, Sparkles, Zap } from "lucide-react";
 import data from "./styles.json";
+
+const PADDLE_TOKEN = process.env.NEXT_PUBLIC_PADDLE_SANDBOX_CLIENT_TOKEN || "";
+const PADDLE_ENV = process.env.NEXT_PUBLIC_PADDLE_ENV || "sandbox";
 
 const GROUP_LABELS = { basic: "Basic", street: "Grunge", shape: "Shapes", pattern: "Patterns", trend: "Trends", vintage: "Vintage", color: "Color" };
 
 const PLANS = [
   { kicker: "START HERE", name: "Free trial", price: "$0", period: "for 7 days", text: "Test NOVA Trame with 21 classic styles on your own artwork before you commit.", features: ["21 halftone styles", "Classic dot and grain halftones", "7-day trial period", "Live preview"] },
-  { kicker: "FLEXIBLE", name: "Monthly", price: "$5", period: "per month", text: "75 styles for a production run, a busy month, or occasional jobs.", features: ["75 halftone styles", "Adds streetwear, special dots and line patterns", "30 days of licensed access", "Print-size LPI"] },
-  { kicker: "STANDARD", name: "Yearly", price: "$50", period: "per year", text: "94 styles for everyday halftone work, with a full year of access at a lower price than monthly.", features: ["94 halftone styles", "Adds trending tee effects", "12 months of licensed access", "Print-size LPI"] },
-  { kicker: "PRO TIER", name: "Yearly Pro", price: "$60", period: "per year", recommended: true, text: "All 130 styles, for demanding production and longer work sessions.", features: ["130 halftone styles", "Adds vintage styles and CMYK / spot colors", "Everything in Yearly", "Built for demanding production"] }
+  { kicker: "FLEXIBLE", name: "Monthly", price: "$5", period: "per month", priceId: "pri_01m7rwz94rp0hp0dhbmeneeda3", text: "75 styles for a production run, a busy month, or occasional jobs.", features: ["75 halftone styles", "Adds streetwear, special dots and line patterns", "30 days of licensed access", "Print-size LPI"] },
+  { kicker: "STANDARD", name: "Yearly", price: "$50", period: "per year", priceId: "pri_01m7rx0ne8fb176wcf36ksecsa", text: "94 styles for everyday halftone work, with a full year of access at a lower price than monthly.", features: ["94 halftone styles", "Adds trending tee effects", "12 months of licensed access", "Print-size LPI"] },
+  { kicker: "PRO TIER", name: "Yearly Pro", price: "$60", period: "per year", recommended: true, priceId: "pri_01m7rx1vyr86287gw855bhb00q", text: "All 130 styles, for demanding production and longer work sessions.", features: ["130 halftone styles", "Adds vintage styles and CMYK / spot colors", "Everything in Yearly", "Built for demanding production"] }
 ];
 
 const FEATURES = [
@@ -31,6 +34,39 @@ const STEPS = [
 export default function TramePreviewPage() {
   const [active, setActive] = useState("all");
   const [query, setQuery] = useState("");
+  const [paddleReady, setPaddleReady] = useState(false);
+  const [notice, setNotice] = useState("");
+
+  // Load Paddle.js (CDN) once and initialize it for the sandbox checkout.
+  useEffect(() => {
+    if (!PADDLE_TOKEN) return;
+    function init() {
+      try {
+        window.Paddle.Environment.set(PADDLE_ENV);
+        window.Paddle.Initialize({
+          token: PADDLE_TOKEN,
+          eventCallback: (e) => {
+            if (e && e.name === "checkout.completed") {
+              setNotice("Payment complete. Your license key is on its way by email — check your inbox, then paste the key into the NOVA Trame panel.");
+            }
+          }
+        });
+        setPaddleReady(true);
+      } catch (err) { /* ignore */ }
+    }
+    if (window.Paddle) { init(); return; }
+    const sc = document.createElement("script");
+    sc.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
+    sc.async = true;
+    sc.onload = init;
+    document.body.appendChild(sc);
+  }, []);
+
+  function buy(priceId) {
+    if (!priceId) return;
+    if (!paddleReady || !window.Paddle) { setNotice("Checkout is still loading, please try again in a moment."); return; }
+    window.Paddle.Checkout.open({ items: [{ priceId: priceId, quantity: 1 }] });
+  }
 
   const groups = useMemo(() => data.groups.map(g => ({ ...g, label: GROUP_LABELS[g.id] || g.id })), []);
   const counts = useMemo(() => {
@@ -101,9 +137,12 @@ export default function TramePreviewPage() {
         <p className="trame-price"><b>{p.price}</b><span>{p.period}</span></p>
         <p className="trame-plan-text">{p.text}</p>
         <ul>{p.features.map(f => <li key={f}><Check size={14}/>{f}</li>)}</ul>
-        <span className="trame-cta" aria-disabled="true">Available at launch</span>
+        {p.priceId
+          ? <button className="trame-cta" onClick={() => buy(p.priceId)}>Buy {p.name} <ArrowRight size={15}/></button>
+          : <a className="trame-cta" href="/trame-preview/install">Get the 7-day trial <ArrowRight size={15}/></a>}
       </article>)}</div>
-      <p className="trame-note">Purchase and automatic license activation are not yet available on this page.</p>
+      {notice && <p className="trame-notice">{notice}</p>}
+      <p className="trame-note">After payment, your license key is emailed to you. Paste it into the NOVA Trame panel in Photoshop to activate. The 7-day trial starts from inside the plugin — no payment needed.</p>
     </section>
 
     <section id="resources" className="tool-resources shell">
@@ -146,9 +185,12 @@ export default function TramePreviewPage() {
       .trame-plan-text{opacity:.75;font-size:.92rem;line-height:1.5;min-height:66px}
       .trame-plan ul{list-style:none;padding:0;margin:14px 0 20px;display:grid;gap:8px;flex:1}
       .trame-plan li{display:flex;gap:8px;font-size:.9rem;align-items:flex-start}
-      .trame-cta{display:block;text-align:center;border:1px solid rgba(128,128,128,.5);border-radius:999px;padding:12px;opacity:.6}
-      .trame-plan-pro .trame-cta{background:#b9ecd0;color:#0d1f16;border-color:#b9ecd0;opacity:.8}
+      .trame-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;box-sizing:border-box;text-align:center;border:1px solid #8fd4a8;color:#cdeace;background:transparent;border-radius:999px;padding:12px;margin-top:4px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;transition:background .15s,color .15s}
+      .trame-cta:hover{background:#8fd4a8;color:#0d1f16}
+      .trame-plan-pro .trame-cta{background:#b9ecd0;color:#0d1f16;border-color:#b9ecd0}
+      .trame-plan-pro .trame-cta:hover{background:#cdeace}
       .trame-badge{position:absolute;top:18px;right:18px;background:#b9ecd0;color:#0d1f16;border-radius:999px;padding:4px 10px;font-size:.7rem;font-weight:700;letter-spacing:.06em}
+      .trame-notice{margin-top:16px;padding:12px 16px;border:1px solid #8fd4a8;border-radius:10px;background:rgba(143,212,168,.12);color:#bfe8cf;font-size:.95rem}
       .trame-note{opacity:.6;font-size:.85rem;margin-top:20px}
     `}</style>
   </main>;
