@@ -18,6 +18,25 @@ Admin CMS: http://localhost:3000/admin
 The included CMS is a frontend/local CMS intended to be easy to run immediately. For production multi-user editing and cloud persistence on Vercel, connect the same schema to Supabase, Neon/Postgres, or another database + authentication layer.
 
 
+## Releasing a NOVA Trame plugin update
+
+Since plugin 1.2.0, the panel reads `public/trame/latest.json` from the website each time it
+opens. When that version is newer than its own, it shows a "new version available" notice with
+a Download button. The panel never installs anything by itself.
+
+To publish a new version (example: 1.3.0):
+
+1. In the plugin source, set the same version in three places:
+   - `com.nova.tramestudio/update.js` → `var VERSION = "1.3.0";`
+   - `com.nova.tramestudio/CSXS/manifest.xml` → `ExtensionBundleVersion` and both `Extension Version` values.
+   - Release notes at the top of `README-EN.txt` and `README-VI.txt`.
+2. Zip the `NOVA-NESTING-TRAME-SET UP` folder and replace `public/trame/NOVA-NESTING-TRAME-SET_UP.zip`.
+3. Set `"version": "1.3.0"` in `public/trame/latest.json`.
+4. Commit the zip and `latest.json` together and deploy. Installed panels show the notice the next time they open.
+
+Keep steps 2 and 3 in the same deploy, so the notice never points to an older zip.
+Users update by downloading the zip, unzipping it and running the installer again; their license is kept.
+
 ## Nest-Pro Laser online seven-day trial API (review build)
 
 Routes:
