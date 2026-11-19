@@ -3,16 +3,26 @@ import { useMemo, useState, useEffect } from "react";
 import { ArrowRight, Check, Download, Sparkles, Zap } from "lucide-react";
 import data from "./styles.json";
 
-const PADDLE_TOKEN = process.env.NEXT_PUBLIC_PADDLE_SANDBOX_CLIENT_TOKEN || "";
+// Live in production (NEXT_PUBLIC_PADDLE_ENV=live), sandbox everywhere else.
 const PADDLE_ENV = process.env.NEXT_PUBLIC_PADDLE_ENV || "sandbox";
+const PADDLE_LIVE = PADDLE_ENV === "live" || PADDLE_ENV === "production";
+const PADDLE_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || process.env.NEXT_PUBLIC_PADDLE_SANDBOX_CLIENT_TOKEN || "";
+
+// Paddle price IDs per plan. The license API maps both sets to the same plans.
+const PRICE_IDS = {
+  monthly: { live: "pri_01m7qg72fmshh1rbjncv4t5ywd", sandbox: "pri_01m7rwz94rp0hp0dhbmeneeda3" },
+  yearly: { live: "pri_01m7qg72k6fhnz3e50yt55wf6k", sandbox: "pri_01m7rx0ne8fb176wcf36ksecsa" },
+  yearly_pro: { live: "pri_01m7qg72p299r0vcmdm7ecqs9v", sandbox: "pri_01m7rx1vyr86287gw855bhb00q" }
+};
+const priceFor = (plan) => PRICE_IDS[plan][PADDLE_LIVE ? "live" : "sandbox"];
 
 const GROUP_LABELS = { basic: "Basic", street: "Grunge", shape: "Shapes", pattern: "Patterns", trend: "Trends", vintage: "Vintage", color: "Color" };
 
 const PLANS = [
   { kicker: "START HERE", name: "Free trial", price: "$0", period: "for 7 days", text: "Test NOVA Trame with 21 classic styles on your own artwork before you commit.", features: ["21 halftone styles", "Classic dot and grain halftones", "7-day trial period", "Live preview"] },
-  { kicker: "FLEXIBLE", name: "Monthly", price: "$5", period: "per month", priceId: "pri_01m7rwz94rp0hp0dhbmeneeda3", text: "75 styles for a production run, a busy month, or occasional jobs.", features: ["75 halftone styles", "Adds streetwear, special dots and line patterns", "30 days of licensed access", "Print-size LPI"] },
-  { kicker: "STANDARD", name: "Yearly", price: "$50", period: "per year", priceId: "pri_01m7rx0ne8fb176wcf36ksecsa", text: "94 styles for everyday halftone work, with a full year of access at a lower price than monthly.", features: ["94 halftone styles", "Adds trending tee effects", "12 months of licensed access", "Print-size LPI"] },
-  { kicker: "PRO TIER", name: "Yearly Pro", price: "$60", period: "per year", recommended: true, priceId: "pri_01m7rx1vyr86287gw855bhb00q", text: "All 130 styles, for demanding production and longer work sessions.", features: ["130 halftone styles", "Adds vintage styles and CMYK / spot colors", "Everything in Yearly", "Built for demanding production"] }
+  { kicker: "FLEXIBLE", name: "Monthly", price: "$5", period: "per month", priceId: priceFor("monthly"), text: "75 styles for a production run, a busy month, or occasional jobs.", features: ["75 halftone styles", "Adds streetwear, special dots and line patterns", "30 days of licensed access", "Print-size LPI"] },
+  { kicker: "STANDARD", name: "Yearly", price: "$50", period: "per year", priceId: priceFor("yearly"), text: "94 styles for everyday halftone work, with a full year of access at a lower price than monthly.", features: ["94 halftone styles", "Adds trending tee effects", "12 months of licensed access", "Print-size LPI"] },
+  { kicker: "PRO TIER", name: "Yearly Pro", price: "$60", period: "per year", recommended: true, priceId: priceFor("yearly_pro"), text: "All 130 styles, for demanding production and longer work sessions.", features: ["130 halftone styles", "Adds vintage styles and CMYK / spot colors", "Everything in Yearly", "Built for demanding production"] }
 ];
 
 const FEATURES = [
@@ -37,12 +47,12 @@ export default function TramePreviewPage() {
   const [paddleReady, setPaddleReady] = useState(false);
   const [notice, setNotice] = useState("");
 
-  // Load Paddle.js (CDN) once and initialize it for the sandbox checkout.
+  // Load Paddle.js (CDN) once and initialize it. Paddle.js defaults to live; only sandbox is set explicitly.
   useEffect(() => {
     if (!PADDLE_TOKEN) return;
     function init() {
       try {
-        window.Paddle.Environment.set(PADDLE_ENV);
+        if (!PADDLE_LIVE) window.Paddle.Environment.set("sandbox");
         window.Paddle.Initialize({
           token: PADDLE_TOKEN,
           eventCallback: (e) => {
