@@ -5,9 +5,14 @@ export const TRAME_TRIAL_MS = 7 * 24 * 60 * 60 * 1000;
 
 // Paddle price IDs for the NOVA Trame product (product pro_01m7qg72cfttxg8jtz5jbn3zj1).
 const PLANS = {
+  // Live price IDs
   pri_01m7qg72fmshh1rbjncv4t5ywd: { key: "monthly", days: 30, recurring: true, label: "Monthly" },
   pri_01m7qg72k6fhnz3e50yt55wf6k: { key: "yearly", days: 365, recurring: true, label: "Yearly" },
-  pri_01m7qg72p299r0vcmdm7ecqs9v: { key: "yearly_pro", days: 365, recurring: true, label: "Yearly Pro" }
+  pri_01m7qg72p299r0vcmdm7ecqs9v: { key: "yearly_pro", days: 365, recurring: true, label: "Yearly Pro" },
+  // Sandbox price IDs (for test-mode purchases)
+  pri_01m7rwz94rp0hp0dhbmeneeda3: { key: "monthly", days: 30, recurring: true, label: "Monthly" },
+  pri_01m7rx0ne8fb176wcf36ksecsa: { key: "yearly", days: 365, recurring: true, label: "Yearly" },
+  pri_01m7rx1vyr86287gw855bhb00q: { key: "yearly_pro", days: 365, recurring: true, label: "Yearly Pro" }
 };
 
 // Style groups unlocked by each plan. Keys match the plugin's group ids.
