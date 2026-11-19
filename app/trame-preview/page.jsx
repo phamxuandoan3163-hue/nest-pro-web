@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState, useEffect } from "react";
-import { ArrowRight, Check, Download, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, Download, Sparkles, Zap } from "lucide-react";
 import data from "./styles.json";
 
 // Live in production (NEXT_PUBLIC_PADDLE_ENV=live), sandbox everywhere else.
@@ -17,6 +17,8 @@ const PRICE_IDS = {
 const priceFor = (plan) => PRICE_IDS[plan][PADDLE_LIVE ? "live" : "sandbox"];
 
 const GROUP_LABELS = { basic: "Basic", street: "Grunge", shape: "Shapes", pattern: "Patterns", trend: "Trends", vintage: "Vintage", color: "Color" };
+// Lowest plan that unlocks each group (matches the license server's plan groups).
+const GROUP_PLAN = { basic: "Free trial", street: "Monthly", shape: "Monthly", pattern: "Monthly", trend: "Yearly", vintage: "Yearly Pro", color: "Yearly Pro" };
 
 const PLANS = [
   { kicker: "START HERE", name: "Free trial", price: "$0", period: "for 7 days", text: "Test NOVA Trame with 21 classic styles on your own artwork before you commit.", features: ["21 halftone styles", "Classic dot and grain halftones", "7-day trial period", "Live preview"] },
@@ -42,7 +44,7 @@ const STEPS = [
 ];
 
 export default function TramePreviewPage() {
-  const [active, setActive] = useState("all");
+  const [openGroups, setOpenGroups] = useState(() => new Set(["basic"]));
   const [query, setQuery] = useState("");
   const [paddleReady, setPaddleReady] = useState(false);
   const [notice, setNotice] = useState("");
@@ -79,21 +81,27 @@ export default function TramePreviewPage() {
   }
 
   const groups = useMemo(() => data.groups.map(g => ({ ...g, label: GROUP_LABELS[g.id] || g.id })), []);
-  const counts = useMemo(() => {
-    const c = {};
-    data.styles.forEach(s => { c[s.group] = (c[s.group] || 0) + 1; });
-    return c;
-  }, []);
-  const shown = useMemo(() => {
+  const searching = query.trim() !== "";
+  // Styles per group, filtered by the search box.
+  const grouped = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return data.styles.filter(s =>
-      (active === "all" || s.group === active) &&
-      (!q || s.name.toLowerCase().includes(q) || s.id.toLowerCase().includes(q))
-    );
-  }, [active, query]);
+    return groups.map(g => ({
+      ...g,
+      total: data.styles.filter(s => s.group === g.id).length,
+      styles: data.styles.filter(s => s.group === g.id && (!q || s.name.toLowerCase().includes(q) || s.id.toLowerCase().includes(q)))
+    }));
+  }, [groups, query]);
+  const shownCount = grouped.reduce((n, g) => n + g.styles.length, 0);
+  const allOpen = openGroups.size === groups.length;
+  function toggleGroup(id) {
+    setOpenGroups(prev => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
+  }
+  function toggleAll() {
+    setOpenGroups(allOpen ? new Set() : new Set(groups.map(g => g.id)));
+  }
 
   return <main className="tool-page trame-page">
-    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><div className="nav-links"><a href="/#tools">Tools</a><a href="#features">Features</a><a href="#workflow">Workflow</a><a href="#styles">Styles</a><a href="#pricing">Pricing</a><a href="/guides">Guides</a></div><a href="#pricing" className="nav-buy">Pricing <ArrowRight size={15}/></a></nav></header>
+    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><div className="nav-links"><a href="/#tools">Tools</a><a href="#features">Features</a><a href="#workflow">Workflow</a><a href="#styles">Styles</a><a href="#pricing">Pricing</a><a href="/guides">Guides</a></div></nav></header>
 
     <div className="tool-breadcrumb shell"><a href="/">All tools</a><span>/</span><span>NOVA Trame</span></div>
 
@@ -125,17 +133,29 @@ export default function TramePreviewPage() {
     </div></section>
 
     <section id="styles" className="tool-resources shell">
-      <div className="tool-section-head"><p className="eyebrow">STYLE LIBRARY</p><h2>Browse every style.</h2><p>Filter by group or search by name. Each style shows its icon and a short description.</p></div>
+      <div className="tool-section-head"><p className="eyebrow">STYLE LIBRARY</p><h2>Browse every style.</h2><p>Open a group to see its styles, or search by name. Each group shows the plan that unlocks it.</p></div>
       <div className="trame-toolbar">
-        <div className="trame-chips" role="tablist" aria-label="Style groups">
-          <button className={"trame-chip" + (active === "all" ? " active" : "")} onClick={() => setActive("all")}>All <span>{data.styles.length}</span></button>
-          {groups.map(g => <button key={g.id} className={"trame-chip" + (active === g.id ? " active" : "")} onClick={() => setActive(g.id)}>{g.label} <span>{counts[g.id] || 0}</span></button>)}
+        <p className="trame-count">{searching ? `${shownCount} of ${data.styles.length} styles match` : `${data.styles.length} styles in ${groups.length} groups`}</p>
+        <div className="trame-toolbar-right">
+          {!searching && <button className="trame-toggle-all" onClick={toggleAll}>{allOpen ? "Collapse all" : "Expand all"}</button>}
+          <input className="trame-search" type="search" placeholder="Search styles" value={query} onChange={e => setQuery(e.target.value)} aria-label="Search styles"/>
         </div>
-        <input className="trame-search" type="search" placeholder="Search styles" value={query} onChange={e => setQuery(e.target.value)} aria-label="Search styles"/>
       </div>
-      <p className="trame-count">Showing {shown.length} of {data.styles.length}</p>
-      <div className="trame-grid">{shown.map(s => <article className="trame-tile" key={s.id}><div className="trame-im"><img src={"/trame/icons/" + s.id + ".png"} alt="" loading="lazy" width={64} height={64}/></div><h3>{s.name}</h3><p>{s.desc}</p></article>)}</div>
-      {shown.length === 0 && <p className="trame-empty">No styles match your search.</p>}
+      <div className="trame-groups">
+        {grouped.filter(g => !searching || g.styles.length > 0).map(g => {
+          const isOpen = searching || openGroups.has(g.id);
+          return <div className={"trame-group" + (isOpen ? " open" : "")} key={g.id}>
+            <button className="trame-group-head" onClick={() => toggleGroup(g.id)} aria-expanded={isOpen} aria-controls={"trame-group-" + g.id} disabled={searching}>
+              <span className="trame-group-name">{g.label}</span>
+              <span className="trame-group-count">{searching ? `${g.styles.length} / ${g.total}` : g.total} styles</span>
+              <span className="trame-group-plan">{GROUP_PLAN[g.id]}</span>
+              <ChevronDown size={18} className="trame-group-chevron" aria-hidden="true"/>
+            </button>
+            {isOpen && <div className="trame-grid" id={"trame-group-" + g.id}>{g.styles.map(s => <article className="trame-tile" key={s.id}><div className="trame-im"><img src={"/trame/icons/" + s.id + ".png"} alt="" loading="lazy" width={64} height={64}/></div><h3>{s.name}</h3><p>{s.desc}</p></article>)}</div>}
+          </div>;
+        })}
+      </div>
+      {searching && shownCount === 0 && <p className="trame-empty">No styles match your search.</p>}
     </section>
 
     <section id="pricing" className="trame-pricing shell">
@@ -149,7 +169,7 @@ export default function TramePreviewPage() {
         <ul>{p.features.map(f => <li key={f}><Check size={14}/>{f}</li>)}</ul>
         {p.priceId
           ? <button className="trame-cta" onClick={() => buy(p.priceId)}>Buy {p.name} <ArrowRight size={15}/></button>
-          : <a className="trame-cta" href="/trame-preview/install">Get the 7-day trial <ArrowRight size={15}/></a>}
+          : <a className="trame-cta" href="/trame/NOVA-NESTING-TRAME-SET_UP.zip" download>Get the 7-day trial <ArrowRight size={15}/></a>}
       </article>)}</div>
       {notice && <p className="trame-notice">{notice}</p>}
       <p className="trame-note">After payment, your license key is emailed to you. Paste it into the NOVA Trame panel in Photoshop to activate. The 7-day trial starts from inside the plugin — no payment needed.</p>
@@ -171,14 +191,27 @@ export default function TramePreviewPage() {
       .trame-canvas img{width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;image-rendering:pixelated;border-radius:6px;background:#111}
       .trame-canvas .preview-status{grid-column:1/-1}
       .trame-toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:28px 0 12px}
-      .trame-chips{display:flex;flex-wrap:wrap;gap:8px}
-      .trame-chip{border:1px solid currentColor;background:transparent;border-radius:999px;padding:6px 12px;cursor:pointer;font:inherit;opacity:.7;color:inherit}
-      .trame-chip.active{opacity:1;font-weight:600}
-      .trame-chip span{opacity:.6;margin-left:4px}
+      .trame-toolbar-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+      .trame-toggle-all{border:1px solid rgba(128,128,128,.45);background:transparent;color:inherit;border-radius:8px;padding:8px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+      .trame-toggle-all:hover{border-color:#8fd4a8}
       .trame-search{min-width:220px;padding:8px 12px;border-radius:8px;border:1px solid #888;font:inherit;background:transparent;color:inherit}
-      .trame-count{opacity:.65;margin:0 0 14px}
-      .trame-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
-      .trame-tile{border:1px solid rgba(128,128,128,.3);border-radius:14px;padding:14px}
+      .trame-count{opacity:.65;margin:0}
+      .trame-groups{display:grid;gap:10px}
+      .trame-group{border:1px solid rgba(128,128,128,.3);border-radius:14px;overflow:hidden}
+      .trame-group.open{border-color:rgba(143,212,168,.45)}
+      .trame-group-head{width:100%;display:flex;align-items:center;gap:14px;padding:16px 18px;background:transparent;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+      .trame-group-head:hover{background:rgba(143,212,168,.06)}
+      .trame-group-head:disabled{cursor:default}
+      .trame-group-name{font-size:1.1rem;font-weight:700}
+      .trame-group-count{opacity:.6;font-size:.88rem}
+      .trame-group-plan{margin-left:auto;border:1px solid rgba(143,212,168,.5);color:#b9ecd0;border-radius:999px;padding:3px 10px;font-size:.75rem;font-weight:600;white-space:nowrap}
+      .trame-group-chevron{flex:0 0 auto;opacity:.7;transition:transform .2s}
+      .trame-group.open .trame-group-chevron{transform:rotate(180deg)}
+      .trame-group .trame-grid{padding:4px 18px 18px}
+      .trame-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+      .trame-tile{border:1px solid rgba(128,128,128,.3);border-radius:12px;padding:10px}
+      .trame-tile p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+      @media(max-width:600px){.trame-group-head{flex-wrap:wrap;gap:6px 12px}.trame-group-plan{margin-left:0}.trame-search{min-width:0;flex:1}}
       .trame-im{background:#fff;border-radius:8px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden}
       .trame-im img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
       .trame-tile h3{font-size:1rem;margin:0 0 4px}
