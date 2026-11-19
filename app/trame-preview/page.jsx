@@ -93,7 +93,7 @@ export default function TramePreviewPage() {
   }, [active, query]);
 
   return <main className="tool-page trame-page">
-    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><div className="nav-links"><a href="/#tools">Tools</a><a href="#features">Features</a><a href="#workflow">Workflow</a><a href="#styles">Styles</a><a href="#pricing">Pricing</a><a href="/guides">Guides</a></div><a href="#pricing" className="nav-buy">Pricing <ArrowRight size={15}/></a></nav></header>
+    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><div className="nav-links"><a href="/#tools">Tools</a><a href="#features">Features</a><a href="#workflow">Workflow</a><a href="#styles">Styles</a><a href="#pricing">Pricing</a><a href="/guides">Guides</a></div></nav></header>
 
     <div className="tool-breadcrumb shell"><a href="/">All tools</a><span>/</span><span>NOVA Trame</span></div>
 
@@ -149,7 +149,7 @@ export default function TramePreviewPage() {
         <ul>{p.features.map(f => <li key={f}><Check size={14}/>{f}</li>)}</ul>
         {p.priceId
           ? <button className="trame-cta" onClick={() => buy(p.priceId)}>Buy {p.name} <ArrowRight size={15}/></button>
-          : <a className="trame-cta" href="/trame-preview/install">Get the 7-day trial <ArrowRight size={15}/></a>}
+          : <a className="trame-cta" href="/trame/NOVA-NESTING-TRAME-SET_UP.zip" download>Get the 7-day trial <ArrowRight size={15}/></a>}
       </article>)}</div>
       {notice && <p className="trame-notice">{notice}</p>}
       <p className="trame-note">After payment, your license key is emailed to you. Paste it into the NOVA Trame panel in Photoshop to activate. The 7-day trial starts from inside the plugin — no payment needed.</p>
