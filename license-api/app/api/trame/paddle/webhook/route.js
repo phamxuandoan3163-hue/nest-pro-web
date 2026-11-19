@@ -28,8 +28,20 @@ function firstItem(transaction) {
   return items.length === 1 && Number(items[0].quantity || 1) === 1 ? items[0] : null;
 }
 
-function emailFrom(transaction) {
-  const email = String(transaction.customer?.email || transaction.billing_details?.email || transaction.customer_email || "").trim().toLowerCase();
+function paddleApiBase() {
+  return process.env.PADDLE_ENVIRONMENT === "live" ? "https://api.paddle.com" : "https://sandbox-api.paddle.com";
+}
+
+async function emailFrom(transaction) {
+  let email = String(transaction.customer?.email || transaction.billing_details?.email || transaction.customer_email || "").trim().toLowerCase();
+  if (!email && transaction.customer_id && process.env.PADDLE_API_KEY) {
+    const response = await fetch(paddleApiBase() + "/customers/" + encodeURIComponent(String(transaction.customer_id)), {
+      headers: { Authorization: "Bearer " + process.env.PADDLE_API_KEY, Accept: "application/json" },
+      cache: "no-store"
+    });
+    const payload = await response.json().catch(() => null);
+    email = String(payload?.data?.email || "").trim().toLowerCase();
+  }
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : null;
 }
 
@@ -86,7 +98,7 @@ export async function POST(request) {
   const expiresAt = plan.recurring && periodEnd
     ? periodEnd
     : new Date(Date.now() + plan.days * 24 * 60 * 60 * 1000).toISOString();
-  const email = emailFrom(transaction);
+  const email = await emailFrom(transaction);
   if (!email) return Response.json({ error: "invalid_customer_email" }, { status: 502 });
 
   const existing = subscriptionId
