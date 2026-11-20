@@ -18,7 +18,7 @@ const STEPS = [
 
 export default function GuidePage() {
   return <main className="article-page">
-    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><div className="nav-links"><a href="/trame-preview#features">Features</a><a href="/trame-preview#workflow">Workflow</a><a href="/trame-preview#styles">Styles</a><a href="/trame-preview/install">Install</a></div><a href="/trame-preview" className="nav-buy">Back to NOVA Trame <ArrowRight size={15}/></a></nav></header>
+    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><div className="nav-links"><a href="/trame-preview#features">Features</a><a href="/trame-preview#workflow">Workflow</a><a href="/trame-preview/install">Install</a></div><a href="/trame-preview" className="nav-buy">Back to NOVA Trame <ArrowRight size={15}/></a></nav></header>
     <div className="shell article-breadcrumb"><a href="/">All tools</a><span>/</span><a href="/trame-preview">NOVA Trame</a><span>/</span><span>Usage guide</span></div>
     <article className="article-body shell">
       <a className="article-back" href="/trame-preview#resources"><ArrowRight size={14}/> Back to NOVA Trame resources</a>
