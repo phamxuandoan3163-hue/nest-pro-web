@@ -21,6 +21,11 @@ export default function ActiveNavMarker() {
         if (byHash) return byHash;
       }
 
+      // Home page tabs: with no (or an unknown) hash the first tab, Tools, is showing.
+      if (path === "/") {
+        return links.find((link) => new URL(link.href, window.location.href).hash === "#tools");
+      }
+
       if (path.includes("/articles/")) {
         return links.find((link) => link.textContent.trim().toLowerCase() === "resources");
       }
