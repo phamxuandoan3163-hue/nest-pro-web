@@ -10,7 +10,10 @@ export default function ActiveNavMarker() {
       const hash = window.location.hash;
 
       if (path === "/guides" || path.startsWith("/guides/")) {
-        return links.find((link) => new URL(link.href, window.location.href).pathname === "/guides");
+        const guideLinks = links.filter((link) => new URL(link.href, window.location.href).pathname === "/guides");
+        // "Resources" points at /guides#guide-library; the "Guides" link has no hash and is the page's own tab.
+        const byHash = hash && guideLinks.find((link) => new URL(link.href, window.location.href).hash === hash);
+        return byHash || guideLinks.find((link) => !new URL(link.href, window.location.href).hash) || guideLinks[0];
       }
 
       if (hash) {

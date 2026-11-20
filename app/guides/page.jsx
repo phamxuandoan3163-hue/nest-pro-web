@@ -51,7 +51,6 @@ export default function GuidesPage() {
               <a key={item.label} href={item.href} aria-current={item.current ? "page" : undefined}>{item.label}</a>
             ))}
           </div>
-          <a href="/license" className="nav-buy">Licensing <ArrowRight size={15}/></a>
         </nav>
       </header>
 
