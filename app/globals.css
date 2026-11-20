@@ -1606,3 +1606,7 @@ body{
   width:17px;
   height:17px;
 }
+
+/* Tag + platform stack on product cards: keep the status tag styled exactly like .product-card-top>span */
+.product-tag-stack>span{font-size:8px;letter-spacing:1.7px;font-weight:850;color:#7c8384}
+.product-primary .product-tag-stack>span{color:#67645e}
