@@ -19,6 +19,15 @@ const priceFor = (plan) => PRICE_IDS[plan][PADDLE_LIVE ? "live" : "sandbox"];
 const GROUP_LABELS = { basic: "Basic", street: "Grunge", shape: "Shapes", pattern: "Patterns", trend: "Trends", vintage: "Vintage", color: "Color" };
 // Lowest plan that unlocks each group (matches the license server's plan groups).
 const GROUP_PLAN = { basic: "Free trial", street: "Monthly", shape: "Monthly", pattern: "Monthly", trend: "Yearly", vintage: "Yearly Pro", color: "Yearly Pro" };
+// Plans are cumulative: each plan includes every group of the plans before it
+// (Free trial: Basic; Monthly: 4 groups incl. Basic; Yearly: 5; Yearly Pro: all 7).
+const PLAN_ORDER = ["Free trial", "Monthly", "Yearly", "Yearly Pro"];
+const planRank = (name) => PLAN_ORDER.indexOf(name);
+// Badge on each group: Basic is the free-trial set, the top groups are Yearly Pro only, the rest are "From <plan>".
+const groupBadge = (id) => {
+  const rank = planRank(GROUP_PLAN[id]);
+  return rank === 0 ? "Free trial" : rank === PLAN_ORDER.length - 1 ? "Yearly Pro" : "From " + GROUP_PLAN[id];
+};
 
 const PLANS = [
   { kicker: "START HERE", name: "Free trial", price: "$0", period: "for 7 days", text: "Test NOVA Trame with 21 classic styles on your own artwork before you commit.", features: ["21 halftone styles", "Classic dot and grain halftones", "7-day trial period", "Live preview"] },
@@ -44,7 +53,11 @@ const STEPS = [
 ];
 
 export default function TramePreviewPage() {
-  const [openGroups, setOpenGroups] = useState(() => new Set(["basic"]));
+  const [plan, setPlan] = useState("Yearly Pro");
+  // Groups start closed. Hovering a group previews it; clicking pins it open until clicked again.
+  const [pinned, setPinned] = useState(() => new Set());
+  const [hovered, setHovered] = useState(null);
+  const [muted, setMuted] = useState(null);
   const [query, setQuery] = useState("");
   const [paddleReady, setPaddleReady] = useState(false);
   const [notice, setNotice] = useState("");
@@ -82,22 +95,36 @@ export default function TramePreviewPage() {
 
   const groups = useMemo(() => data.groups.map(g => ({ ...g, label: GROUP_LABELS[g.id] || g.id })), []);
   const searching = query.trim() !== "";
-  // Styles per group, filtered by the search box.
+  // What each plan includes (cumulative), with group and style counts.
+  const planStats = useMemo(() => PLAN_ORDER.map(name => {
+    const ids = groups.filter(g => planRank(GROUP_PLAN[g.id]) <= planRank(name)).map(g => g.id);
+    return { name, groupIds: ids, labels: ids.map(id => GROUP_LABELS[id] || id), styles: data.styles.filter(s => ids.includes(s.group)).length };
+  }), [groups]);
+  const activePlan = planStats.find(p => p.name === plan) || planStats[planStats.length - 1];
+  // Styles per group. Without a search, only the chosen plan's groups are listed; a search covers the whole library.
   const grouped = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return groups.map(g => ({
+    return groups.filter(g => q || activePlan.groupIds.includes(g.id)).map(g => ({
       ...g,
       total: data.styles.filter(s => s.group === g.id).length,
       styles: data.styles.filter(s => s.group === g.id && (!q || s.name.toLowerCase().includes(q) || s.id.toLowerCase().includes(q)))
     }));
-  }, [groups, query]);
+  }, [groups, query, activePlan]);
   const shownCount = grouped.reduce((n, g) => n + g.styles.length, 0);
-  const allOpen = openGroups.size === groups.length;
+  const allOpen = grouped.length > 0 && grouped.every(g => pinned.has(g.id));
+  // Click pins a group open; clicking a pinned group closes it (and ignores hover until the pointer leaves).
   function toggleGroup(id) {
-    setOpenGroups(prev => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
+    if (pinned.has(id)) { setMuted(id); setHovered(null); }
+    setPinned(prev => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
   }
   function toggleAll() {
-    setOpenGroups(allOpen ? new Set() : new Set(groups.map(g => g.id)));
+    setHovered(null);
+    setPinned(allOpen ? new Set() : new Set(grouped.map(g => g.id)));
+  }
+  function hoverGroup(id) { if (muted !== id) setHovered(id); }
+  function leaveGroup(id) {
+    setHovered(h => (h === id ? null : h));
+    setMuted(m => (m === id ? null : m));
   }
 
   return <main className="tool-page trame-page">
@@ -133,9 +160,16 @@ export default function TramePreviewPage() {
     </div></section>
 
     <section id="styles" className="tool-resources shell">
-      <div className="tool-section-head"><p className="eyebrow">STYLE LIBRARY</p><h2>Browse every style.</h2><p>Open a group to see its styles, or search by name. Each group shows the plan that unlocks it.</p></div>
+      <div className="tool-section-head"><p className="eyebrow">STYLE LIBRARY</p><h2>Browse every style.</h2><p>Pick a plan to see what it includes. Each plan includes everything in the plans before it. Hover a group to preview its styles, click to keep it open.</p></div>
+      <div className="trame-plan-switch" role="group" aria-label="Choose a plan">
+        {planStats.map(p => <button type="button" key={p.name} className={"trame-plan-chip" + (plan === p.name ? " active" : "")} aria-pressed={plan === p.name} onClick={() => setPlan(p.name)}>
+          <b>{p.name}</b>
+          <span>{p.groupIds.length} {p.groupIds.length === 1 ? "group" : "groups"} · {p.styles} styles</span>
+        </button>)}
+      </div>
+      <p className="trame-plan-note">{activePlan.name} includes {activePlan.groupIds.length} {activePlan.groupIds.length === 1 ? "group" : "groups"}: {activePlan.labels.join(", ")}.</p>
       <div className="trame-toolbar">
-        <p className="trame-count">{searching ? `${shownCount} of ${data.styles.length} styles match` : `${data.styles.length} styles in ${groups.length} groups`}</p>
+        <p className="trame-count">{searching ? `${shownCount} of ${data.styles.length} styles match` : `${activePlan.styles} styles in ${activePlan.groupIds.length} ${activePlan.groupIds.length === 1 ? "group" : "groups"}`}</p>
         <div className="trame-toolbar-right">
           {!searching && <button className="trame-toggle-all" onClick={toggleAll}>{allOpen ? "Collapse all" : "Expand all"}</button>}
           <input className="trame-search" type="search" placeholder="Search styles" value={query} onChange={e => setQuery(e.target.value)} aria-label="Search styles"/>
@@ -143,12 +177,13 @@ export default function TramePreviewPage() {
       </div>
       <div className="trame-groups">
         {grouped.filter(g => !searching || g.styles.length > 0).map(g => {
-          const isOpen = searching || openGroups.has(g.id);
-          return <div className={"trame-group" + (isOpen ? " open" : "")} key={g.id}>
+          const isPinned = pinned.has(g.id);
+          const isOpen = searching || isPinned || hovered === g.id;
+          return <div className={"trame-group" + (isOpen ? " open" : "") + (isPinned ? " pinned" : "")} key={g.id} onMouseEnter={() => hoverGroup(g.id)} onMouseLeave={() => leaveGroup(g.id)}>
             <button className="trame-group-head" onClick={() => toggleGroup(g.id)} aria-expanded={isOpen} aria-controls={"trame-group-" + g.id} disabled={searching}>
               <span className="trame-group-name">{g.label}</span>
               <span className="trame-group-count">{searching ? `${g.styles.length} / ${g.total}` : g.total} styles</span>
-              <span className="trame-group-plan">{GROUP_PLAN[g.id]}</span>
+              <span className="trame-group-plan">{groupBadge(g.id)}</span>
               <ChevronDown size={18} className="trame-group-chevron" aria-hidden="true"/>
             </button>
             {isOpen && <div className="trame-grid" id={"trame-group-" + g.id}>{g.styles.map(s => <article className="trame-tile" key={s.id}><div className="trame-im"><img src={"/trame/icons/" + s.id + ".png"} alt="" loading="lazy" width={64} height={64}/></div><h3>{s.name}</h3><p>{s.desc}</p></article>)}</div>}
@@ -199,6 +234,15 @@ export default function TramePreviewPage() {
       .trame-groups{display:grid;gap:10px}
       .trame-group{border:1px solid rgba(128,128,128,.3);border-radius:14px;overflow:hidden}
       .trame-group.open{border-color:rgba(143,212,168,.45)}
+      .trame-group.pinned{border-color:#8fd4a8}
+      .trame-plan-switch{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:24px 0 10px}
+      .trame-plan-chip{display:flex;flex-direction:column;gap:2px;align-items:flex-start;text-align:left;border:1px solid rgba(128,128,128,.4);background:transparent;color:inherit;border-radius:14px;padding:12px 14px;font:inherit;cursor:pointer}
+      .trame-plan-chip b{font-size:1rem}
+      .trame-plan-chip span{opacity:.7;font-size:.82rem}
+      .trame-plan-chip:hover{border-color:#8fd4a8}
+      .trame-plan-chip.active{border-color:#8fd4a8;background:rgba(143,212,168,.12)}
+      .trame-plan-chip.active b{color:#b9ecd0}
+      .trame-plan-note{margin:0 0 4px;opacity:.75;font-size:.92rem}
       .trame-group-head{width:100%;display:flex;align-items:center;gap:14px;padding:16px 18px;background:transparent;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
       .trame-group-head:hover{background:rgba(143,212,168,.06)}
       .trame-group-head:disabled{cursor:default}
