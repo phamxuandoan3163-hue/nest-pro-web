@@ -23,11 +23,8 @@ const GROUP_PLAN = { basic: "Free trial", street: "Monthly", shape: "Monthly", p
 // (Free trial: Basic; Monthly: 4 groups incl. Basic; Yearly: 5; Yearly Pro: all 7).
 const PLAN_ORDER = ["Free trial", "Monthly", "Yearly", "Yearly Pro"];
 const planRank = (name) => PLAN_ORDER.indexOf(name);
-// Badge on each group: Basic is the free-trial set, the top groups are Yearly Pro only, the rest are "From <plan>".
-const groupBadge = (id) => {
-  const rank = planRank(GROUP_PLAN[id]);
-  return rank === 0 ? "Free trial" : rank === PLAN_ORDER.length - 1 ? "Yearly Pro" : "From " + GROUP_PLAN[id];
-};
+// Every plan that includes a group (its lowest plan and all higher ones), shown as one box per plan on the group row.
+const groupPlans = (id) => PLAN_ORDER.filter(name => planRank(name) >= planRank(GROUP_PLAN[id]));
 
 const PLANS = [
   { kicker: "START HERE", name: "Free trial", price: "$0", period: "for 7 days", text: "Test NOVA Trame with 21 classic styles on your own artwork before you commit.", features: ["21 halftone styles", "Classic dot and grain halftones", "7-day trial period", "Live preview"] },
@@ -183,7 +180,7 @@ export default function TramePreviewPage() {
             <button className="trame-group-head" onClick={() => toggleGroup(g.id)} aria-expanded={isOpen} aria-controls={"trame-group-" + g.id} disabled={searching}>
               <span className="trame-group-name">{g.label}</span>
               <span className="trame-group-count">{searching ? `${g.styles.length} / ${g.total}` : g.total} styles</span>
-              <span className="trame-group-plan">{groupBadge(g.id)}</span>
+              <span className="trame-group-plans" title={"Included in: " + groupPlans(g.id).join(", ")}>{groupPlans(g.id).map(n => <span key={n} className={"trame-group-plan" + (plan === n ? " on" : "")}>{n}</span>)}</span>
               <ChevronDown size={18} className="trame-group-chevron" aria-hidden="true"/>
             </button>
             {isOpen && <div className="trame-grid" id={"trame-group-" + g.id}>{g.styles.map(s => <article className="trame-tile" key={s.id}><div className="trame-im"><img src={"/trame/icons/" + s.id + ".png"} alt="" loading="lazy" width={64} height={64}/></div><h3>{s.name}</h3><p>{s.desc}</p></article>)}</div>}
@@ -248,14 +245,16 @@ export default function TramePreviewPage() {
       .trame-group-head:disabled{cursor:default}
       .trame-group-name{font-size:1.1rem;font-weight:700}
       .trame-group-count{opacity:.6;font-size:.88rem}
-      .trame-group-plan{margin-left:auto;border:1px solid rgba(143,212,168,.5);color:#b9ecd0;border-radius:999px;padding:3px 10px;font-size:.75rem;font-weight:600;white-space:nowrap}
+      .trame-group-plans{margin-left:auto;display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+      .trame-group-plan{border:1px solid rgba(143,212,168,.5);color:#b9ecd0;border-radius:999px;padding:3px 10px;font-size:.75rem;font-weight:600;white-space:nowrap}
+      .trame-group-plan.on{background:rgba(143,212,168,.2);border-color:#8fd4a8}
       .trame-group-chevron{flex:0 0 auto;opacity:.7;transition:transform .2s}
       .trame-group.open .trame-group-chevron{transform:rotate(180deg)}
       .trame-group .trame-grid{padding:4px 18px 18px}
       .trame-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
       .trame-tile{border:1px solid rgba(128,128,128,.3);border-radius:12px;padding:10px}
       .trame-tile p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-      @media(max-width:600px){.trame-group-head{flex-wrap:wrap;gap:6px 12px}.trame-group-plan{margin-left:0}.trame-search{min-width:0;flex:1}}
+      @media(max-width:600px){.trame-group-head{flex-wrap:wrap;gap:6px 12px}.trame-group-plans{margin-left:0;justify-content:flex-start;order:3;flex-basis:100%}.trame-group-chevron{margin-left:auto}.trame-search{min-width:0;flex:1}}
       .trame-im{background:#fff;border-radius:8px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden}
       .trame-im img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
       .trame-tile h3{font-size:1rem;margin:0 0 4px}
