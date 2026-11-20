@@ -28,8 +28,8 @@ const sections = [
   { id: "privacy", eyebrow: "04 / PRIVACY", title: "Privacy overview", paragraphs: [
     "Purchase and support workflows may require information such as your email address, order reference, product/license status and messages you send to support. This information should be used only for purposes such as delivering a purchase, managing a license, preventing fraud, maintaining the service and responding to support requests.",
     "Payments should be handled by the payment provider used at checkout. Do not send payment-card details, account passwords or license secrets through public channels.",
-    "The actual payment, hosting, email, analytics and licensing providers used by the live service must be identified in the final published privacy notice. Retention periods, applicable data-controller details and contact information should also be completed for the business operating the service.",
-    "For a privacy-related request, use the support channel shown in your order confirmation. Applicable privacy rights depend on the law that governs your purchase and location."
+    "NOVA Trame payments are processed by Paddle, which emails your license key to you after purchase.",
+    "For any privacy question, contact support@ainovanesting.pro. Applicable privacy rights depend on the law that governs your purchase and location."
   ]}
 ];
 
@@ -38,7 +38,7 @@ export default function PoliciesPage() {
     <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><div className="nav-links"><a href="/#tools">Tools</a><a href="/tools/nest-pro#workflow">Features</a><a href="/tools/nest-pro#workflow">Workflow</a><a href="/guides">Resources</a><a href="/guides">Guides</a></div><a href="/support" className="nav-buy">Support <span aria-hidden="true">↗</span></a></nav></header>
     <div className="shell utility-shell">
       <div className="utility-breadcrumb"><Link href="/">Home</Link><span>/</span><span>Policies</span></div>
-      <header className="utility-hero"><p className="eyebrow">POLICIES & CUSTOMER INFORMATION</p><h1>Clear terms.<br/><em>Fair expectations.</em></h1><p>Review the baseline policies for using Nova Nesting, managing a license and resolving a purchase issue.</p><p className="policy-updated">Last updated: October 15, 2026</p></header>
+      <header className="utility-hero"><p className="eyebrow">POLICIES & CUSTOMER INFORMATION</p><h1>Clear terms.<br/><em>Fair expectations.</em></h1><p>Review the baseline policies for using Nova Nesting, managing a license and resolving a purchase issue.</p><p className="policy-updated">Last updated: November 20, 2026</p></header>
       <nav className="policy-jump" aria-label="Policy sections"><a href="#terms">Terms of use</a><a href="#license">License & renewal</a><a href="#refunds">Refunds</a><a href="#privacy">Privacy</a></nav>
       <div className="policy-content">
         {sections.map((section) => <section id={section.id} key={section.id} className="policy-section"><p className="eyebrow">{section.eyebrow}</p><h2>{section.title}</h2>{section.paragraphs.map((paragraph, i) => <p key={i}>{paragraph}</p>)}</section>)}
