@@ -1,10 +1,10 @@
 export const metadata = {
-  title: "Tool Guides | Nest-Pro",
-  description: "Practical instructions for preparing Illustrator files, running Nest-Pro, matching designs to patterns, and configuring optional Laser Cut output.",
+  title: "Tool Guides",
+  description: "Practical instructions for preparing Illustrator files, running Nova Nesting, matching designs to patterns, and configuring optional Laser Cut output.",
   alternates: { canonical: "/guides" },
   openGraph: {
-    title: "Tool Guides | Nest-Pro",
-    description: "Find practical Nest-Pro setup, workflow, matching, and Laser Cut instructions.",
+    title: "Tool Guides | Nova Nesting",
+    description: "Find practical Nova Nesting setup, workflow, matching, and Laser Cut instructions.",
     type: "website",
     url: "/guides"
   }
