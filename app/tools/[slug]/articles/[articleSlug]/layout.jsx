@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation";
+
 const ARTICLES = {
   "nest-pro": {
-    "getting-started": ["Getting started with Nest-Pro and Laser Cut", "Prepare the active artboard, match pattern silhouettes, and optionally configure Inside/Outside stroke widths and colors."],
+    "getting-started": ["Getting started with Nova Marker Making and Nesting","Prepare the active artboard, match pattern silhouettes, and optionally configure Inside/Outside stroke widths and colors."],
     "scan-modes": ["How silhouette matching works", "Learn how geometry filters, normalized shape fingerprints, perimeter comparison and 0°/180° orientation determine a design-to-pattern match."],
     "nesting-workflow": ["The exact Nesting + Laser Cut sequence", "Follow the source-file workflow from active-artboard scan through 0°/180° alignment and optional color-configurable laser strokes."],
     "laser-stroke-output": ["Configuring Inside and Outside laser strokes", "Learn how to enable Laser Cut, adjust widths and colors, and manage the dedicated output layer."]
@@ -28,6 +30,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function ArticleLayout({ children }) {
+export default async function ArticleLayout({ children, params }) {
+  const { slug, articleSlug } = await params;
+  // Unknown articles return a real 404 instead of a 200 "Article not found" page.
+  if (!ARTICLES[slug]?.[articleSlug]) notFound();
   return children;
 }

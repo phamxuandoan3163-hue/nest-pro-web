@@ -6,23 +6,23 @@ export const metadata = {
   metadataBase: new URL("https://www.ainovanesting.pro"),
   applicationName: "Nova Nesting",
   title: {
-    default: "Nova Nesting — Production tools for Adobe Illustrator",
+    default: "Nova Nesting — Production tools for Adobe Illustrator and Photoshop",
     template: "%s | Nova Nesting"
   },
-  description: "Production automation tools for Adobe Illustrator, including apparel pattern preparation, size detection, artwork placement and nesting workflows.",
+  description: "Production automation tools for Adobe Illustrator and Photoshop, including apparel pattern preparation, size detection, artwork placement and nesting workflows.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: "Nova Nesting",
-    title: "Nova Nesting — Production tools for Adobe Illustrator",
-    description: "Explore production automation tools for apparel, print preparation and repetitive Illustrator workflows.",
+    title: "Nova Nesting — Production tools for Adobe Illustrator and Photoshop",
+    description: "Explore production automation tools for apparel, print preparation and repetitive Illustrator and Photoshop workflows.",
     url: "https://www.ainovanesting.pro/",
     locale: "en_US"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nova Nesting — Production tools for Adobe Illustrator",
-    description: "Production automation tools for Adobe Illustrator and apparel workflows."
+    title: "Nova Nesting — Production tools for Adobe Illustrator and Photoshop",
+    description: "Production automation tools for Adobe Illustrator, Photoshop and apparel workflows."
   },
   robots: {
     index: true,
