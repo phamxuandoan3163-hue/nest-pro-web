@@ -1,13 +1,6 @@
 "use client";
+import NavLinks from "../nav-links";
 import { ArrowRight, BookOpen, ScanLine, Scissors, Workflow } from "lucide-react";
-
-const navItems = [
-  { label: "Tools", href: "/#tools" },
-  { label: "Features", href: "/tools/nest-pro#workflow" },
-  { label: "Workflow", href: "/tools/nest-pro#workflow" },
-  { label: "Resources", href: "/guides#guide-library" },
-  { label: "Guides", href: "/guides", current: true }
-];
 
 const guides = [
   {
@@ -46,11 +39,7 @@ export default function GuidesPage() {
       <header className="nav-wrap">
         <nav className="nav shell">
           <a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a>
-          <div className="nav-links">
-            {navItems.map((item) => (
-              <a key={item.label} href={item.href} aria-current={item.current ? "page" : undefined}>{item.label}</a>
-            ))}
-          </div>
+          <NavLinks/>
         </nav>
       </header>
 

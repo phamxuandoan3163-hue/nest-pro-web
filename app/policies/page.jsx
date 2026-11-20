@@ -1,3 +1,4 @@
+import NavLinks from "../nav-links";
 import Link from "next/link";
 
 export const metadata = {
@@ -35,7 +36,7 @@ const sections = [
 
 export default function PoliciesPage() {
   return <main className="utility-page policy-page">
-    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><div className="nav-links"><a href="/#tools">Tools</a><a href="/tools/nest-pro#workflow">Features</a><a href="/tools/nest-pro#workflow">Workflow</a><a href="/guides">Resources</a><a href="/guides">Guides</a></div><a href="/support" className="nav-buy">Support <span aria-hidden="true">↗</span></a></nav></header>
+    <header className="nav-wrap"><nav className="nav shell"><a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="https://drive.google.com/thumbnail?id=1Nz3XYxmcu7rB8w5hgPyfxT-4HJrIuY8h&sz=w1000" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a><NavLinks/><a href="/support" className="nav-buy">Support <span aria-hidden="true">↗</span></a></nav></header>
     <div className="shell utility-shell">
       <div className="utility-breadcrumb"><Link href="/">Home</Link><span>/</span><span>Policies</span></div>
       <header className="utility-hero"><p className="eyebrow">POLICIES & CUSTOMER INFORMATION</p><h1>Clear terms.<br/><em>Fair expectations.</em></h1><p>Review the baseline policies for using Nova Nesting, managing a license and resolving a purchase issue.</p><p className="policy-updated">Last updated: November 20, 2026</p></header>

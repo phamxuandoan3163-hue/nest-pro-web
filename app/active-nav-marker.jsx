@@ -30,7 +30,8 @@ export default function ActiveNavMarker() {
       }
 
       if (path.includes("/articles/")) {
-        return links.find((link) => link.textContent.trim().toLowerCase() === "resources");
+        // Article pages belong to the Guides library.
+        return links.find((link) => link.textContent.trim().toLowerCase() === "guides");
       }
 
       if (path.startsWith("/tools/")) {
