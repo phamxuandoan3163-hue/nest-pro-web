@@ -27,6 +27,7 @@ export default function SystemRequirements({ data }) {
         ))}
       </div>
       {data.note && <p style={{ margin: "18px 0 0", fontSize: 12, lineHeight: 1.8, color: "#939a9a", maxWidth: 760 }}>{data.note}</p>}
+      {data.source && <p style={{ margin: "8px 0 0", fontSize: 12, color: "#939a9a" }}>Source: <a href={data.source.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline", color: "#d9dcd8" }}>{data.source.label}</a></p>}
     </section>
   );
 }
