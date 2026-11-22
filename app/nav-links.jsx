@@ -3,7 +3,6 @@
 const TABS = [
   ["Tools", "/#tools"],
   ["Features", "/#features"],
-  ["Workflow", "/#workflow"],
   ["Resources", "/#resources"],
   ["Guides", "/guides"]
 ];

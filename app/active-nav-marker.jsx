@@ -24,8 +24,10 @@ export default function ActiveNavMarker() {
         if (byHash) return byHash;
       }
 
-      // Home page tabs: with no (or an unknown) hash the first tab, Tools, is showing.
+      // Home page tabs: with no hash the first tab, Tools, is showing. A hash with no nav link
+      // (such as #workflow, which the hero button opens) highlights nothing.
       if (path === "/") {
+        if (hash) return null;
         return links.find((link) => new URL(link.href, window.location.href).hash === "#tools");
       }
 
