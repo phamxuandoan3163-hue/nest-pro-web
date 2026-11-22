@@ -1,4 +1,6 @@
 "use client";
+import SystemRequirements from "../system-requirements";
+import { TRAME_REQUIREMENTS } from "../system-requirements-data";
 import { useMemo, useState, useEffect } from "react";
 import { ArrowRight, Check, ChevronDown, Download, Sparkles, Zap } from "lucide-react";
 import data from "./styles.json";
@@ -175,6 +177,8 @@ export default function TramePreviewPage() {
       </div>
       {searching && shownCount === 0 && <p className="trame-empty">No styles match your search.</p>}
     </section>
+
+    <SystemRequirements data={TRAME_REQUIREMENTS}/>
 
     <section id="pricing" className="trame-pricing shell">
       <div className="tool-section-head"><p className="eyebrow">PICK YOUR ACCESS</p><h2>NOVA Trame pricing.</h2><p>Choose the access period that fits your production. Prices are in USD.</p></div>
