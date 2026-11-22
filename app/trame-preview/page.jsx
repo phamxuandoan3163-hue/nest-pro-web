@@ -129,7 +129,7 @@ export default function TramePreviewPage() {
         <h1>NOVA Trame</h1>
         <p className="tool-intro">Halftone styles built for DTF printing on black and white shirts.</p>
         <p className="tool-description">Pick from {data.styles.length} halftone styles, set the frequency from the print size, and check the result in a live preview before you apply it.</p>
-        <div className="tool-hero-actions"><a className="button dark" href="#styles">Browse {data.styles.length} styles <ArrowRight size={16}/></a><a className="button outline" href="#workflow">See the workflow</a><a className="button outline" href="/trame/NOVA-NESTING-TRAME-SET_UP.zip" download><Download size={15}/> Free Download</a></div>
+        <div className="tool-hero-actions"><a className="button dark" href="/trame/NOVA-NESTING-TRAME-SET_UP.zip" download style={{fontSize:16,padding:"18px 30px",gap:10}}><Download size={19}/> Download and Try for free</a><a className="button outline" href="#styles">Browse {data.styles.length} styles <ArrowRight size={16}/></a><a className="button outline" href="#workflow">See the workflow</a></div>
         <div className="tool-trust"><span><Check size={14}/> Built for DTF</span><span><Sparkles size={14}/> {data.styles.length} styles</span></div>
       </div>
       <div className="tool-preview tool-video-preview trame-video">
