@@ -11,5 +11,9 @@ export const metadata = {
 };
 
 export default function TrameLayout({ children }) {
-  return children;
+  // Paddle.js (checkout) is the only third-party script on these pages: open its connection early.
+  return <>
+    <link rel="preconnect" href="https://cdn.paddle.com" crossOrigin="anonymous"/>
+    {children}
+  </>;
 }
