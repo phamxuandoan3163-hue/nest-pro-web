@@ -1,5 +1,6 @@
 "use client";
 import SystemRequirements from "../system-requirements";
+import EffectsGallery from "./effects-gallery";
 import { TRAME_REQUIREMENTS } from "../system-requirements-data";
 import { useMemo, useState, useEffect } from "react";
 import { ArrowRight, Check, ChevronDown, Download, Sparkles, Zap } from "lucide-react";
@@ -177,6 +178,8 @@ export default function TramePreviewPage() {
       </div>
       {searching && shownCount === 0 && <p className="trame-empty">No styles match your search.</p>}
     </section>
+
+    <EffectsGallery/>
 
     <SystemRequirements data={TRAME_REQUIREMENTS}/>
 
