@@ -60,11 +60,11 @@ export default function EffectsGallery() {
       <p className="fx-foot">For a subtle texture, start with Basic Dot. For a rougher streetwear finish, compare Gritty Grain with Photocopy. For a vintage look, compare the warm tint of Sepia Photo with the worn color of Faded Vintage.</p>
 
       <dialog ref={dialogRef} className="fx-dialog" aria-label="Artwork and magnified detail" onClick={(ev) => { if (ev.target === dialogRef.current) dialogRef.current.close(); }} onClose={() => setActive(null)}>
-        <form method="dialog"><button className="fx-close" aria-label="Close">Close</button></form>
+        <form method="dialog"><span className="fx-title">{active ? `${String(active[0]).padStart(2, "0")}. ${active[1]}` : ""}</span><button className="fx-close" aria-label="Close">Close</button></form>
         {active && (
           <div className="fx-preview">
-            <img src={`${BASE}/${String(active[0]).padStart(2, "0")}.webp`} alt={`${active[0]}. ${active[1]}`} />
-            <img className="fx-large" src={`${BASE}/${String(active[0]).padStart(2, "0")}-detail.webp`} alt={`Magnified detail of ${active[1]}`} />
+            <img src={`${BASE}/${String(active[0]).padStart(2, "0")}-full.webp`} alt={`${active[0]}. ${active[1]}`} />
+            <img className="fx-large" src={`${BASE}/${String(active[0]).padStart(2, "0")}-detail-lg.webp`} alt={`Magnified detail of ${active[1]}`} />
           </div>
         )}
       </dialog>
