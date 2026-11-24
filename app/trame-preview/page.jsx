@@ -136,7 +136,6 @@ export default function TramePreviewPage() {
         <div className="tool-trust"><span><Check size={14}/> Built for DTF</span><span><Sparkles size={14}/> {data.styles.length} styles</span></div>
       </div>
       <div className="tool-preview tool-video-preview trame-video">
-        <div className="tool-video-titlebar"><span className="tool-video-window-title">NOVA Trame · Product video</span><div className="tool-video-window-controls" aria-hidden="true"><i className="tool-video-minimize"/><i className="tool-video-maximize"/><i className="tool-video-close"/></div></div>
         <div className="tool-video-frame"><video src="/trame/nova-trame-video.mp4" autoPlay muted loop playsInline controls preload="metadata" aria-label="NOVA Trame product video"/></div>
       </div>
     </section>
