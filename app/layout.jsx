@@ -1,6 +1,7 @@
 import "./globals.css";
 import ActiveNavMarker from "./active-nav-marker";
 import CookieConsent from "./cookie-consent";
+import SiteTracker from "./site-tracker";
 
 export const metadata = {
   metadataBase: new URL("https://www.ainovanesting.pro"),
@@ -32,5 +33,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return <html lang="en"><body><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content">{children}</div><ActiveNavMarker /><CookieConsent /></body></html>;
+  return <html lang="en"><body><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content">{children}</div><ActiveNavMarker /><CookieConsent /><SiteTracker /></body></html>;
 }

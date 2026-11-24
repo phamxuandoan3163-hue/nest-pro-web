@@ -5,6 +5,7 @@ import { TRAME_REQUIREMENTS } from "../system-requirements-data";
 import { useMemo, useState, useEffect } from "react";
 import { ArrowRight, Check, ChevronDown, Download, Sparkles, Zap } from "lucide-react";
 import data from "./styles.json";
+import { track } from "../site-tracker";
 
 // Live in production (NEXT_PUBLIC_PADDLE_ENV=live), sandbox everywhere else.
 const PADDLE_ENV = process.env.NEXT_PUBLIC_PADDLE_ENV || "sandbox";
@@ -18,6 +19,8 @@ const PRICE_IDS = {
   yearly_pro: { live: "pri_01m7qg72p299r0vcmdm7ecqs9v", sandbox: "pri_01m7rx1vyr86287gw855bhb00q" }
 };
 const priceFor = (plan) => PRICE_IDS[plan][PADDLE_LIVE ? "live" : "sandbox"];
+// Plan key for a price id (live or sandbox), used to label checkout analytics events.
+const planOf = (priceId) => Object.keys(PRICE_IDS).find((k) => PRICE_IDS[k].live === priceId || PRICE_IDS[k].sandbox === priceId) || "";
 
 const GROUP_LABELS = { basic: "Basic", street: "Grunge", shape: "Shapes", pattern: "Patterns", trend: "Trends", vintage: "Vintage", color: "Color" };
 // Lowest plan that unlocks each group (matches the license server's plan groups).
@@ -71,6 +74,7 @@ export default function TramePreviewPage() {
           token: PADDLE_TOKEN,
           eventCallback: (e) => {
             if (e && e.name === "checkout.completed") {
+              track("checkout_done", planOf(e.data && e.data.items && e.data.items[0] && e.data.items[0].price_id));
               setNotice("Payment complete. Your license key is on its way by email — check your inbox, then paste the key into the NOVA Trame panel.");
             }
           }
@@ -89,6 +93,7 @@ export default function TramePreviewPage() {
   function buy(priceId) {
     if (!priceId) return;
     if (!paddleReady || !window.Paddle) { setNotice("Checkout is still loading, please try again in a moment."); return; }
+    track("checkout_open", planOf(priceId));
     window.Paddle.Checkout.open({ items: [{ priceId: priceId, quantity: 1 }] });
   }
 
