@@ -4,6 +4,7 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 export const metadata = { title: "Thống kê Nova Nesting", robots: { index: false, follow: false } };
 
 const RANGES = [7, 30, 90];

@@ -23,43 +23,59 @@ function maskEmail(email) {
   return e.slice(0, Math.min(2, at)) + "***" + e.slice(at);
 }
 
+// Fails with a readable error instead of leaving the page loading forever.
+function withTimeout(promise, ms, what) {
+  let timer;
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(what + " took longer than " + ms / 1000 + "s")), ms); })
+  ]).finally(() => clearTimeout(timer));
+}
+
 export async function loadStats(days) {
-  await ensureSiteEvents();
+  await withTimeout(ensureSiteEvents(), 15000, "Preparing the site_events table");
   const sql = db();
   const keys = dayKeys(days);
   const since = keys[0];
-  const sinceTs = sql`(${since}::date AT TIME ZONE ${TZ})`;
+  // Midnight Vietnam time (UTC+7, no daylight saving) at the start of the range.
+  const sinceTs = new Date(since + "T00:00:00+07:00");
 
-  const [totals, daily, countries, cities, pages, referrers, devices, downloads, checkouts, first,
-         purchases, recent, trials] = await Promise.all([
-    sql`SELECT type, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
+  // The queries run one after another on purpose: Supabase's transaction pooler can stall
+  // when many queries are pipelined on a single connection.
+  const queries = () => [
+    () => sql`SELECT type, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
         FROM site_events WHERE at >= ${sinceTs} GROUP BY type`,
-    sql`SELECT to_char(at AT TIME ZONE ${TZ}, 'YYYY-MM-DD') AS d, type, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
+    () => sql`SELECT to_char(at AT TIME ZONE ${TZ}, 'YYYY-MM-DD') AS d, type, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
         FROM site_events WHERE at >= ${sinceTs} GROUP BY 1, 2`,
-    sql`SELECT country, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
+    () => sql`SELECT country, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
         FROM site_events WHERE type = 'pageview' AND at >= ${sinceTs} GROUP BY country ORDER BY v DESC, n DESC LIMIT 15`,
-    sql`SELECT country, region, city, COUNT(DISTINCT visitor)::int AS v
+    () => sql`SELECT country, region, city, COUNT(DISTINCT visitor)::int AS v
         FROM site_events WHERE type = 'pageview' AND at >= ${sinceTs} AND city <> '' GROUP BY 1, 2, 3 ORDER BY v DESC LIMIT 12`,
-    sql`SELECT path, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
+    () => sql`SELECT path, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
         FROM site_events WHERE type = 'pageview' AND at >= ${sinceTs} GROUP BY path ORDER BY n DESC LIMIT 10`,
-    sql`SELECT referrer_host AS host, COUNT(DISTINCT visitor)::int AS v
+    () => sql`SELECT referrer_host AS host, COUNT(DISTINCT visitor)::int AS v
         FROM site_events WHERE type = 'pageview' AND at >= ${sinceTs} AND referrer_host <> '' GROUP BY 1 ORDER BY v DESC LIMIT 8`,
-    sql`SELECT device, COUNT(DISTINCT visitor)::int AS v
+    () => sql`SELECT device, COUNT(DISTINCT visitor)::int AS v
         FROM site_events WHERE type = 'pageview' AND at >= ${sinceTs} GROUP BY device ORDER BY v DESC`,
-    sql`SELECT path, label, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
+    () => sql`SELECT path, label, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
         FROM site_events WHERE type = 'download' AND at >= ${sinceTs} GROUP BY 1, 2 ORDER BY n DESC LIMIT 8`,
-    sql`SELECT type, label, COUNT(*)::int AS n
+    () => sql`SELECT type, label, COUNT(*)::int AS n
         FROM site_events WHERE type IN ('checkout_open', 'checkout_done') AND at >= ${sinceTs} GROUP BY 1, 2`,
-    sql`SELECT MIN(at) AS at FROM site_events`,
-    sql`SELECT to_char(created_at AT TIME ZONE ${TZ}, 'YYYY-MM-DD') AS d, plan_key, price_id, COUNT(*)::int AS n
+    () => sql`SELECT MIN(at) AS at FROM site_events`,
+    () => sql`SELECT to_char(created_at AT TIME ZONE ${TZ}, 'YYYY-MM-DD') AS d, plan_key, price_id, COUNT(*)::int AS n
         FROM trame_licenses WHERE paddle_transaction_id IS NOT NULL AND plan_key <> 'trial' AND created_at >= ${sinceTs}
         GROUP BY 1, 2, 3`,
-    sql`SELECT created_at, plan_key, price_id, customer_email, status, subscription_status
+    () => sql`SELECT created_at, plan_key, price_id, customer_email, status, subscription_status
         FROM trame_licenses WHERE paddle_transaction_id IS NOT NULL AND plan_key <> 'trial'
         ORDER BY created_at DESC LIMIT 10`,
-    sql`SELECT to_char(created_at AT TIME ZONE ${TZ}, 'YYYY-MM-DD') AS d, COUNT(*)::int AS n
+    () => sql`SELECT to_char(created_at AT TIME ZONE ${TZ}, 'YYYY-MM-DD') AS d, COUNT(*)::int AS n
         FROM trame_trials WHERE created_at >= ${sinceTs} GROUP BY 1`
-  ]);
+  ];
+
+  const results = [];
+  for (const run of queries()) results.push(await withTimeout(run(), 15000, "A statistics query"));
+  const [totals, daily, countries, cities, pages, referrers, devices, downloads, checkouts, first,
+         purchases, recent, trials] = results;
 
   const total = (type, field) => (totals.find((r) => r.type === type) || {})[field] || 0;
   const series = keys.map((d) => {
