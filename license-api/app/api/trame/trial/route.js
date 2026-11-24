@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { db } from "../../../../lib/db";
-import { encryptKey, groupsFor, hashDevice, hashKey, makeTrameKey, signEntitlement, TRAME_RENEW_URL, TRAME_TRIAL_MS } from "../../../../lib/trame";
+import { encryptKey, groupsFor, hashDevice, hashKey, makeGraceToken, makeTrameKey, signEntitlement, TRAME_RENEW_URL, TRAME_TRIAL_MS } from "../../../../lib/trame";
 import { clientIp, json, options } from "../../../../lib/trame-http";
 
 export const runtime = "nodejs";
@@ -44,7 +44,7 @@ export async function POST(request) {
     issued_at: new Date().toISOString(),
     valid_until: new Date(Math.min(Date.now() + 24 * 60 * 60 * 1000, Date.parse(expiresAt))).toISOString()
   };
-  return json(request, { ok: true, license_key: key, expires_at: expiresAt, entitlement: payload, signature: signEntitlement(payload), renew_url: TRAME_RENEW_URL });
+  return json(request, { ok: true, license_key: key, expires_at: expiresAt, entitlement: payload, signature: signEntitlement(payload), token: makeGraceToken(payload), renew_url: TRAME_RENEW_URL });
 }
 
 export function OPTIONS(request) { return options(request); }

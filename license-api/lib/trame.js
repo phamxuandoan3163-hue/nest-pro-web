@@ -95,6 +95,13 @@ export function makeOfflineToken(payload) {
   return body.toString("base64") + "." + signature.toString("base64");
 }
 
+// Grace token for offline use (panel 1.3.2+): same signed format as an offline code, marked
+// typ "grace". The panel allows offline use for 24 hours after issued_at, and refuses to accept
+// a grace token as an offline activation code (or an offline code as a grace token).
+export function makeGraceToken(payload) {
+  return makeOfflineToken({ ...payload, typ: "grace" });
+}
+
 export async function deliverTrameLicense(email, key, plan, reference) {
   if (!process.env.RESEND_API_KEY || !process.env.LICENSE_EMAIL_FROM) throw new Error("RESEND_API_KEY and LICENSE_EMAIL_FROM are required.");
   const response = await fetch("https://api.resend.com/emails", {

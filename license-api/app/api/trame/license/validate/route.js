@@ -1,5 +1,5 @@
 import { db } from "../../../../../lib/db";
-import { groupsFor, hashDevice, hashKey, signEntitlement, TRAME_RENEW_URL } from "../../../../../lib/trame";
+import { groupsFor, hashDevice, hashKey, makeGraceToken, signEntitlement, TRAME_RENEW_URL } from "../../../../../lib/trame";
 import { clientIp, json, options } from "../../../../../lib/trame-http";
 
 export const runtime = "nodejs";
@@ -53,6 +53,7 @@ export async function POST(request) {
     state: "ACTIVE",
     entitlement: payload,
     signature: signEntitlement(payload),
+    token: makeGraceToken(payload),
     renew_url: TRAME_RENEW_URL
   });
 }
