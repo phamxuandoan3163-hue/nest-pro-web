@@ -32,50 +32,86 @@ function withTimeout(promise, ms, what) {
   ]).finally(() => clearTimeout(timer));
 }
 
-export async function loadStats(days) {
-  await withTimeout(ensureSiteEvents(), 15000, "Preparing the site_events table");
+// Every section of the dashboard in ONE statement (one round trip to the database).
+// The API runs far from the database, so each extra query costs a few hundred ms.
+function statsQuery(sql, sinceTs) {
+  const tz = TZ;
+  return sql`
+    WITH s AS (SELECT * FROM site_events WHERE at >= ${sinceTs}),
+         pv AS (SELECT * FROM s WHERE type = 'pageview'),
+         lic AS (SELECT * FROM trame_licenses WHERE paddle_transaction_id IS NOT NULL AND plan_key <> 'trial')
+    SELECT json_build_object(
+      'totals', (SELECT COALESCE(json_agg(t), '[]') FROM (
+          SELECT type, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v FROM s GROUP BY type) t),
+      'daily', (SELECT COALESCE(json_agg(t), '[]') FROM (
+          SELECT to_char(at AT TIME ZONE ${tz}, 'YYYY-MM-DD') AS d, type, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
+          FROM s GROUP BY 1, 2) t),
+      'countries', (SELECT COALESCE(json_agg(t ORDER BY t.v DESC, t.n DESC), '[]') FROM (
+          SELECT country, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v FROM pv
+          GROUP BY country ORDER BY v DESC, n DESC LIMIT 15) t),
+      'cities', (SELECT COALESCE(json_agg(t ORDER BY t.v DESC), '[]') FROM (
+          SELECT country, region, city, COUNT(DISTINCT visitor)::int AS v FROM pv WHERE city <> ''
+          GROUP BY 1, 2, 3 ORDER BY v DESC LIMIT 12) t),
+      'pages', (SELECT COALESCE(json_agg(t ORDER BY t.n DESC), '[]') FROM (
+          SELECT path, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v FROM pv
+          GROUP BY path ORDER BY n DESC LIMIT 10) t),
+      'referrers', (SELECT COALESCE(json_agg(t ORDER BY t.v DESC), '[]') FROM (
+          SELECT referrer_host AS host, COUNT(DISTINCT visitor)::int AS v FROM pv WHERE referrer_host <> ''
+          GROUP BY 1 ORDER BY v DESC LIMIT 8) t),
+      'devices', (SELECT COALESCE(json_agg(t ORDER BY t.v DESC), '[]') FROM (
+          SELECT device, COUNT(DISTINCT visitor)::int AS v FROM pv GROUP BY device) t),
+      'downloads', (SELECT COALESCE(json_agg(t ORDER BY t.n DESC), '[]') FROM (
+          SELECT path, label, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v FROM s WHERE type = 'download'
+          GROUP BY 1, 2 ORDER BY n DESC LIMIT 8) t),
+      'checkouts', (SELECT COALESCE(json_agg(t), '[]') FROM (
+          SELECT type, label, COUNT(*)::int AS n FROM s WHERE type IN ('checkout_open', 'checkout_done') GROUP BY 1, 2) t),
+      'first', (SELECT MIN(at) FROM site_events),
+      'purchases', (SELECT COALESCE(json_agg(t), '[]') FROM (
+          SELECT to_char(created_at AT TIME ZONE ${tz}, 'YYYY-MM-DD') AS d, plan_key, price_id, COUNT(*)::int AS n
+          FROM lic WHERE created_at >= ${sinceTs} GROUP BY 1, 2, 3) t),
+      'recent', (SELECT COALESCE(json_agg(t ORDER BY t.created_at DESC), '[]') FROM (
+          SELECT created_at, plan_key, price_id, customer_email, status, subscription_status
+          FROM lic ORDER BY created_at DESC LIMIT 10) t),
+      'trials', (SELECT COALESCE(json_agg(t), '[]') FROM (
+          SELECT to_char(created_at AT TIME ZONE ${tz}, 'YYYY-MM-DD') AS d, COUNT(*)::int AS n
+          FROM trame_trials WHERE created_at >= ${sinceTs} GROUP BY 1) t)
+    ) AS data`;
+}
+
+// Recent results per range, so switching 7 / 30 / 90 days or reloading is instant for a short while.
+const CACHE_MS = 60 * 1000;
+const cache = new Map();
+
+export async function loadStats(days, { fresh = false } = {}) {
+  const hit = cache.get(days);
+  if (!fresh && hit && Date.now() - hit.at < CACHE_MS) return hit.value;
+  const value = await computeStats(days);
+  cache.set(days, { at: Date.now(), value });
+  return value;
+}
+
+async function computeStats(days) {
   const sql = db();
   const keys = dayKeys(days);
   const since = keys[0];
   // Midnight Vietnam time (UTC+7, no daylight saving) at the start of the range.
   const sinceTs = new Date(since + "T00:00:00+07:00");
 
-  // The queries run one after another on purpose: Supabase's transaction pooler can stall
-  // when many queries are pipelined on a single connection.
-  const queries = () => [
-    () => sql`SELECT type, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
-        FROM site_events WHERE at >= ${sinceTs} GROUP BY type`,
-    () => sql`SELECT to_char(at AT TIME ZONE ${TZ}, 'YYYY-MM-DD') AS d, type, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
-        FROM site_events WHERE at >= ${sinceTs} GROUP BY 1, 2`,
-    () => sql`SELECT country, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
-        FROM site_events WHERE type = 'pageview' AND at >= ${sinceTs} GROUP BY country ORDER BY v DESC, n DESC LIMIT 15`,
-    () => sql`SELECT country, region, city, COUNT(DISTINCT visitor)::int AS v
-        FROM site_events WHERE type = 'pageview' AND at >= ${sinceTs} AND city <> '' GROUP BY 1, 2, 3 ORDER BY v DESC LIMIT 12`,
-    () => sql`SELECT path, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
-        FROM site_events WHERE type = 'pageview' AND at >= ${sinceTs} GROUP BY path ORDER BY n DESC LIMIT 10`,
-    () => sql`SELECT referrer_host AS host, COUNT(DISTINCT visitor)::int AS v
-        FROM site_events WHERE type = 'pageview' AND at >= ${sinceTs} AND referrer_host <> '' GROUP BY 1 ORDER BY v DESC LIMIT 8`,
-    () => sql`SELECT device, COUNT(DISTINCT visitor)::int AS v
-        FROM site_events WHERE type = 'pageview' AND at >= ${sinceTs} GROUP BY device ORDER BY v DESC`,
-    () => sql`SELECT path, label, COUNT(*)::int AS n, COUNT(DISTINCT visitor)::int AS v
-        FROM site_events WHERE type = 'download' AND at >= ${sinceTs} GROUP BY 1, 2 ORDER BY n DESC LIMIT 8`,
-    () => sql`SELECT type, label, COUNT(*)::int AS n
-        FROM site_events WHERE type IN ('checkout_open', 'checkout_done') AND at >= ${sinceTs} GROUP BY 1, 2`,
-    () => sql`SELECT MIN(at) AS at FROM site_events`,
-    () => sql`SELECT to_char(created_at AT TIME ZONE ${TZ}, 'YYYY-MM-DD') AS d, plan_key, price_id, COUNT(*)::int AS n
-        FROM trame_licenses WHERE paddle_transaction_id IS NOT NULL AND plan_key <> 'trial' AND created_at >= ${sinceTs}
-        GROUP BY 1, 2, 3`,
-    () => sql`SELECT created_at, plan_key, price_id, customer_email, status, subscription_status
-        FROM trame_licenses WHERE paddle_transaction_id IS NOT NULL AND plan_key <> 'trial'
-        ORDER BY created_at DESC LIMIT 10`,
-    () => sql`SELECT to_char(created_at AT TIME ZONE ${TZ}, 'YYYY-MM-DD') AS d, COUNT(*)::int AS n
-        FROM trame_trials WHERE created_at >= ${sinceTs} GROUP BY 1`
-  ];
-
-  const results = [];
-  for (const run of queries()) results.push(await withTimeout(run(), 15000, "A statistics query"));
-  const [totals, daily, countries, cities, pages, referrers, devices, downloads, checkouts, first,
-         purchases, recent, trials] = results;
+  let rows;
+  try {
+    rows = await withTimeout(statsQuery(sql, sinceTs), 20000, "The statistics query");
+  } catch (e) {
+    // site_events does not exist until the first visit is recorded: create it, then retry once.
+    if (e && e.code === "42P01") {
+      await withTimeout(ensureSiteEvents(), 15000, "Preparing the site_events table");
+      rows = await withTimeout(statsQuery(sql, sinceTs), 20000, "The statistics query");
+    } else {
+      throw e;
+    }
+  }
+  const data = rows[0].data;
+  const { totals, daily, countries, cities, pages, referrers, devices, downloads, checkouts, purchases, recent, trials } = data;
+  const first = [{ at: data.first }];
 
   const total = (type, field) => (totals.find((r) => r.type === type) || {})[field] || 0;
   const series = keys.map((d) => {
@@ -98,6 +134,7 @@ export async function loadStats(days) {
   }));
 
   return {
+    computedAt: new Date().toISOString(),
     days,
     since,
     firstEventAt: first[0]?.at || null,

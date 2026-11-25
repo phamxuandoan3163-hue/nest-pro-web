@@ -91,8 +91,16 @@ export function eventFromRequest(request, body, now = new Date()) {
   };
 }
 
+// Insert straight away; create the table only when it does not exist yet (error 42P01),
+// so a normal visit costs one database round trip.
 export async function recordEvent(row) {
-  await ensureSiteEvents();
   const sql = db();
-  await sql`INSERT INTO site_events ${sql(row, "type", "path", "label", "referrer_host", "country", "region", "city", "device", "visitor")}`;
+  const insert = () => sql`INSERT INTO site_events ${sql(row, "type", "path", "label", "referrer_host", "country", "region", "city", "device", "visitor")}`;
+  try {
+    await insert();
+  } catch (e) {
+    if (!e || e.code !== "42P01") throw e;
+    await ensureSiteEvents();
+    await insert();
+  }
 }
