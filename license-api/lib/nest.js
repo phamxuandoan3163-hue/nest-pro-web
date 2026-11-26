@@ -13,10 +13,14 @@ export const NEST_RENEW_URL = String(process.env.NEST_BUY_URL || "https://ainova
 export const NEST_TRIAL_MS = 7 * 24 * 60 * 60 * 1000;
 
 // Plans. All plans unlock every feature; they differ in length and number of computers.
+// All three are one-time Paddle purchases (no subscription, no auto-renewal) — the website's own
+// FAQ says so ("Each plan is a one-time payment for its access period, with no automatic renewal").
+// `recurring: false` here keeps the webhook, the confirmation e-mail text and expiry date all
+// consistent with that: no Paddle subscription id is expected, and expiry is always now + plan.days.
 const PLAN_DEFS = {
-  monthly: { key: "monthly", days: 30, recurring: true, label: "Monthly", devices: 1 },
-  yearly: { key: "yearly", days: 365, recurring: true, label: "Yearly", devices: 1 },
-  yearly_pro: { key: "yearly_pro", days: 365, recurring: true, label: "Yearly Pro", devices: 2 }
+  monthly: { key: "monthly", days: 30, recurring: false, label: "Monthly", devices: 1 },
+  yearly: { key: "yearly", days: 365, recurring: false, label: "Yearly", devices: 1 },
+  yearly_pro: { key: "yearly_pro", days: 365, recurring: false, label: "Yearly Pro", devices: 2 }
 };
 
 // Paddle price ids come from the NEST_PADDLE_PRICES env var, so they can be set or changed in

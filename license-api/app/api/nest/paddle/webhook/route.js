@@ -101,22 +101,47 @@ export async function POST(request) {
   const email = await emailFrom(transaction);
   if (!email) return Response.json({ error: "invalid_customer_email" }, { status: 502 });
 
-  const existing = subscriptionId
+  let existing = subscriptionId
     ? await sql`SELECT * FROM nest_licenses WHERE paddle_subscription_id=${subscriptionId} LIMIT 1`
     : await sql`SELECT * FROM nest_licenses WHERE paddle_transaction_id=${transactionId} LIMIT 1`;
 
+  // These plans are one-time purchases: there is no Paddle subscription to renew, so a customer
+  // "renews" by buying again, which arrives as a brand-new transaction. Extend their existing key by
+  // e-mail instead of minting a second, orphaned one they'd have to notice and re-enter in the panel.
+  // Skipped once the key has been revoked (e.g. refunded): that purchase starts a fresh key.
+  let renewingByEmail = false;
+  if (!existing[0] && !subscriptionId) {
+    const prior = await sql`
+      SELECT * FROM nest_licenses WHERE customer_email=${email} AND status != 'revoked'
+      ORDER BY created_at DESC LIMIT 1
+    `;
+    if (prior[0]) { existing = prior; renewingByEmail = true; }
+  }
+
   if (existing[0]) {
-    // Renewal: extend the same key.
+    // Renewing early keeps whatever time is left instead of losing it; renewing after it lapsed
+    // starts the new term from now. Paddle-driven subscription renewals keep using their own periodEnd.
+    const renewedExpiresAt = renewingByEmail
+      ? new Date(Math.max(new Date(existing[0].expires_at).getTime(), Date.now()) + plan.days * 24 * 60 * 60 * 1000).toISOString()
+      : expiresAt;
     await sql`
-      UPDATE nest_licenses SET expires_at=${expiresAt}::timestamptz, status='active',
+      UPDATE nest_licenses SET expires_at=${renewedExpiresAt}::timestamptz, status='active',
         plan_key=${plan.key}, price_id=${priceId}, max_devices=GREATEST(max_devices, ${plan.devices || 1}),
+        paddle_transaction_id=${renewingByEmail ? transactionId : existing[0].paddle_transaction_id},
         subscription_event_at=${occurredAt}::timestamptz
       WHERE key_hash=${existing[0].key_hash}
     `;
     // A Paddle retry after a failed first e-mail lands here: send the key if it was never sent.
+    // The license itself is already saved above, so a delivery failure (Resend down, misconfigured
+    // sender, etc.) must not turn into a 500: that would make Paddle retry the whole event forever
+    // and the fulfilled purchase would never be acknowledged. Log it and let the next retry try again.
     if (!existing[0].email_sent_at) {
-      await deliverNestLicense(email, decryptKey(existing[0].key_cipher), plan, existing[0].paddle_transaction_id || transactionId);
-      await sql`UPDATE nest_licenses SET email_sent_at=NOW() WHERE key_hash=${existing[0].key_hash}`;
+      try {
+        await deliverNestLicense(email, decryptKey(existing[0].key_cipher), plan, existing[0].paddle_transaction_id || transactionId);
+        await sql`UPDATE nest_licenses SET email_sent_at=NOW() WHERE key_hash=${existing[0].key_hash}`;
+      } catch (e) {
+        console.error("nest webhook: license e-mail delivery failed (will retry on next webhook):", e);
+      }
     }
   } else {
     const key = makeNestKey();
@@ -129,8 +154,12 @@ export async function POST(request) {
     `;
     const rows = await sql`SELECT * FROM nest_licenses WHERE paddle_transaction_id=${transactionId} LIMIT 1`;
     if (rows[0] && !rows[0].email_sent_at) {
-      await deliverNestLicense(email, decryptKey(rows[0].key_cipher), plan, transactionId);
-      await sql`UPDATE nest_licenses SET email_sent_at=NOW() WHERE key_hash=${rows[0].key_hash}`;
+      try {
+        await deliverNestLicense(email, decryptKey(rows[0].key_cipher), plan, transactionId);
+        await sql`UPDATE nest_licenses SET email_sent_at=NOW() WHERE key_hash=${rows[0].key_hash}`;
+      } catch (e) {
+        console.error("nest webhook: license e-mail delivery failed (will retry on next webhook):", e);
+      }
     }
   }
 
