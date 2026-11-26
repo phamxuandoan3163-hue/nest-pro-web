@@ -386,6 +386,10 @@ html{scroll-padding-top:112px}
 .license-page .license-card li,.license-page .license-card-featured li{color:#c3c8c6}
 .license-page .license-card .button.outline{border-color:#555d5e;color:#f2f2ef}
 .license-page .license-card .button.outline:hover{border-color:#eff0ee}
+/* Plan buy buttons are <button> elements, which get the browser's white default background;
+   the outline text is near-white, so they were unreadable. Keep them transparent like the links. */
+.license-page .license-card button.button.outline{background:transparent;color:#f2f2ef}
+.license-page .license-card button.button.outline:hover{background:rgba(255,255,255,.06)}
 .license-page .license-card-featured .button.dark{background:#eff0ee;color:#111415;border-color:#eff0ee}
 .license-page .license-card-featured .button.dark:hover{background:#fff;color:#111415}
 @media(max-width:950px){
