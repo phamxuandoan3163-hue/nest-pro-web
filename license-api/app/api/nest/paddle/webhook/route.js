@@ -92,7 +92,8 @@ export async function POST(request) {
   if (!item || !plan) return Response.json({ error: "unknown_price_id" }, { status: 400 });
 
   const transactionId = String(transaction.id || "");
-  const subscriptionId = plan.recurring ? String(transaction.subscription_id || "") : null;
+  // One-time purchases have no subscription id: keep it null (an empty string would collide on the UNIQUE column).
+  const subscriptionId = plan.recurring ? (String(transaction.subscription_id || "").trim() || null) : null;
   const periodEnd = item.billing_period?.ends_at || transaction.billing_period?.ends_at || null;
   const expiresAt = plan.recurring && periodEnd
     ? periodEnd

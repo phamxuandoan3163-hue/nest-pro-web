@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Nest-Pro License API",
-  description: "Online seven-day trial verification API for Nest-Pro Laser CEP."
+  title: "Nova Nesting License API",
+  description: "License activation and verification for the Nova Nesting plugin."
 };
 
 export default function RootLayout({ children }) {
