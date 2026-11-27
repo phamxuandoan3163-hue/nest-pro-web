@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
 function signatureIsValid(rawBody, header, secret) {
+  secret = String(secret || "").trim();   // a pasted secret often carries a trailing space or newline
   if (!header || !secret) return false;
   const parts = Object.fromEntries(header.split(";").map((part) => {
     const i = part.indexOf("=");
@@ -87,7 +88,10 @@ export async function POST(request) {
     const adj = event.data || {};
     const action = String(adj.action || "");
     const approved = String(adj.status || "") === "approved";
-    const full = String(adj.type || "full") === "full";
+    // Paddle labels a dashboard refund of the whole payment "partial" at the top level; what tells a full refund
+    // apart is that every refunded item is itself "full" (seen in a real sandbox payload).
+    const items = Array.isArray(adj.items) ? adj.items : [];
+    const full = String(adj.type || "") === "full" || (items.length > 0 && items.every((i) => String(i && i.type) === "full"));
     const takesAccessAway = approved && ((action === "refund" && full) || action === "chargeback" || action === "chargeback_warranty");
     const refundedTxn = String(adj.transaction_id || "");
     let revoked = 0;
@@ -99,7 +103,7 @@ export async function POST(request) {
       `;
       revoked = rows.length;
     }
-    await sql`INSERT INTO nest_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
+    // Not recorded as "handled": revoking is idempotent, and recording would stop a retry from acting on it.
     return Response.json({ received: true, revoked });
   }
 
@@ -141,6 +145,7 @@ export async function POST(request) {
     if (prior[0]) { existing = prior; renewingByEmail = true; }
   }
 
+  let emailFailed = false;   // the licence is saved either way; if the e-mail fails we ask Paddle to retry
   if (existing[0]) {
     // Renewing early keeps whatever time is left instead of losing it; renewing after it lapsed
     // starts the new term from now. Paddle-driven subscription renewals keep using their own periodEnd.
@@ -163,7 +168,8 @@ export async function POST(request) {
         await deliverNestLicense(email, decryptKey(existing[0].key_cipher), plan, existing[0].paddle_transaction_id || transactionId);
         await sql`UPDATE nest_licenses SET email_sent_at=NOW() WHERE key_hash=${existing[0].key_hash}`;
       } catch (e) {
-        console.error("nest webhook: license e-mail delivery failed (will retry on next webhook):", e);
+        emailFailed = true;
+        console.error("nest webhook: license e-mail delivery failed (Paddle will retry):", e);
       }
     }
   } else {
@@ -181,10 +187,15 @@ export async function POST(request) {
         await deliverNestLicense(email, decryptKey(rows[0].key_cipher), plan, transactionId);
         await sql`UPDATE nest_licenses SET email_sent_at=NOW() WHERE key_hash=${rows[0].key_hash}`;
       } catch (e) {
-        console.error("nest webhook: license e-mail delivery failed (will retry on next webhook):", e);
+        emailFailed = true;
+        console.error("nest webhook: license e-mail delivery failed (Paddle will retry):", e);
       }
     }
   }
+
+  // The licence is already saved. If its e-mail could not be sent, answer with an error and do NOT mark the event as
+  // handled, so Paddle retries and the key is e-mailed once delivery works again (nothing is created twice).
+  if (emailFailed) return Response.json({ received: true, fulfilled: true, email_sent: false }, { status: 502 });
 
   await sql`INSERT INTO nest_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
   return Response.json({ received: true, fulfilled: true, renew_url: NEST_RENEW_URL }, { headers: { "Cache-Control": "no-store" } });
