@@ -142,6 +142,7 @@ export async function POST(request) {
     if (prior[0]) { existing = prior; renewingByEmail = true; }
   }
 
+  let emailFailed = false;   // the licence is saved either way; if the e-mail fails we ask Paddle to retry
   if (existing[0]) {
     // Renewing early keeps whatever time is left instead of losing it; renewing after it lapsed
     // starts the new term from now. Paddle-driven subscription renewals keep using their own periodEnd.
@@ -164,7 +165,8 @@ export async function POST(request) {
         await deliverNestLicense(email, decryptKey(existing[0].key_cipher), plan, existing[0].paddle_transaction_id || transactionId);
         await sql`UPDATE nest_licenses SET email_sent_at=NOW() WHERE key_hash=${existing[0].key_hash}`;
       } catch (e) {
-        console.error("nest webhook: license e-mail delivery failed (will retry on next webhook):", e);
+        emailFailed = true;
+        console.error("nest webhook: license e-mail delivery failed (Paddle will retry):", e);
       }
     }
   } else {
@@ -182,10 +184,15 @@ export async function POST(request) {
         await deliverNestLicense(email, decryptKey(rows[0].key_cipher), plan, transactionId);
         await sql`UPDATE nest_licenses SET email_sent_at=NOW() WHERE key_hash=${rows[0].key_hash}`;
       } catch (e) {
-        console.error("nest webhook: license e-mail delivery failed (will retry on next webhook):", e);
+        emailFailed = true;
+        console.error("nest webhook: license e-mail delivery failed (Paddle will retry):", e);
       }
     }
   }
+
+  // The licence is already saved. If its e-mail could not be sent, answer with an error and do NOT mark the event as
+  // handled, so Paddle retries and the key is e-mailed once delivery works again (nothing is created twice).
+  if (emailFailed) return Response.json({ received: true, fulfilled: true, email_sent: false }, { status: 502 });
 
   await sql`INSERT INTO nest_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
   return Response.json({ received: true, fulfilled: true, renew_url: NEST_RENEW_URL }, { headers: { "Cache-Control": "no-store" } });
