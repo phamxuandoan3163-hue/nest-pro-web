@@ -88,7 +88,10 @@ export async function POST(request) {
     const adj = event.data || {};
     const action = String(adj.action || "");
     const approved = String(adj.status || "") === "approved";
-    const full = String(adj.type || "full") === "full";
+    // Paddle labels a dashboard refund of the whole payment "partial" at the top level; what tells a full refund
+    // apart is that every refunded item is itself "full" (seen in a real sandbox payload).
+    const items = Array.isArray(adj.items) ? adj.items : [];
+    const full = String(adj.type || "") === "full" || (items.length > 0 && items.every((i) => String(i && i.type) === "full"));
     const takesAccessAway = approved && ((action === "refund" && full) || action === "chargeback" || action === "chargeback_warranty");
     const refundedTxn = String(adj.transaction_id || "");
     let revoked = 0;
@@ -100,7 +103,7 @@ export async function POST(request) {
       `;
       revoked = rows.length;
     }
-    await sql`INSERT INTO nest_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
+    // Not recorded as "handled": revoking is idempotent, and recording would stop a retry from acting on it.
     return Response.json({ received: true, revoked });
   }
 
