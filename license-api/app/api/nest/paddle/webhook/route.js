@@ -80,6 +80,29 @@ export async function POST(request) {
     return Response.json({ received: true });
   }
 
+  // Refunds and chargebacks arrive as Paddle "adjustments". Only a fully approved refund or any approved
+  // chargeback takes the licence away; partial refunds, pending, rejected or reversed ones change nothing.
+  // The licence is matched by the transaction that was refunded (the latest purchase on the key).
+  if (eventType.startsWith("adjustment.")) {
+    const adj = event.data || {};
+    const action = String(adj.action || "");
+    const approved = String(adj.status || "") === "approved";
+    const full = String(adj.type || "full") === "full";
+    const takesAccessAway = approved && ((action === "refund" && full) || action === "chargeback" || action === "chargeback_warranty");
+    const refundedTxn = String(adj.transaction_id || "");
+    let revoked = 0;
+    if (takesAccessAway && refundedTxn) {
+      const rows = await sql`
+        UPDATE nest_licenses SET status='revoked'
+        WHERE paddle_transaction_id=${refundedTxn} AND status != 'revoked'
+        RETURNING key_hash
+      `;
+      revoked = rows.length;
+    }
+    await sql`INSERT INTO nest_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
+    return Response.json({ received: true, revoked });
+  }
+
   if (eventType !== "transaction.completed") {
     await sql`INSERT INTO nest_webhook_events(event_id,event_type) VALUES (${eventId},${eventType}) ON CONFLICT DO NOTHING`;
     return Response.json({ received: true, ignored: true });
