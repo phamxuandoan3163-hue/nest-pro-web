@@ -9,11 +9,17 @@ import { track } from "../site-tracker";
 const PADDLE_ENV = process.env.NEXT_PUBLIC_PADDLE_ENV || "sandbox";
 const PADDLE_LIVE = PADDLE_ENV === "live" || PADDLE_ENV === "production";
 const PADDLE_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || process.env.NEXT_PUBLIC_PADDLE_SANDBOX_CLIENT_TOKEN || "";
+// Live price ids by default. A Paddle sandbox preview overrides them with NEXT_PUBLIC_NEST_PRICES,
+// same format as the API's NEST_PADDLE_PRICES: "pri_a:monthly,pri_b:yearly,pri_c:yearly_pro".
 const NEST_PRICES = {
   monthly: "pri_01m6p0xa84j4whhqbv1cy41098",
   yearly: "pri_01m6p0xajv913pfmn9e6mkv17v",
   yearly_pro: "pri_01m6p0xawy63yr90bqnk3rm2bq"
 };
+for (const part of String(process.env.NEXT_PUBLIC_NEST_PRICES || "").split(",")) {
+  const [id, plan] = part.split(":").map((v) => String(v || "").trim());
+  if (id && NEST_PRICES[plan]) NEST_PRICES[plan] = id;
+}
 const planOf = (priceId) => Object.keys(NEST_PRICES).find((k) => NEST_PRICES[k] === priceId) || "";
 
 const plans=[
