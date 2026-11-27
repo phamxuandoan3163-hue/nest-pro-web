@@ -8,6 +8,7 @@ import { track } from "../site-tracker";
 // each price id to a plan (NEST_PADDLE_PRICES) and e-mails the NEST- key after payment.
 const PADDLE_ENV = process.env.NEXT_PUBLIC_PADDLE_ENV || "sandbox";
 const PADDLE_LIVE = PADDLE_ENV === "live" || PADDLE_ENV === "production";
+const PADDLE_SANDBOX = PADDLE_ENV === "sandbox";   // test checkout on a preview; never used in production
 const PADDLE_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || process.env.NEXT_PUBLIC_PADDLE_SANDBOX_CLIENT_TOKEN || "";
 // Live price ids by default. A Paddle sandbox preview overrides them with NEXT_PUBLIC_NEST_PRICES,
 // same format as the API's NEST_PADDLE_PRICES: "pri_a:monthly,pri_b:yearly,pri_c:yearly_pro".
@@ -33,9 +34,10 @@ export default function LicenseContent(){
   const [paddleReady,setPaddleReady]=useState(false);
   const [notice,setNotice]=useState("");
   useEffect(()=>{
-    if(!PADDLE_TOKEN||!PADDLE_LIVE) return;
+    if(!PADDLE_TOKEN||!(PADDLE_LIVE||PADDLE_SANDBOX)) return;
     function init(){
       try{
+        if(!PADDLE_LIVE) window.Paddle.Environment.set("sandbox");
         window.Paddle.Initialize({token:PADDLE_TOKEN,eventCallback:(e)=>{
           if(e&&e.name==="checkout.completed"){
             track("checkout_done",planOf(e.data&&e.data.items&&e.data.items[0]&&e.data.items[0].price_id));
@@ -55,7 +57,7 @@ export default function LicenseContent(){
   function buy(plan){
     const priceId=NEST_PRICES[plan];
     if(!priceId) return;
-    if(!PADDLE_LIVE||!PADDLE_TOKEN){setNotice("Checkout is not available in this preview. Please use ainovanesting.pro.");return;}
+    if(!(PADDLE_LIVE||PADDLE_SANDBOX)||!PADDLE_TOKEN){setNotice("Checkout is not available in this preview. Please use ainovanesting.pro.");return;}
     if(!paddleReady||!window.Paddle){setNotice("Checkout is still loading, please try again in a moment.");return;}
     track("checkout_open",plan);
     window.Paddle.Checkout.open({items:[{priceId:priceId,quantity:1}]});
