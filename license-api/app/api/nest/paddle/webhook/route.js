@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
 function signatureIsValid(rawBody, header, secret) {
+  secret = String(secret || "").trim();   // a pasted secret often carries a trailing space or newline
   if (!header || !secret) return false;
   const parts = Object.fromEntries(header.split(";").map((part) => {
     const i = part.indexOf("=");
