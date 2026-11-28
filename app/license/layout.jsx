@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Licensing",
+  title: "Nova Nesting licenses and pricing",
   description: "Review Nova Nesting license periods, product access and activation information.",
   alternates: { canonical: "/license" }
 };

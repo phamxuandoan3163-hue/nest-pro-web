@@ -2,8 +2,8 @@ import NavLinks from "../nav-links";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Support",
-  description: "Get help with Nova Nesting orders, license delivery, activation and product setup.",
+  title: "Support: License, Activation & Download Help",
+  description: "Get help with Nova Nesting and NOVA Trame orders, license emails, activation and setup. Email support@ainovanesting.pro.",
   alternates: { canonical: "/support" }
 };
 
@@ -23,6 +23,6 @@ export default function SupportPage() {
       <section className="support-contact"><div><p className="eyebrow">WHEN YOU CONTACT SUPPORT</p><h2>Include the details that help us investigate.</h2></div><ul><li>Order reference and purchase date</li><li>Product and license period</li><li>Illustrator version and operating system</li><li>Exact error text and a screenshot, with sensitive details hidden</li></ul><p>Email <a className="support-email" href="mailto:support@ainovanesting.pro">support@ainovanesting.pro</a> for help. For an existing purchase, reply to the order or license email so the request stays connected to your receipt. If no license email arrived, include your order reference and purchase date. This website page does not verify orders or issue replacement keys by itself.</p></section>
       <div className="support-actions"><Link className="button dark" href="/tools/nest-pro">Nova Nesting product guide <span aria-hidden="true">→</span></Link><Link className="button outline" href="/policies#refunds">Refund and payment policy</Link></div>
     </div>
-    <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Legal and support"><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
+    <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Footer"><a href="/tools/nest-pro">Nova Nesting</a><a href="/trame-preview">NOVA Trame</a><a href="/guides">Guides</a><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
   </main>;
 }

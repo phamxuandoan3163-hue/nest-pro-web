@@ -1,12 +1,13 @@
 export const metadata = {
-  title: "Tool Guides",
-  description: "Practical instructions for preparing Illustrator files, running Nova Nesting, matching designs to patterns, and configuring optional Laser Cut output.",
+  title: "Nova Nesting and NOVA Trame Guides",
+  description: "Step-by-step guides: prepare your Illustrator file, match designs to patterns, set laser cut strokes, and install and use NOVA Trame in Photoshop.",
   alternates: { canonical: "/guides" },
   openGraph: {
-    title: "Tool Guides | Nova Nesting",
-    description: "Find practical Nova Nesting setup, workflow, matching, and Laser Cut instructions.",
+    title: "Nova Nesting and NOVA Trame Guides",
+    description: "Step-by-step guides for Illustrator marker making and nesting, and for DTF halftones in Photoshop.",
     type: "website",
-    url: "/guides"
+    url: "/guides",
+    images: [{ url: "/media/og-home.png", width: 1200, height: 630, alt: "Nova Nesting guides" }]
   }
 };
 

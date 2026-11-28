@@ -4,7 +4,8 @@ export default function robots() {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin", "/order-confirmation"]
+        // The installer ZIPs are downloads, not pages. Images, guides and media stay crawlable.
+        disallow: ["/admin", "/order-confirmation", "/nest-pro/", "/trame/NOVA-NESTING-TRAME-SET_UP.zip"]
       }
     ],
     sitemap: "https://www.ainovanesting.pro/sitemap.xml"

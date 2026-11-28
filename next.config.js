@@ -4,6 +4,13 @@
 const longCache = [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }];
 
 module.exports = {
+  // Permanent redirects keep old links and search results working after a URL is renamed.
+  async redirects() {
+    return [
+      { source: "/tools/nest-pro/articles/scan-modes", destination: "/tools/nest-pro/articles/how-silhouette-matching-works", permanent: true },
+      { source: "/license", destination: "/tools/nest-pro#licensing", permanent: true }
+    ];
+  },
   async headers() {
     return [
       { source: "/media/:path*", headers: longCache },

@@ -2,8 +2,8 @@ import NavLinks from "../nav-links";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Policies",
-  description: "Review Nova Nesting terms of use, license duration, renewal, cancellation, refund and privacy information.",
+  title: "Terms, License, Refund & Privacy Policy",
+  description: "Read the Nova Nesting terms of use, license periods and renewal, refund policy and privacy overview for Nova Nesting and NOVA Trame.",
   alternates: { canonical: "/policies" }
 };
 
@@ -46,6 +46,6 @@ export default function PoliciesPage() {
       </div>
       <aside className="policy-note"><strong>Need help with an order?</strong><p>Use the support instructions in your purchase confirmation and include the order reference. Do not post license keys or payment details publicly.</p><Link className="button dark" href="/support">Visit support <span aria-hidden="true">→</span></Link></aside>
     </div>
-    <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Legal and support"><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
+    <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Footer"><a href="/tools/nest-pro">Nova Nesting</a><a href="/trame-preview">NOVA Trame</a><a href="/guides">Guides</a><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
   </main>;
 }

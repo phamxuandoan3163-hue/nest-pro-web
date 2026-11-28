@@ -1,9 +1,10 @@
 import { ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "How to use NOVA Trame",
-  description: "Usage guide for NOVA Trame: choose a shirt color, pick a halftone style, check the preview and export a print-ready file for DTF.",
-  alternates: { canonical: "/trame-preview/guide" }
+  title: "How to Use NOVA Trame: DTF Halftone Workflow",
+  description: "Choose a shirt color, pick a halftone style, check the print-size preview and export a transparent PNG for your RIP with NOVA Trame in Photoshop.",
+  alternates: { canonical: "/trame-preview/guide" },
+  openGraph: { title: "How to Use NOVA Trame: DTF Halftone Workflow", description: "From artwork to a RIP-ready transparent PNG with NOVA Trame in Photoshop.", type: "article", url: "/trame-preview/guide", images: [{ url: "/media/og-home.png", width: 1200, height: 630, alt: "NOVA Trame usage guide" }] }
 };
 
 const STEPS = [
@@ -34,6 +35,6 @@ export default function GuidePage() {
       <div className="article-bottom"><p>Need the installation steps first?</p><a className="button dark" href="/trame-preview/install">Read the installation guide <ArrowRight size={15}/></a></div>
     </article>
     <style>{`.guide-figure{margin:24px 0 8px;max-width:360px}.guide-figure img{width:100%;height:auto;border-radius:12px;border:1px solid rgba(128,128,128,.3)}.guide-figure figcaption{font-size:.85rem;opacity:.7;margin-top:8px}`}</style>
-    <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Legal and support"><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
+    <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Footer"><a href="/tools/nest-pro">Nova Nesting</a><a href="/trame-preview">NOVA Trame</a><a href="/guides">Guides</a><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
   </main>;
 }

@@ -56,16 +56,16 @@ const SCREENSHOTS=[
 ];
 // Resources tab.
 const GUIDES=[
-  {href:"/tools/nest-pro/articles/getting-started",tag:"START HERE",kind:"GUIDE",title:"Getting started with Nova Marker Making and Nesting",text:"Prepare an Illustrator file, set tolerance, decide whether to use Laser Cut, and review the output."},
-  {href:"/tools/nest-pro/articles/scan-modes",tag:"MATCHING",kind:"GUIDE",title:"How silhouette matching works",text:"Understand the main matching concepts and what to check if a design is paired with the wrong pattern."},
-  {href:"/tools/nest-pro/articles/nesting-workflow",tag:"WORKFLOW",kind:"GUIDE",title:"The exact Nesting + Laser Cut sequence",text:"Follow the practical order from preparing the source file through checking the result and saving."},
-  {href:"/tools/nest-pro/articles/laser-stroke-output",tag:"LASER CUT",kind:"GUIDE",title:"Configuring Inside and Outside laser strokes",text:"Choose stroke widths and colors, manage the LASER CUT layer, and review the paths before cutting."},
+  {href:"/tools/nest-pro/articles/getting-started",tag:"START HERE",kind:"GUIDE",title:"Getting Started with Nova Nesting in Illustrator",text:"Prepare an Illustrator file, set tolerance, decide whether to use Laser Cut, and review the output."},
+  {href:"/tools/nest-pro/articles/how-silhouette-matching-works",tag:"MATCHING",kind:"GUIDE",title:"How Silhouette Matching Works in Nova Nesting",text:"Understand the main matching concepts and what to check if a design is paired with the wrong pattern."},
+  {href:"/tools/nest-pro/articles/nesting-workflow",tag:"WORKFLOW",kind:"GUIDE",title:"Nesting + Laser Cut Workflow in Illustrator, Step by Step",text:"Follow the practical order from preparing the source file through checking the result and saving."},
+  {href:"/tools/nest-pro/articles/laser-stroke-output",tag:"LASER CUT",kind:"GUIDE",title:"Set Inside and Outside Laser Strokes in Illustrator",text:"Choose stroke widths and colors, manage the LASER CUT layer, and review the paths before cutting."},
   {href:"/trame-preview/install",tag:"INSTALLATION",kind:"GUIDE",title:"How to install NOVA Trame",text:"Install the plugin on Windows or macOS, without Creative Cloud."},
   {href:"/trame-preview/guide",tag:"USAGE",kind:"GUIDE",title:"How to use NOVA Trame",text:"From artwork to a RIP-ready file: shirt color, styles, preview and export."}
 ];
 
 function Brand(){return <a href="/" className="brand brand-mark-link" aria-label="Nova Nesting home" title="Nova Nesting"><img src="/media/nova-nesting-logo.webp" className="brand-mark-img" alt="NOVA NESTING AI logo" width={120} height={100}/></a>}
-function Nav(){return <header className="nav-wrap"><nav className="nav shell"><Brand/><div className="nav-links"><a href="#tools">Tools</a><a href="#features">Features</a><a href="#resources">Resources</a><a href="/guides">Guides</a></div></nav></header>}
+function Nav(){return <header className="nav-wrap"><nav className="nav shell"><Brand/><div className="nav-links"><a href="#tools">Tools</a><a href="#features">Features</a><a href="/trame-preview">NOVA Trame</a><a href="#resources">Resources</a><a href="/guides">Guides</a></div></nav></header>}
 function ProductCard({p,index}){const slug=SLUGS[p.name]||"production-tools";const hi=index===0||!!p.available;const card=<><div className="product-card-top"><div className="product-tag-stack" style={{display:"flex",flexDirection:"column",alignItems:"flex-start",gap:8}}><span className={hi?"product-status-active":""}>{p.tag}</span>{p.platform&&<small className="product-platform" style={{fontSize:13,fontWeight:600,color:"#4b5254"}}>{p.platform}</small>}</div><div className={"product-icon "+(hi?"product-icon-active":"")}>{hi?<Zap size={18}/>:<Sparkles size={18}/>}</div></div><h3>{p.name}</h3><p>{p.description}</p><ul>{p.features.slice(0,4).map(x=><li key={x}><Check size={13}/>{x}</li>)}</ul></>;if(p.href)return <a href={p.href} className={"product-card"+(hi?" product-primary":"")} aria-label={"Open "+p.name}>{card}<span className="card-action">{p.cta||"Explore"} <ArrowRight size={14}/></span></a>;return index===0?<a href={"/tools/"+slug} className="product-card product-primary" aria-label={"Open "+p.name}>{card}<span className="card-action">Explore features <ArrowRight size={14}/></span></a>:<article className="product-card">{card}</article>}
 function JerseyCollectionVisual(){return <div className="directory-hero-visual"><img src="/media/hero-jersey-collection.webp" srcSet="/media/hero-jersey-collection-800.webp 800w, /media/hero-jersey-collection.webp 1600w" sizes="(max-width: 950px) 100vw, 50vw" alt="Photorealistic 3D jersey collection showing five coordinated colorways from the front and back" width={1600} height={800} fetchPriority="high" decoding="async"/></div>}
 
@@ -139,32 +139,47 @@ function ResourcesTab(){return <>
   </div></section>
 </>}
 
+
+const FAQ=[
+  ["What is Nova Nesting?","Nova Nesting is a set of production tools for apparel makers. It includes Nova Marker Making and Nesting for Adobe Illustrator and NOVA Trame for Adobe Photoshop."],
+  ["What does Nova Nesting do in Illustrator?","It compares each design on your artboard with the pattern outlines, finds the matching pattern piece, keeps the design at 0° or turns it exactly 180°, and aligns it in place. The existing artwork is moved, not copied. Laser cut strokes are optional."],
+  ["Does Nova Nesting save or export my file automatically?","No. Nova Nesting never saves or exports on its own. Review the placement and the summary, then save the file yourself."],
+  ["What is NOVA Trame?","NOVA Trame is a Photoshop plugin with 130 halftone styles for DTF printing on black and white shirts. The dot frequency (LPI) is set from your print size, and a live preview shows the result before you apply it."],
+  ["Can I try the tools before I buy?","Yes. Both tools start with a 7-day free trial, so you can test them on your own patterns and artwork."],
+  ["How do I get help?","Read the step-by-step guides, or email support@ainovanesting.pro. License periods, prices, refund policy and terms are listed on the site."]
+];
+function Faq(){return <section id="faq" className="landing-features shell">
+  <Head eyebrow="FAQ" title={<>Questions before<br/><em>you start?</em></>}><p>Short answers about both tools. The guides explain every step in detail.</p></Head>
+  <div style={{display:"grid",gap:10,marginTop:8}}>{FAQ.map(([q,a])=><details key={q} style={{border:"1px solid #2a3031",background:"#15191a",borderRadius:14,padding:"16px 20px"}}><summary style={{cursor:"pointer",fontWeight:700,fontSize:15,color:"#f2f2ef"}}>{q}</summary><p style={{margin:"12px 0 0",fontSize:14,lineHeight:1.7,color:"#9a9f9f"}}>{a}</p></details>)}</div>
+</section>}
+
 function Home(){
   const[c,setC]=useState(defaultContent);
   useEffect(()=>{try{const raw=localStorage.getItem(STORAGE);if(raw)setC(renameBrand(JSON.parse(raw)));}catch{}},[]);
   const theme=useMemo(()=>({'--page-bg':c.theme.pageBg,'--surface':c.theme.surface,'--surface2':c.theme.surface2,'--text':c.theme.text,'--muted':c.theme.muted,'--line':c.theme.line,'--accent':c.theme.accent,'--accent-text':c.theme.accentText,'--dark-band':c.theme.darkBand,'--soft-band':c.theme.softBand,'--radius':c.theme.radius+"px"}),[c.theme]);
-  // Only the active tab is visible; the others stay in the HTML but hidden. The tab follows the URL hash.
-  const[tab,setTab]=useState("tools");
-  useEffect(()=>{const apply=()=>{const h=window.location.hash.replace("#","");if(TABS.includes(h)){setTab(h);requestAnimationFrame(()=>{const el=document.getElementById("panel");if(el)el.scrollIntoView({behavior:"smooth",block:"start"});});}};apply();window.addEventListener("hashchange",apply);return()=>window.removeEventListener("hashchange",apply);},[]);
+  // All sections are visible one after another (nothing is hidden), so every word on the page can be read by visitors and search engines. A hash such as #features scrolls to that section.
+  useEffect(()=>{const apply=()=>{const h=window.location.hash.replace("#","");if(TABS.includes(h)||h==="faq"){requestAnimationFrame(()=>{const el=document.getElementById(h);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});});}};apply();window.addEventListener("hashchange",apply);return()=>window.removeEventListener("hashchange",apply);},[]);
   return <main id="top" style={theme}>
     <Nav/>
     <section className="directory-hero shell">
       <div className="directory-hero-copy">
         <p className="eyebrow">PRODUCTION SOFTWARE FOR ADOBE ILLUSTRATOR AND PHOTOSHOP</p>
-        <h1>Less manual work.<br/><em>Full control.</em></h1>
-        <p className="directory-lead">Nova Nesting matches artwork to apparel pattern pieces in Illustrator. NOVA Trame turns artwork into DTF-ready halftones in Photoshop. Try either one free for 7 days, on your own files.</p>
+        <h1 className="hero-h1-seo">Apparel nesting and DTF halftone tools for Illustrator and Photoshop</h1>
+        <p className="hero-tagline">Less manual work.<br/><em>Full control.</em></p>
+        <p className="directory-lead">Nova Nesting matches each design to its pattern piece in Illustrator and aligns it in place. NOVA Trame turns artwork into DTF-ready halftones in Photoshop. Try either one free for 7 days, on your own files.</p>
         <div className="directory-actions"><a className="button dark" href="#tools">Explore tools <ArrowRight size={16}/></a><a className="button outline" href="#workflow"><Workflow size={15}/> See the workflow</a></div>
         <ul style={{display:"flex",flexWrap:"wrap",gap:"8px 22px",listStyle:"none",padding:0,margin:"26px 0 0",fontSize:12,color:"#9a9f9f"}}>{["7-day free trial","Works on your own files","Email support"].map(t=><li key={t} style={{display:"flex",alignItems:"center",gap:7}}><Check size={14} color="#35d07f"/>{t}</li>)}</ul>
       </div>
       <JerseyCollectionVisual/>
     </section>
     <div id="panel" style={{scrollMarginTop:78}}>
-      <div className="home-panel" hidden={tab!=="tools"}><ToolsTab c={c}/></div>
-      <div className="home-panel" hidden={tab!=="features"}><FeaturesTab/></div>
-      <div className="home-panel" hidden={tab!=="workflow"}><WorkflowTab/></div>
-      <div className="home-panel" hidden={tab!=="resources"}><ResourcesTab/></div>
+      <div className="home-panel"><ToolsTab c={c}/></div>
+      <div className="home-panel"><FeaturesTab/></div>
+      <div className="home-panel"><WorkflowTab/></div>
+      <div className="home-panel"><ResourcesTab/></div>
+      <Faq/>
     </div>
-    <footer className="footer shell"><span>{c.site.footerLeft}</span><nav className="footer-legal" aria-label="Legal and support"><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
+    <footer className="footer shell"><span>{c.site.footerLeft}</span><nav className="footer-legal" aria-label="Footer"><a href="/tools/nest-pro">Nova Nesting</a><a href="/trame-preview">NOVA Trame</a><a href="/guides">Guides</a><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
   </main>;
 }
 export default Home;

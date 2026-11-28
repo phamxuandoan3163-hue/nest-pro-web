@@ -134,7 +134,7 @@ export default function TramePreviewPage() {
       <div className="tool-hero-copy">
         <span className="status-label status-label-active"><i/> AVAILABLE</span>
         <p className="eyebrow">PHOTOSHOP PLUGIN · DTF HALFTONE</p>
-        <h1>NOVA Trame</h1>
+        <h1>NOVA Trame<span className="h1-sub">DTF halftone plugin for Adobe Photoshop</span></h1>
         <p className="tool-intro">Halftone styles built for DTF printing on black and white shirts.</p>
         <p className="tool-description">Pick from {data.styles.length} halftone styles, set the frequency from the print size, and check the result in a live preview before you apply it.</p>
         <div className="tool-hero-actions"><a className="button dark" href="/trame/NOVA-NESTING-TRAME-SET_UP.zip" download style={{fontSize:16,padding:"18px 30px",gap:10}}><Download size={19}/> Download and Try for free</a><a className="button outline" href="#styles">Browse {data.styles.length} styles <ArrowRight size={16}/></a><a className="button outline" href="#workflow">See the workflow</a></div>
@@ -212,7 +212,7 @@ export default function TramePreviewPage() {
       </div>
     </section>
 
-    <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Legal and support"><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
+    <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Footer"><a href="/tools/nest-pro">Nova Nesting</a><a href="/trame-preview">NOVA Trame</a><a href="/guides">Guides</a><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
 
     <style>{`
       .trame-video video{width:100%;height:100%;display:block;object-fit:contain;background:#000}

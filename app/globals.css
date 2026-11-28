@@ -1636,3 +1636,10 @@ body{
 .fx-dialog form{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.fx-title{font-weight:700;font-size:16px}.fx-close{border:1px solid #bbb;background:#fff;border-radius:8px;padding:6px 16px;cursor:pointer}
 .fx-preview{display:grid;grid-template-columns:1fr 1fr;align-items:center;justify-items:center;gap:16px}.fx-preview img{width:100%;max-height:calc(96vh - 90px);object-fit:contain;background:#000}.fx-preview .fx-large{width:min(100%,calc(96vh - 90px));border-radius:50%;aspect-ratio:1;object-fit:cover;box-shadow:0 0 0 2px #202128}
 @media(max-width:600px){.fx-section{padding:75px 0 20px}.fx-preview{grid-template-columns:1fr}.fx-preview img{max-height:none}}
+
+/* SEO: the home H1 states what the site offers; the old tagline keeps its large display style. */
+.directory-hero h1.hero-h1-seo{font-size:clamp(26px,3.2vw,40px);letter-spacing:-1.2px;line-height:1.08;margin:0 0 22px;max-width:780px;font-weight:700}
+.hero-tagline{font-size:clamp(46px,6vw,76px);line-height:.95;letter-spacing:-3.5px;margin:0 0 22px;max-width:1000px;font-weight:700}
+.hero-tagline em{font-family:Georgia,serif;font-weight:400}
+@media(max-width:600px){.hero-tagline{letter-spacing:-2px}}
+.tool-hero h1 .h1-sub{display:block;margin-top:14px;font-size:clamp(20px,2.4vw,30px);line-height:1.15;letter-spacing:-.8px;font-weight:600;color:#c9cdcc}

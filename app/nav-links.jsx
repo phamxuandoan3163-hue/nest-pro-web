@@ -3,6 +3,7 @@
 const TABS = [
   ["Tools", "/#tools"],
   ["Features", "/#features"],
+  ["NOVA Trame", "/trame-preview"],
   ["Resources", "/#resources"],
   ["Guides", "/guides"]
 ];

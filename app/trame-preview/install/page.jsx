@@ -1,9 +1,10 @@
 import { ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "How to install NOVA Trame",
-  description: "Step-by-step guide to installing the NOVA Trame Photoshop plugin on Windows and macOS, without Creative Cloud.",
-  alternates: { canonical: "/trame-preview/install" }
+  title: "How to Install NOVA Trame in Photoshop (Windows & Mac)",
+  description: "Install the NOVA Trame Photoshop plugin on Windows or macOS in about five minutes, without Creative Cloud, then start the 7-day trial.",
+  alternates: { canonical: "/trame-preview/install" },
+  openGraph: { title: "How to Install NOVA Trame in Photoshop", description: "Install the NOVA Trame Photoshop plugin on Windows or macOS without Creative Cloud.", type: "article", url: "/trame-preview/install", images: [{ url: "/media/og-home.png", width: 1200, height: 630, alt: "NOVA Trame installation guide" }] }
 };
 
 const SHOT = (n, alt) => ({ src: `/trame/install/step-${n}.webp`, alt });
@@ -37,6 +38,6 @@ export default function InstallPage() {
       <div className="article-bottom"><p>Ready to make your first halftone?</p><a className="button dark" href="/trame-preview/guide">Read the usage guide <ArrowRight size={15}/></a></div>
     </article>
     <style>{`.install-shot{margin:18px 0 6px}.install-shot img{width:100%;height:auto;border-radius:12px;border:1px solid rgba(128,128,128,.3);display:block}.guide-figure{margin:24px 0 8px;max-width:360px}.guide-figure img{width:100%;height:auto;border-radius:12px;border:1px solid rgba(128,128,128,.3)}.guide-figure figcaption{font-size:.85rem;opacity:.7;margin-top:8px}`}</style>
-    <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Legal and support"><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
+    <footer className="footer shell"><a href="/">Nova Nesting</a><nav className="footer-legal" aria-label="Footer"><a href="/tools/nest-pro">Nova Nesting</a><a href="/trame-preview">NOVA Trame</a><a href="/guides">Guides</a><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a></nav><span>© 2026 Nova Nesting</span></footer>
   </main>;
 }

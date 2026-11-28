@@ -5,32 +5,37 @@ import { ArrowRight, BookOpen, ScanLine, Scissors, Workflow } from "lucide-react
 const guides = [
   {
     category: "START HERE",
-    title: "Getting started with Nova Marker Making and Nesting",
+    title: "Getting Started with Nova Nesting in Illustrator",
     description: "Prepare an Illustrator file, set tolerance, decide whether to use Laser Cut, and review the output.",
     href: "/tools/nest-pro/articles/getting-started",
     icon: BookOpen
   },
   {
     category: "MATCHING GUIDE",
-    title: "How silhouette matching works",
+    title: "How Silhouette Matching Works in Nova Nesting",
     description: "Understand the main matching concepts and what to check if a design is paired with the wrong pattern.",
-    href: "/tools/nest-pro/articles/scan-modes",
+    href: "/tools/nest-pro/articles/how-silhouette-matching-works",
     icon: ScanLine
   },
   {
     category: "WORKFLOW",
-    title: "The Nova Nesting run sequence",
+    title: "Nesting + Laser Cut Workflow in Illustrator, Step by Step",
     description: "Follow the practical order from preparing the source file through checking the result and saving.",
     href: "/tools/nest-pro/articles/nesting-workflow",
     icon: Workflow
   },
   {
     category: "LASER CUT",
-    title: "Configure Inside and Outside strokes",
+    title: "Set Inside and Outside Laser Strokes in Illustrator",
     description: "Choose stroke widths and colors, manage the LASER CUT layer, and review generated paths safely.",
     href: "/tools/nest-pro/articles/laser-stroke-output",
     icon: Scissors
   }
+];
+
+const trameGuides = [
+  { category: "INSTALLATION", title: "How to Install NOVA Trame in Photoshop (Windows & Mac)", description: "Install the plugin on Windows or macOS in about five minutes, without Creative Cloud.", href: "/trame-preview/install", icon: BookOpen },
+  { category: "USAGE", title: "How to Use NOVA Trame: DTF Halftone Workflow", description: "Choose a shirt color, pick a halftone style, check the preview and export a transparent PNG for your RIP.", href: "/trame-preview/guide", icon: Workflow }
 ];
 
 export default function GuidesPage() {
@@ -67,7 +72,7 @@ export default function GuidesPage() {
 
       <section id="guide-library" className="guides-library shell">
         <div className="guides-section-head">
-          <div><p className="eyebrow">GUIDE LIBRARY</p><h2>Find the answer you need.</h2></div>
+          <div><p className="eyebrow">NOVA NESTING FOR ILLUSTRATOR</p><h2>Marker making and nesting guides.</h2></div>
           <p>Usage instructions live here, separate from product features and the short workflow overview.</p>
         </div>
         <div className="guides-library-grid">
@@ -79,6 +84,23 @@ export default function GuidesPage() {
                   <span className="guides-card-tag">{guide.category}</span>
                   <span className="guides-card-icon"><Icon size={17}/></span>
                 </div>
+                <h3>{guide.title}</h3>
+                <p>{guide.description}</p>
+                <strong>Read guide <ArrowRight size={14}/></strong>
+              </a>
+            );
+          })}
+        </div>
+        <div className="guides-section-head" style={{marginTop:56}}>
+          <div><p className="eyebrow">NOVA TRAME FOR PHOTOSHOP</p><h2>DTF halftone guides.</h2></div>
+          <p>Install the NOVA Trame plugin, then follow a complete job from artwork to a RIP-ready file.</p>
+        </div>
+        <div className="guides-library-grid">
+          {trameGuides.map((guide) => {
+            const Icon = guide.icon;
+            return (
+              <a className="guides-card" key={guide.href} href={guide.href}>
+                <div className="guides-card-top"><span className="guides-card-tag">{guide.category}</span><span className="guides-card-icon"><Icon size={17}/></span></div>
                 <h3>{guide.title}</h3>
                 <p>{guide.description}</p>
                 <strong>Read guide <ArrowRight size={14}/></strong>
@@ -98,8 +120,8 @@ export default function GuidesPage() {
 
       <footer className="footer shell">
         <a href="/">Nova Nesting</a>
-        <nav className="footer-legal" aria-label="Legal and support">
-          <a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a>
+        <nav className="footer-legal" aria-label="Footer">
+          <a href="/tools/nest-pro">Nova Nesting</a><a href="/trame-preview">NOVA Trame</a><a href="/guides">Guides</a><a href="/policies#terms">Terms</a><a href="/policies#refunds">Refunds</a><a href="/policies#license">License</a><a href="/policies#privacy">Privacy</a><a href="/support">Support</a>
         </nav>
         <a href="/">All tools</a>
       </footer>
