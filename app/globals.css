@@ -1643,3 +1643,8 @@ body{
 .hero-tagline em{font-family:Georgia,serif;font-weight:400}
 @media(max-width:600px){.hero-tagline{letter-spacing:-2px}}
 .tool-hero h1 .h1-sub{display:block;margin-top:14px;font-size:clamp(20px,2.4vw,30px);line-height:1.15;letter-spacing:-.8px;font-weight:600;color:#c9cdcc}
+
+/* Layout fixes found in the review */
+.product-card ul{margin-bottom:28px}
+.product-card .card-action{margin-top:auto}
+@media(min-width:901px){.footer{grid-template-columns:auto minmax(0,1fr) auto!important;gap:24px!important}.footer-legal{justify-content:center!important}}
